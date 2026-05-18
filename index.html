@@ -3137,7 +3137,7 @@ function completeAddUser() {
   const name = document.getElementById('add-user-name').value.trim();
   if (!rank || !name) return;
   const pass = document.getElementById('add-user-pass').value;
-  const user = { id: Date.now(), rank, name, password: pass || '', blueprints: [], materials: [] };
+  const user = { id: Date.now(), rank, name, password: String(pass || ''), blueprints: [], materials: [] };
   invUsers.push(user);
   saveInvUsers(user);
   rebuildUserDropdown();
@@ -3164,7 +3164,7 @@ function selectUser(id) {
   const newId = id ? parseInt(id) : null;
   const user = newId ? invUsers.find(u => String(u.id) === String(newId)) : null;
   // Admin bypasses password check
-  if(user && user.password && !isAdminMode) {
+  if(user && String(user.password || '') !== '' && !isAdminMode) {
     _pendingUserId = newId;
     openPwModal(user);
     // Reset dropdown to current user until authenticated
@@ -3729,7 +3729,7 @@ function saveChangePw() {
   const confirmVal = document.getElementById('chg-pw-confirm').value;
   // Verify current password
   if(hasCurrentPw) {
-    const correctPw = isAdmin ? getAdminPw() : user.password;
+    const correctPw = isAdmin ? getAdminPw() : String(user.password || '');
     if(currentVal !== correctPw) {
       document.getElementById('chg-pw-current-err').style.display = 'block';
       return;
@@ -3745,10 +3745,10 @@ function saveChangePw() {
     if(newVal === '') {
       localStorage.removeItem(ADMIN_PW_KEY);
     } else {
-      localStorage.setItem(ADMIN_PW_KEY, newVal);
+      localStorage.setItem(ADMIN_PW_KEY, String(newVal));
     }
   } else if(user) {
-    user.password = newVal;
+    user.password = String(newVal);
     saveInvUsers(user);
   }
   closeChangePw();
@@ -3793,7 +3793,7 @@ function submitPw() {
   const user = invUsers.find(u => String(u.id) === String(_pendingUserId));
   if(!user) return;
   const entered = document.getElementById('pw-modal-input').value;
-  if(entered !== user.password) {
+  if(entered !== String(user.password || '')) {
     document.getElementById('pw-error').style.display = 'block';
     document.getElementById('pw-modal-input').value = '';
     document.getElementById('pw-modal-input').focus();
