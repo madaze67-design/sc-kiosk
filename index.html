@@ -1546,11 +1546,13 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
             <div style="padding:8px 10px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
               <div style="display:flex;align-items:center;gap:6px;">
                 <div id="ord-cat-row" style="display:flex;gap:3px;align-items:center;flex:1;"></div>
-                <div class="filter-tag off" id="ord-mybp-tag" onclick="toggleOrdMyBP()" style="white-space:nowrap;font-size:10px;">My BP's</div>
               </div>
-              <div class="search-box">
-                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input placeholder="Search blueprints..." id="ord-bp-search" oninput="renderOrdBPList()">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <div class="filter-tag off" id="ord-mybp-tag" onclick="toggleOrdMyBP()" style="white-space:nowrap;font-size:10px;">My BP's</div>
+                <div class="search-box" style="flex:1;">
+                  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <input placeholder="Search blueprints..." id="ord-bp-search" oninput="renderOrdBPList()">
+                </div>
               </div>
             </div>
             <div id="ord-bp-list" style="flex:1;overflow-y:auto;"></div>
@@ -1613,17 +1615,44 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
         <!-- Filter bar -->
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);background:var(--bg-panel);display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
           <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">ORDER FULFILLMENT</div>
-          <div style="display:flex;align-items:center;gap:5px;">
+          <div style="display:flex;align-items:center;gap:5px;position:relative;">
             <span style="font-size:11px;color:var(--white-muted);font-family:var(--mono);">Status:</span>
-            <select id="ff-status-filter" multiple onchange="renderFulfill()"
+            <div id="ff-status-dropdown" onclick="toggleFFStatusDD(event)"
               style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);
-                     font-family:var(--font);font-size:11px;padding:2px 4px;min-width:130px;height:28px;">
-              <option value="New Order" selected>New Order</option>
-              <option value="In Progress" selected>In Progress</option>
-              <option value="Awaiting BP" selected>Awaiting BP</option>
-              <option value="Awaiting Mats" selected>Awaiting Mats</option>
-              <option value="Ready for Pickup" selected>Ready for Pickup</option>
-            </select>
+                     font-family:var(--font);font-size:11px;padding:3px 24px 3px 8px;min-width:140px;
+                     height:28px;display:flex;align-items:center;cursor:pointer;position:relative;user-select:none;">
+              <span id="ff-status-label">All Active</span>
+              <svg viewBox="0 0 24 24" style="position:absolute;right:5px;top:50%;transform:translateY(-50%);width:12px;height:12px;stroke:var(--white-muted);fill:none;stroke-width:2;pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="ff-status-dd-panel" style="display:none;position:fixed;background:var(--bg-header);border:1px solid var(--teal-dim);z-index:500;min-width:180px;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
+              <div style="padding:6px 10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);">FILTER BY STATUS</span>
+                <div style="display:flex;gap:8px;">
+                  <span onclick="ffStatusSelectAll(true)" style="font-size:10px;color:var(--teal);cursor:pointer;">All</span>
+                  <span onclick="ffStatusSelectAll(false)" style="font-size:10px;color:var(--white-muted);cursor:pointer;">None</span>
+                </div>
+              </div>
+              <div style="padding:4px 0;">
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                  <input type="checkbox" value="New Order" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> New Order
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                  <input type="checkbox" value="In Progress" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> In Progress
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                  <input type="checkbox" value="Awaiting BP" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> Awaiting BP
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                  <input type="checkbox" value="Awaiting Mats" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> Awaiting Mats
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                  <input type="checkbox" value="Ready for Pickup" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> Ready for Pickup
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                  <input type="checkbox" value="Complete" onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> Complete
+                </label>
+              </div>
+            </div>
           </div>
           <div style="display:flex;align-items:center;gap:5px;">
             <span style="font-size:11px;color:var(--white-muted);font-family:var(--mono);">Assigned:</span>
@@ -2394,7 +2423,7 @@ function getFabOres() {
     }));
   }
   // User selected: use their personal materials
-  const user = invUsers.find(u => u.id === fabUserId);
+  const user = invUsers.find(u => String(u.id) === String(fabUserId));
   if(!user) return [];
   // Convert user.materials to ore format, merging same-name entries by summing qty
   // (keep multiple entries as separate stacks for quality distinction)
@@ -2710,7 +2739,7 @@ function switchFabTab(t){
 
 function getFilteredBps(){
   const s=(document.getElementById('bp-search')?.value||'').toLowerCase();
-  const fabUser = fabUserId ? invUsers.find(u=>u.id===fabUserId) : null;
+  const fabUser = fabUserId ? invUsers.find(u=>String(u.id)===String(fabUserId)) : null;
   const fabOres = getFabOres();
   return BLUEPRINTS.filter(bp=>{
     if(s&&!bp.name.toLowerCase().includes(s))return false;
@@ -3074,7 +3103,7 @@ let invEditingMatEntry = null; // {userId, entryId} when editing
 let invAddingMatName = null;   // ore name when adding new
 
 function getActiveUser() {
-  return invUsers.find(u => u.id === activeUserId) || null;
+  return invUsers.find(u => String(u.id) === String(activeUserId)) || null;
 }
 
 // ── Add User popup ──────────────────────────────────────────
@@ -3133,7 +3162,7 @@ let _pendingUserId = null; // holds id awaiting password
 
 function selectUser(id) {
   const newId = id ? parseInt(id) : null;
-  const user = newId ? invUsers.find(u => u.id === newId) : null;
+  const user = newId ? invUsers.find(u => String(u.id) === String(newId)) : null;
   // Admin bypasses password check
   if(user && user.password && !isAdminMode) {
     _pendingUserId = newId;
@@ -3761,7 +3790,7 @@ function checkPwForm() {
 
 function submitPw() {
   if(!_pendingUserId) return;
-  const user = invUsers.find(u => u.id === _pendingUserId);
+  const user = invUsers.find(u => String(u.id) === String(_pendingUserId));
   if(!user) return;
   const entered = document.getElementById('pw-modal-input').value;
   if(entered !== user.password) {
@@ -3819,7 +3848,7 @@ function confirmDeleteUser() {
   if(!document.getElementById('del-user-confirm-chk').checked) return;
   // Remove user from array
   const deletedId = activeUserId;
-  invUsers = invUsers.filter(u => u.id !== deletedId);
+  invUsers = invUsers.filter(u => String(u.id) !== String(deletedId));
   activeUserId = null;
   deleteUserFromSheet(deletedId);
   rebuildUserDropdown();
@@ -4431,9 +4460,8 @@ function refreshFulfillAssigneeFilter() {
 function renderFulfill() {
   const container = document.getElementById('ff-orders-list');
   if(!container) return;
-  const statusSel  = document.getElementById('ff-status-filter');
   const assignSel  = document.getElementById('ff-assign-filter');
-  const activeStatuses = statusSel ? [...statusSel.selectedOptions].map(o=>o.value) : ORDER_STATUSES.filter(s=>s!=='Complete');
+  const activeStatuses = [...(document.querySelectorAll('#ff-status-dd-panel input[type=checkbox]')||[])].filter(c=>c.checked).map(c=>c.value);
   const activeAssign   = assignSel ? [...assignSel.selectedOptions].map(o=>o.value).filter(Boolean) : [];
 
   let list = allOrders.filter(o => {
@@ -4545,6 +4573,46 @@ async function setOrderAssignee(orderId, assignee) {
 
 // ── Add to Order button in Fabricate detail panel ─────────────
 // Called from the fabricate "Add to Order" button we'll add in the HTML
+
+// ── Order Fulfillment Status Dropdown ──────────────────────────
+function toggleFFStatusDD(e) {
+  e.stopPropagation();
+  const panel = document.getElementById('ff-status-dd-panel');
+  if(!panel) return;
+  if(panel.style.display === 'none') {
+    // Position under the trigger button
+    const btn = document.getElementById('ff-status-dropdown');
+    const rect = btn.getBoundingClientRect();
+    panel.style.left = rect.left + 'px';
+    panel.style.top  = (rect.bottom + 2) + 'px';
+    panel.style.display = 'block';
+  } else {
+    panel.style.display = 'none';
+  }
+}
+function updateFFStatusLabel() {
+  const checks = [...(document.querySelectorAll('#ff-status-dd-panel input[type=checkbox]')||[])];
+  const active = checks.filter(c=>c.checked);
+  const lbl = document.getElementById('ff-status-label');
+  if(!lbl) return;
+  if(active.length === 0)             lbl.textContent = 'None';
+  else if(active.length === checks.length) lbl.textContent = 'All';
+  else if(active.length === 1)        lbl.textContent = active[0].value;
+  else                                lbl.textContent = active.length + ' selected';
+}
+function ffStatusSelectAll(val) {
+  document.querySelectorAll('#ff-status-dd-panel input[type=checkbox]')
+    .forEach(c => c.checked = val);
+  updateFFStatusLabel();
+  renderFulfill();
+}
+// Close dropdown when clicking outside
+document.addEventListener('click', e => {
+  const panel = document.getElementById('ff-status-dd-panel');
+  if(panel && !panel.contains(e.target) && e.target.id !== 'ff-status-dropdown') {
+    panel.style.display = 'none';
+  }
+});
 
 // ESC key
 document.addEventListener('keydown',e=>{
