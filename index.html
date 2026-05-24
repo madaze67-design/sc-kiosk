@@ -1694,10 +1694,14 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
       <div style="margin-bottom:12px;">
         <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">APPS SCRIPT WEB APP URL</div>
         <input id="gsync-url" class="sc-input" style="width:100%;font-size:12px;"
-               placeholder="https://script.google.com/macros/s/..."
+               placeholder="https://script.google.com/macros/s/ABC.../exec"
                oninput="checkGSyncUrl()" value="">
       </div>
-      <div id="gsync-status" style="font-size:11px;font-family:var(--mono);padding:8px 10px;background:var(--bg-main);border:1px solid var(--border);min-height:28px;color:var(--white-muted);display:none;"></div>
+      <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);margin-top:5px;line-height:1.6;">
+        URL must start with <span style="color:var(--teal-dim);">https://script.google.com/macros/s/</span> and end with <span style="color:var(--teal-dim);">/exec</span><br>
+        Get it from: Apps Script → Deploy → Manage deployments → copy URL
+      </div>
+      <div id="gsync-status" style="font-size:11px;font-family:var(--mono);padding:8px 10px;background:var(--bg-main);border:1px solid var(--border);min-height:28px;color:var(--white-muted);display:none;margin-top:8px;"></div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
       <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);" id="gsync-last-sync"></div>
@@ -3293,6 +3297,7 @@ function startSyncPolling() {
 
 async function refreshUsersFromSheet() {
   if(!gsApiUrl) return;
+  if(!_cachedAdminPw) await loadAdminPw();
   const result = await apiCall({ action: 'getusers' });
   if(result.success && Array.isArray(result.users)) {
     invUsers = result.users;
@@ -3593,11 +3598,24 @@ function completeInvMat() {
 // ADMIN + PASSWORD MANAGEMENT
 // ═══════════════════════════════════════════════════
 let isAdminMode = false;
-const ADMIN_PW_KEY = 'sc_admin_password';
-const ADMIN_DEFAULT_PW = 'rQjcpWA8KD';
+const ADMIN_PW_KEY = 'sc_admin_password'; // legacy key — no longer used
+let _cachedAdminPw = null; // loaded from Google Sheets SC_Config sheet
 
 function getAdminPw() {
-  return localStorage.getItem(ADMIN_PW_KEY) || ADMIN_DEFAULT_PW;
+  return _cachedAdminPw; // null = not yet loaded from Sheets
+}
+
+async function loadAdminPw() {
+  if(!gsApiUrl) return;
+  try {
+    const result = await apiCall({ action: 'getconfig', key: 'admin_password' });
+    if(result.success && result.value) {
+      _cachedAdminPw = String(result.value);
+      localStorage.removeItem(ADMIN_PW_KEY); // clean up old localStorage entry
+    }
+  } catch(e) {
+    console.warn('Could not load admin password:', e);
+  }
 }
 
 // ── Admin login ──────────────────────────────────────
@@ -3623,8 +3641,17 @@ function checkAdminPwForm() {
 }
 function submitAdminPw() {
   const entered = document.getElementById('admin-pw-input').value;
-  if(entered !== getAdminPw()) {
-    document.getElementById('admin-pw-error').style.display = 'block';
+  const adminPw = getAdminPw();
+  if(adminPw === null) {
+    const errEl = document.getElementById('admin-pw-error');
+    errEl.textContent = '✗ Not connected — click SYNC first';
+    errEl.style.display = 'block';
+    return;
+  }
+  if(entered !== adminPw) {
+    const errEl = document.getElementById('admin-pw-error');
+    errEl.textContent = '✗ Incorrect password';
+    errEl.style.display = 'block';
     document.getElementById('admin-pw-input').value = '';
     checkAdminPwForm();
     return;
@@ -3742,11 +3769,9 @@ function saveChangePw() {
   }
   // Save
   if(isAdmin) {
-    if(newVal === '') {
-      localStorage.removeItem(ADMIN_PW_KEY);
-    } else {
-      localStorage.setItem(ADMIN_PW_KEY, String(newVal));
-    }
+    const pwToSave = newVal === '' ? 'rQjcpWA8KD' : String(newVal);
+    _cachedAdminPw = pwToSave;
+    apiCall({ action: 'setconfig', payload: { key: 'admin_password', value: pwToSave } });
   } else if(user) {
     user.password = String(newVal);
     saveInvUsers(user);
@@ -3902,7 +3927,8 @@ function closeGSync() { document.getElementById('gsync-modal').style.display = '
 
 function checkGSyncUrl() {
   const url   = document.getElementById('gsync-url').value.trim();
-  const valid = url.startsWith('https://script.google.com/macros/s/') || url.startsWith('https://script.googleusercontent.com/');
+  // Only accept the correct deployment URL ending in /exec
+  const valid = url.startsWith('https://script.google.com/macros/s/') && url.endsWith('/exec');
   ['gsync-test-btn','gsync-save-btn'].forEach(id => {
     const btn = document.getElementById(id);
     btn.disabled = !valid;
@@ -3962,6 +3988,7 @@ async function saveGSyncUrl() {
     setGSyncStatus('✓ Connected — ' + invUsers.length + ' users loaded from Google Sheets', 'var(--teal-bright)');
     startSyncPolling();
     setApiStatus('ok');
+    loadAdminPw();
   } else {
     setGSyncStatus('✗ Failed to load users: ' + (result.error||'unknown error'), 'var(--red)');
     setApiStatus('error');
@@ -3980,6 +4007,7 @@ function initInvTab() {
 gsApiUrl = localStorage.getItem(GS_URL_KEY) || '';
 if(gsApiUrl) {
   loadInvUsers();
+  loadAdminPw();
   startSyncPolling();
 } else {
   setApiStatus('none');
