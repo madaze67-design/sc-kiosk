@@ -3605,23 +3605,28 @@ function getAdminPw() {
 }
 
 async function loadAdminPw() {
+  // Ensure admin user exists in the sheet and load their password into cache
   if(!gsApiUrl) return;
   try {
-    // Use a direct fetch that does NOT affect the API status indicator
-    // so a missing/old deployment doesn't show as an error
-    const qs = 'action=getconfig&key=admin_password';
+    const qs = 'action=ensureadmin';
     const res = await fetch(gsApiUrl + '?' + qs, { redirect: 'follow' });
-    if(!res.ok) return; // silently skip — script may not be updated yet
+    if(!res.ok) return;
     const data = await res.json();
-    if(data.success && data.value) {
-      _cachedAdminPw = String(data.value);
-      localStorage.removeItem(ADMIN_PW_KEY);
+    if(data.success) {
+      // Reload users so admin user appears in the list
+      const result = await apiCall({ action: 'getusers' });
+      if(result.success) {
+        invUsers = result.users || [];
+        rebuildUserDropdown();
+        refreshFabUserDropdown();
+        refreshFulfillAssigneeFilter();
+      }
+      // Cache the admin password from the admin user object
+      const adminUser = invUsers.find(u => String(u.role) === 'admin');
+      if(adminUser) _cachedAdminPw = String(adminUser.password || 'rQjcpWA8KD');
     }
-    // If getconfig not recognised yet (old deployment), just leave _cachedAdminPw as null
-    // Admin login will show "Not connected" until script is redeployed
   } catch(e) {
-    console.warn('Could not load admin password from Sheets:', e);
-    // Don't set API error status — users not using admin won't care
+    console.warn('Could not load admin user:', e);
   }
 }
 
@@ -3632,6 +3637,7 @@ async function openAdminLogin() {
   document.getElementById('admin-pw-error').style.display = 'none';
   checkAdminPwForm();
   document.getElementById('admin-login-modal').style.display = 'flex';
+  // Try to load admin pw if not cached
   if(_cachedAdminPw === null && gsApiUrl) {
     await loadAdminPw();
   }
@@ -3671,7 +3677,20 @@ function activateAdmin() {
   btn.style.color = 'var(--amber-bright)';
   btn.style.background = 'var(--amber-bg)';
   btn.title = 'Admin Mode Active — Click to deactivate';
-  // Show Change Password for admin
+  // Set the admin user as the active user profile
+  const adminUser = invUsers.find(u => String(u.role) === 'admin');
+  if(adminUser) {
+    activeUserId = adminUser.id;
+    const sel = document.getElementById('inv-user-select');
+    if(sel) sel.value = String(adminUser.id);
+    const delBtn = document.getElementById('del-user-btn');
+    if(delBtn) delBtn.style.display = '';
+    const chgBtn = document.getElementById('chg-pw-btn');
+    if(chgBtn) { chgBtn.style.display = ''; chgBtn.dataset.context = 'user'; }
+    const info = document.getElementById('inv-user-info');
+    if(info) info.textContent = adminUser.blueprints.length + ' BPs · ' + adminUser.materials.length + ' ore entries';
+  }
+  // Show Change Password for admin pw (stored on admin user)
   showChangePwBtn('admin');
   // Switch to inventory tab
   if(currentScreen !== 'inv') showScreen('inv');
@@ -3683,7 +3702,21 @@ function deactivateAdmin() {
   btn.style.color = 'var(--amber-dim)';
   btn.style.background = '';
   btn.title = 'Gnome Admin';
-  // Reset change pw button
+  // Clear active user if it was the admin
+  const adminUser = invUsers.find(u => String(u.role) === 'admin');
+  if(adminUser && String(activeUserId) === String(adminUser.id)) {
+    activeUserId = null;
+    const sel = document.getElementById('inv-user-select');
+    if(sel) sel.value = '';
+    const delBtn = document.getElementById('del-user-btn');
+    if(delBtn) delBtn.style.display = 'none';
+    const info = document.getElementById('inv-user-info');
+    if(info) info.textContent = '';
+    const bpList = document.getElementById('inv-bp-list');
+    if(bpList) bpList.innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>';
+    const matList = document.getElementById('inv-mat-list');
+    if(matList) matList.innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>';
+  }
   const chgBtn = document.getElementById('chg-pw-btn');
   if(chgBtn) chgBtn.style.display = 'none';
 }
@@ -3776,7 +3809,12 @@ function saveChangePw() {
   if(isAdmin) {
     const pwToSave = newVal === '' ? 'rQjcpWA8KD' : String(newVal);
     _cachedAdminPw = pwToSave;
-    apiCall({ action: 'setconfig', payload: { key: 'admin_password', value: pwToSave } });
+    // Save to admin user's password field in SC_Users sheet
+    const adminUser = invUsers.find(u => String(u.role) === 'admin');
+    if(adminUser) {
+      adminUser.password = pwToSave;
+      saveInvUsers(adminUser);
+    }
   } else if(user) {
     user.password = String(newVal);
     saveInvUsers(user);
@@ -3878,6 +3916,12 @@ function confirmDeleteUser() {
   if(!document.getElementById('del-user-confirm-chk').checked) return;
   // Remove user from array
   const deletedId = activeUserId;
+  const toDelete = invUsers.find(u => String(u.id) === String(deletedId));
+  if(toDelete && String(toDelete.role) === 'admin') {
+    alert('The Gnome Admin user cannot be deleted.');
+    closeDeleteUser();
+    return;
+  }
   invUsers = invUsers.filter(u => String(u.id) !== String(deletedId));
   activeUserId = null;
   deleteUserFromSheet(deletedId);
