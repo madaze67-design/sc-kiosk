@@ -498,7 +498,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   padding: 4px 0;
   box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
-.cat-icon-btn:hover .cat-dropdown { display: block; }
+.cat-icon-btn.dd-open .cat-dropdown { display: block; }
 .cat-dropdown-title {
   font-family: var(--mono);
   font-size: 9px;
@@ -1180,7 +1180,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .inv-cat-btn:hover img,.inv-cat-btn.active img { opacity:0.9;filter:brightness(1.3) sepia(0.4) hue-rotate(140deg) saturate(2); }
 .inv-cat-btn.active { border-color:var(--teal); background:var(--teal-bg); }
 .inv-cat-btn .cat-dropdown { z-index:201; }
-.inv-cat-btn:hover .cat-dropdown { display:block; }
+.inv-cat-btn.dd-open .cat-dropdown { display:block; }
 
 /* Utility */
 .hidden { display: none !important; }
@@ -4746,6 +4746,66 @@ function showFirstVisitIfNeeded() {
     document.getElementById('first-visit-modal').style.display = 'flex';
   }
 }
+
+// ── Category dropdown hover with delay ──────────────────────────
+// Prevents the dropdown from instantly hiding when mouse briefly leaves
+(function() {
+  const SHOW_DELAY = 0;    // ms before showing (instant)
+  const HIDE_DELAY = 320;  // ms before hiding (gives time to move to subcategory)
+  let hideTimers = new WeakMap();
+
+  function attachDropdownDelay(selector) {
+    document.addEventListener('mouseover', e => {
+      const btn = e.target.closest(selector);
+      if(!btn) return;
+      // Cancel any pending hide
+      if(hideTimers.has(btn)) {
+        clearTimeout(hideTimers.get(btn));
+        hideTimers.delete(btn);
+      }
+      btn.classList.add('dd-open');
+    });
+    document.addEventListener('mouseout', e => {
+      const btn = e.target.closest(selector);
+      if(!btn) return;
+      // Only hide if mouse left the button entirely (not just moved to child)
+      const related = e.relatedTarget;
+      if(related && btn.contains(related)) return;
+      const timer = setTimeout(() => {
+        btn.classList.remove('dd-open');
+        hideTimers.delete(btn);
+      }, HIDE_DELAY);
+      hideTimers.set(btn, timer);
+    });
+    // Also keep open when hovering the dropdown panel itself
+    document.addEventListener('mouseover', e => {
+      const dd = e.target.closest('.cat-dropdown');
+      if(!dd) return;
+      const btn = dd.closest(selector);
+      if(!btn) return;
+      if(hideTimers.has(btn)) {
+        clearTimeout(hideTimers.get(btn));
+        hideTimers.delete(btn);
+      }
+    });
+    document.addEventListener('mouseout', e => {
+      const dd = e.target.closest('.cat-dropdown');
+      if(!dd) return;
+      const btn = dd.closest(selector);
+      if(!btn) return;
+      const related = e.relatedTarget;
+      if(related && (btn.contains(related) || dd.contains(related))) return;
+      const timer = setTimeout(() => {
+        btn.classList.remove('dd-open');
+        hideTimers.delete(btn);
+      }, HIDE_DELAY);
+      hideTimers.set(btn, timer);
+    });
+  }
+
+  attachDropdownDelay('.cat-icon-btn');
+  attachDropdownDelay('.inv-cat-btn');
+})();
 
 // ESC key
 document.addEventListener('keydown',e=>{
