@@ -1732,8 +1732,8 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
         <input id="add-user-rank" class="sc-input" style="width:100%;font-size:13px;" placeholder="e.g. Captain, Admiral, Citizen..." oninput="checkAddUserForm()">
       </div>
       <div style="margin-bottom:14px;">
-        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">NAME</div>
-        <input id="add-RSI-Handle" class="sc-input" style="width:100%;font-size:13px;" placeholder="Enter player name..." oninput="checkAddUserForm()">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">RSI HANDLE</div>
+        <input id="add-user-name" class="sc-input" style="width:100%;font-size:13px;" placeholder="Enter RSI handle..." oninput="checkAddUserForm()">
       </div>
       <div style="margin-bottom:20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
@@ -1872,6 +1872,38 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
     </div>
     <div style="padding:8px;">
       <div id="ff-status-items"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FIRST VISIT WARNING MODAL -->
+<div id="first-visit-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.92);z-index:900;align-items:center;justify-content:center;">
+  <div style="width:460px;background:var(--bg-header);border:1px solid var(--amber);box-shadow:0 0 50px rgba(200,148,26,0.2);">
+    <div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--amber);fill:none;stroke-width:2;flex-shrink:0;">
+        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--amber);">SECURITY NOTICE</span>
+    </div>
+    <div style="padding:24px;">
+      <div style="font-size:13px;color:var(--white);line-height:1.8;margin-bottom:20px;">
+        Please note that passwords are stored on a personal Google Sheet and will be seen by the owner of this tool.
+        <br><br>
+        <strong style="color:var(--amber);">Do not use a password you do not wish to be seen.</strong>
+      </div>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--white-dim);">
+        <input type="checkbox" id="first-visit-chk" onchange="checkFirstVisitForm()" style="width:16px;height:16px;accent-color:var(--amber);cursor:pointer;">
+        I understand — do not show this again
+      </label>
+    </div>
+    <div style="padding:10px 16px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
+      <button id="first-visit-btn" onclick="closeFirstVisit()" disabled
+        style="height:32px;padding:0 24px;background:rgba(200,148,26,0.05);border:1px solid rgba(200,148,26,0.3);
+               color:rgba(200,148,26,0.4);font-family:var(--font);font-size:12px;font-weight:700;
+               letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;">
+        I UNDERSTAND
+      </button>
     </div>
   </div>
 </div>
@@ -3206,7 +3238,8 @@ function selectUser(id) {
 
 const GS_URL_KEY     = 'sc_api_url';
 const GS_ADMIN_KEY   = 'sc_admin_password';
-let   gsApiUrl       = localStorage.getItem(GS_URL_KEY) || '';
+const DEFAULT_GS_URL = 'https://script.google.com/macros/s/AKfycbzr-l1cCodvZu_wtBA6A9op4uUYJauzY9boDqzI6NR9jFXYo9bPWSkQT92LVtLBztgQGA/exec';
+let   gsApiUrl       = localStorage.getItem(GS_URL_KEY) || DEFAULT_GS_URL;
 let   gsSyncing      = false; // debounce flag
 
 // Show/hide the connection status dot in title bar
@@ -3963,7 +3996,7 @@ function initInvTab() {
 // ── Connection setup functions ──────────────────────────────────────────────
 
 function openGSync() {
-  const saved = localStorage.getItem(GS_URL_KEY) || '';
+  const saved = localStorage.getItem(GS_URL_KEY) || DEFAULT_GS_URL;
   document.getElementById('gsync-url').value = saved;
   checkGSyncUrl();
   const lastSync = localStorage.getItem('sc_gsync_last');
@@ -4061,6 +4094,8 @@ if(gsApiUrl) {
 } else {
   setApiStatus('none');
 }
+// Show security notice on first visit
+showFirstVisitIfNeeded();
 
 
 // ═══════════════════════════════════════════════════════════════
@@ -4690,6 +4725,27 @@ document.addEventListener('click', e => {
     panel.style.display = 'none';
   }
 });
+
+// ── First-visit security warning ───────────────────────────────
+function checkFirstVisitForm() {
+  const checked = document.getElementById('first-visit-chk').checked;
+  const btn = document.getElementById('first-visit-btn');
+  btn.disabled = !checked;
+  if(checked) {
+    btn.style.cssText = 'height:32px;padding:0 24px;background:var(--amber-bg);border:1px solid var(--amber);color:var(--amber-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.2s;';
+  } else {
+    btn.style.cssText = 'height:32px;padding:0 24px;background:rgba(200,148,26,0.05);border:1px solid rgba(200,148,26,0.3);color:rgba(200,148,26,0.4);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;';
+  }
+}
+function closeFirstVisit() {
+  document.getElementById('first-visit-modal').style.display = 'none';
+  localStorage.setItem('sc_visited', '1');
+}
+function showFirstVisitIfNeeded() {
+  if(!localStorage.getItem('sc_visited')) {
+    document.getElementById('first-visit-modal').style.display = 'flex';
+  }
+}
 
 // ESC key
 document.addEventListener('keydown',e=>{
