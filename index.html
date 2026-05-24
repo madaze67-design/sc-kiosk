@@ -3297,7 +3297,6 @@ function startSyncPolling() {
 
 async function refreshUsersFromSheet() {
   if(!gsApiUrl) return;
-  if(!_cachedAdminPw) await loadAdminPw();
   const result = await apiCall({ action: 'getusers' });
   if(result.success && Array.isArray(result.users)) {
     invUsers = result.users;
@@ -3608,13 +3607,21 @@ function getAdminPw() {
 async function loadAdminPw() {
   if(!gsApiUrl) return;
   try {
-    const result = await apiCall({ action: 'getconfig', key: 'admin_password' });
-    if(result.success && result.value) {
-      _cachedAdminPw = String(result.value);
-      localStorage.removeItem(ADMIN_PW_KEY); // clean up old localStorage entry
+    // Use a direct fetch that does NOT affect the API status indicator
+    // so a missing/old deployment doesn't show as an error
+    const qs = 'action=getconfig&key=admin_password';
+    const res = await fetch(gsApiUrl + '?' + qs, { redirect: 'follow' });
+    if(!res.ok) return; // silently skip — script may not be updated yet
+    const data = await res.json();
+    if(data.success && data.value) {
+      _cachedAdminPw = String(data.value);
+      localStorage.removeItem(ADMIN_PW_KEY);
     }
+    // If getconfig not recognised yet (old deployment), just leave _cachedAdminPw as null
+    // Admin login will show "Not connected" until script is redeployed
   } catch(e) {
-    console.warn('Could not load admin password:', e);
+    console.warn('Could not load admin password from Sheets:', e);
+    // Don't set API error status — users not using admin won't care
   }
 }
 
