@@ -3277,10 +3277,11 @@ async function apiCall(params) {
     let res;
     if(POST_ACTIONS.has(action)) {
       // POST for write operations — avoids URL length limits on large payloads
+      // NOTE: No Content-Type header — sending as text/plain avoids CORS preflight
+      // which Apps Script does not handle. e.postData.contents still receives JSON fine.
       res = await fetch(gsApiUrl, {
         method: 'POST',
         redirect: 'follow',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(params),
       });
     } else {
