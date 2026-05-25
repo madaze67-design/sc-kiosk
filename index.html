@@ -3168,14 +3168,24 @@ function checkAddUserForm() {
     btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   }
 }
-function completeAddUser() {
+async function completeAddUser() {
   const rank = document.getElementById('add-user-rank').value.trim();
   const name = document.getElementById('add-user-name').value.trim();
   if (!rank || !name) return;
+  const btn = document.getElementById('add-user-complete');
+  btn.textContent = 'SAVING...';
+  btn.disabled = true;
   const pass = document.getElementById('add-user-pass').value;
   const user = { id: Date.now(), rank, name, password: String(pass || ''), blueprints: [], materials: [] };
   invUsers.push(user);
-  saveInvUsers(user);
+  const result = await saveInvUsers(user);
+  if(result && result.success === false) {
+    btn.textContent = 'COMPLETE';
+    btn.disabled = false;
+    alert('Failed to save user: ' + (result.error || 'unknown error'));
+    invUsers.pop(); // remove from local array if save failed
+    return;
+  }
   rebuildUserDropdown();
   refreshFabUserDropdown();
   selectUser(user.id);
@@ -3256,15 +3266,30 @@ function setApiStatus(state) {
 }
 
 // Core API caller — uses fetch to the Apps Script Web App URL
+// Actions that write data — use POST to avoid URL length limits
+const POST_ACTIONS = new Set(['saveuser','deleteuser','saveorder','savecustombp','deletecustombp','setconfig','ensureadmin']);
+
 async function apiCall(params) {
   if(!gsApiUrl) return { success: false, error: 'No API URL configured' };
   setApiStatus('syncing');
   try {
-    // Build URL with action + payload as GET params (Apps Script works best with GET)
-    const qs = Object.entries(params)
-      .map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(typeof v === 'object' ? JSON.stringify(v) : v))
-      .join('&');
-    const res = await fetch(gsApiUrl + '?' + qs, { redirect: 'follow' });
+    const action = (params.action || '').toLowerCase();
+    let res;
+    if(POST_ACTIONS.has(action)) {
+      // POST for write operations — avoids URL length limits on large payloads
+      res = await fetch(gsApiUrl, {
+        method: 'POST',
+        redirect: 'follow',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params),
+      });
+    } else {
+      // GET for read operations
+      const qs = Object.entries(params)
+        .map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(typeof v === 'object' ? JSON.stringify(v) : v))
+        .join('&');
+      res = await fetch(gsApiUrl + '?' + qs, { redirect: 'follow' });
+    }
     if(!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     setApiStatus(data.success ? 'ok' : 'error');
@@ -3296,18 +3321,19 @@ async function loadInvUsers() {
 
 // Save a single user to Google Sheets (create or update)
 async function saveInvUsers(specificUser) {
-  if(!gsApiUrl) return;
-  // If a specific user is provided, only save that one
-  // Otherwise save the whole array (used after delete etc.)
+  if(!gsApiUrl) return { success: false, error: 'No API URL' };
   const usersToSave = specificUser ? [specificUser] : invUsers;
+  let lastResult = { success: true };
   for(const user of usersToSave) {
     const result = await apiCall({ action: 'saveuser', payload: user });
     if(!result.success) {
       console.warn('Failed to save user:', result.error);
       setApiStatus('error');
+      lastResult = result;
     }
   }
-  if(usersToSave.length) setApiStatus('ok');
+  if(lastResult.success) setApiStatus('ok');
+  return lastResult;
 }
 
 // Delete a user from Google Sheets
@@ -3445,7 +3471,7 @@ function toggleUserBP(user, bpName, row) {
     row.classList.add('owned');
     row.querySelector('.inv-bp-check').textContent = '✓';
   }
-  saveInvUsers();
+  saveInvUsers(user).catch(e => console.warn('BP save failed:', e));
   document.getElementById('inv-user-info').textContent = `${user.blueprints.length} BPs · ${user.materials.length} ore entries`;
 }
 
@@ -3621,7 +3647,7 @@ function completeInvMat() {
       qty
     });
   }
-  saveInvUsers();
+  saveInvUsers().catch(e => console.warn('Delete mat failed:', e));
   closeInvMatModal();
   renderInvMats();
   document.getElementById('inv-user-info').textContent = `${user.blueprints.length} BPs · ${user.materials.length} ore entries`;
@@ -3846,11 +3872,11 @@ function saveChangePw() {
     const adminUser = invUsers.find(u => String(u.role) === 'admin');
     if(adminUser) {
       adminUser.password = pwToSave;
-      saveInvUsers(adminUser);
+      saveInvUsers(adminUser).catch(e => console.warn('Admin save failed:', e));
     }
   } else if(user) {
     user.password = String(newVal);
-    saveInvUsers(user);
+    saveInvUsers(user).catch(e => console.warn('PW save failed:', e));
   }
   closeChangePw();
 }
@@ -3973,7 +3999,7 @@ function removeUserMat() {
   if (!user || !invEditingMatEntry) return;
   if (!confirm('Remove this material entry?')) return;
   user.materials = user.materials.filter(m => m.entryId !== invEditingMatEntry);
-  saveInvUsers(user);
+  saveInvUsers(user).catch(e => console.warn('Remove mat save failed:', e));
   closeInvMatModal();
   renderInvMats();
   document.getElementById('inv-user-info').textContent = `${user.blueprints.length} BPs · ${user.materials.length} ore entries`;
