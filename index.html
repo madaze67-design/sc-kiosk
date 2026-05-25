@@ -3266,8 +3266,14 @@ function setApiStatus(state) {
 }
 
 // Core API caller — uses fetch to the Apps Script Web App URL
-// Actions that write data — use POST to avoid URL length limits
-const POST_ACTIONS = new Set(['saveuser','deleteuser','saveorder','savecustombp','deletecustombp','setconfig','ensureadmin']);
+// Apps Script drops POST body on its 302 redirect, so we use GET for everything.
+// Payload is sent as a URL parameter which Apps Script reads via e.parameter.payload.
+// Write actions use form-urlencoded POST (no CORS preflight, no URL length limit)
+// Apps Script reads form params via e.parameter — same as GET params
+const WRITE_ACTIONS = new Set([
+  'saveuser','deleteuser','saveorder','savecustombp',
+  'deletecustombp','setconfig','ensureadmin'
+]);
 
 async function apiCall(params) {
   if(!gsApiUrl) return { success: false, error: 'No API URL configured' };
@@ -3275,20 +3281,25 @@ async function apiCall(params) {
   try {
     const action = (params.action || '').toLowerCase();
     let res;
-    if(POST_ACTIONS.has(action)) {
-      // POST for write operations — avoids URL length limits on large payloads
-      // NOTE: No Content-Type header — sending as text/plain avoids CORS preflight
-      // which Apps Script does not handle. e.postData.contents still receives JSON fine.
+    if(WRITE_ACTIONS.has(action)) {
+      // Form-urlencoded POST — simple content type, no CORS preflight
+      // Apps Script reads e.parameter.action and e.parameter.payload
+      const body = new URLSearchParams();
+      Object.entries(params).forEach(([k,v]) => {
+        body.set(k, typeof v === 'object' ? JSON.stringify(v) : String(v));
+      });
       res = await fetch(gsApiUrl, {
         method: 'POST',
         redirect: 'follow',
-        body: JSON.stringify(params),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
       });
     } else {
-      // GET for read operations
+      // GET for reads
       const qs = Object.entries(params)
-        .map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(typeof v === 'object' ? JSON.stringify(v) : v))
-        .join('&');
+        .map(([k,v]) => encodeURIComponent(k) + '=' + encodeURIComponent(
+          typeof v === 'object' ? JSON.stringify(v) : String(v)
+        )).join('&');
       res = await fetch(gsApiUrl + '?' + qs, { redirect: 'follow' });
     }
     if(!res.ok) throw new Error('HTTP ' + res.status);
