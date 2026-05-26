@@ -3714,9 +3714,14 @@ function canEditOrders() {
   if(isAdminMode) return true;
   const u = getActiveUser();
   if(!u) return false;
-  const role = String(u.role || '').toLowerCase();
-  const perms = String(u.permissions || '').toLowerCase();
-  return role === 'admin' || perms.includes('artificer') || perms.includes('admin');
+  const role  = String(u.role         || '').toLowerCase();
+  const perms = String(u.permissions  || '').toLowerCase();
+  // Check role field (admin), permissions field (artificer/admin),
+  // or role field also containing artificer (in case column is used differently)
+  return role  === 'admin'
+      || role.includes('artificer')
+      || perms.includes('artificer')
+      || perms.includes('admin');
 }
 
 async function loadAdminPw() {
@@ -4861,6 +4866,17 @@ function renderFulfill() {
         </div>
       </div>`;
     container.appendChild(card);
+  });
+}
+
+function debugCanEdit() {
+  const u = getActiveUser();
+  if(!u) { console.log('canEditOrders: no active user'); return; }
+  console.log('canEditOrders debug:', {
+    isAdminMode,
+    id: u.id, rank: u.rank, name: u.name,
+    role: u.role, permissions: u.permissions,
+    result: canEditOrders()
   });
 }
 
