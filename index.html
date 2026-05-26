@@ -136,14 +136,14 @@ body {
   align-items: center;
   gap: 6px;
   color: var(--teal);
-  font-size: 12px;
+  font-size: 15px;
   font-family: var(--font);
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.15s;
 }
 #close-btn:hover { opacity: 1; color: var(--red); }
-#close-btn::before { content: '✕'; font-size: 11px; }
+#close-btn::before { content: '✕'; font-size: 14px; }
 
 /* ── BODY LAYOUT ── */
 #body {
@@ -189,7 +189,7 @@ body {
   border: 1px solid var(--teal-dim);
   padding: 4px 10px;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 1.5px;
   color: var(--teal-bright);
   white-space: nowrap;
@@ -251,7 +251,7 @@ body {
   flex-wrap: wrap;
 }
 .inv-title {
-  font-size: 11px;
+  font-size: 14px;
   font-family: var(--mono);
   color: var(--teal);
   letter-spacing: 2px;
@@ -262,7 +262,7 @@ body {
   border: 1px solid var(--border);
   color: var(--white);
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 15px;
   padding: 5px 8px;
   outline: none;
   transition: border-color 0.15s;
@@ -273,7 +273,7 @@ body {
   border: 1px solid var(--border);
   color: var(--white);
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 15px;
   padding: 5px 8px;
   outline: none;
   cursor: pointer;
@@ -283,7 +283,7 @@ body {
   border: 1px solid var(--border);
   color: var(--white-dim);
   font-family: var(--font);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 1px;
   padding: 5px 10px;
@@ -306,13 +306,13 @@ body {
 .inv-table-wrap::-webkit-scrollbar-track { background: var(--bg-panel); }
 .inv-table-wrap::-webkit-scrollbar-thumb { background: var(--teal-dim); }
 
-table.inv-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+table.inv-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 table.inv-table thead { position: sticky; top: 0; z-index: 5; background: var(--bg-header); }
 table.inv-table th {
   padding: 7px 10px;
   text-align: left;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 1px;
   color: var(--teal-dim);
   border-bottom: 1px solid var(--border-mid);
@@ -329,7 +329,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .type-badge {
   display: inline-block;
   padding: 1px 6px;
-  font-size: 10px;
+  font-size: 13px;
   font-family: var(--mono);
   letter-spacing: 0.5px;
 }
@@ -349,7 +349,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border: 1px solid var(--teal-dim);
   color: var(--teal);
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 15px;
   padding: 2px 5px;
   outline: none;
   width: 100%;
@@ -358,7 +358,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   display:flex; align-items:center; gap:6px;
   padding: 8px 10px;
   color: var(--white-muted);
-  font-size: 11px;
+  font-size: 14px;
   font-family: var(--mono);
   cursor: pointer;
   transition: all 0.15s;
@@ -398,7 +398,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 2px;
   cursor: pointer;
@@ -439,7 +439,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border: none;
   color: var(--white);
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 15px;
   outline: none;
   flex: 1;
 }
@@ -451,7 +451,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border: 1px solid var(--border);
   color: var(--white-dim);
   font-family: var(--font);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
@@ -510,7 +510,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .cat-icon-btn.dd-open .cat-dropdown { display: block; }
 .cat-dropdown-title {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 15px;
   letter-spacing: 1.5px;
   color: var(--teal);
   padding: 4px 10px 6px;
@@ -522,7 +522,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   align-items: center;
   gap: 8px;
   padding: 4px 10px;
-  font-size: 12px;
+  font-size: 15px;
   color: var(--white-dim);
   cursor: pointer;
   transition: background 0.1s;
@@ -538,7 +538,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   flex-wrap: wrap;
 }
 .show-label {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--white-muted);
   font-family: var(--font);
 }
@@ -549,7 +549,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   padding: 2px 8px;
   background: var(--teal-bg);
   border: 1px solid var(--teal-dim);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--teal-bright);
   letter-spacing: 0.5px;
@@ -557,7 +557,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   transition: all 0.15s;
 }
 .filter-tag:hover { background: var(--teal-bg); border-color: var(--teal); }
-.filter-tag .x { font-size: 10px; color: var(--teal-dim); margin-left: 2px; }
+.filter-tag .x { font-size: 13px; color: var(--teal-dim); margin-left: 2px; }
 .filter-tag.off {
   background: transparent;
   border-color: var(--border);
@@ -584,7 +584,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   background: var(--bg-section);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--white);
@@ -597,7 +597,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   align-items: center;
   gap: 6px;
   padding: 5px 14px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--teal-dim);
@@ -635,7 +635,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   width: 22px; height: 16px;
   display: flex; align-items: center; justify-content: center;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 15px;
   font-weight: bold;
   background: rgba(0,0,0,0.6);
 }
@@ -650,7 +650,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   background: var(--bg-header);
   border: 1px solid var(--teal-dim);
   padding: 4px 10px;
-  font-size: 11px;
+  font-size: 14px;
   font-family: var(--mono);
   color: var(--teal-bright);
   white-space: nowrap;
@@ -718,7 +718,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .page-btn:hover { border-color: var(--teal-dim); color: var(--teal); }
 .page-info {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 15px;
   color: var(--white-dim);
   min-width: 36px;
   text-align: center;
@@ -756,7 +756,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   background: var(--bg-section);
   border: 1px solid var(--border-mid);
   padding: 9px 28px;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 2px;
   color: var(--white);
@@ -785,18 +785,18 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .upgrade-group {
   display: flex; align-items: center; gap: 6px;
 }
-.upgrade-label { font-size: 11px; color: var(--white-muted); }
+.upgrade-label { font-size: 14px; color: var(--white-muted); }
 .upgrade-sel {
   background: var(--bg-main);
   border: 1px solid var(--border);
   color: var(--white-muted);
   font-family: var(--font);
-  font-size: 11px;
+  font-size: 14px;
   padding: 3px 6px;
   opacity: 0.5;
   cursor: not-allowed;
 }
-.autofill-label { font-size: 11px; color: var(--white-muted); white-space: nowrap; }
+.autofill-label { font-size: 14px; color: var(--white-muted); white-space: nowrap; }
 .detail-btn {
   height: 26px;
   padding: 0 12px;
@@ -804,7 +804,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border: 1px solid var(--border);
   color: var(--white-dim);
   font-family: var(--font);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.5px;
   cursor: pointer;
@@ -815,7 +815,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .qty-row {
   display: flex; align-items: center; gap: 4px;
 }
-.qty-label { font-size: 11px; color: var(--white-muted); margin-right: 2px; }
+.qty-label { font-size: 14px; color: var(--white-muted); margin-right: 2px; }
 .qty-btn {
   width: 26px; height: 26px;
   background: var(--bg-main);
@@ -833,7 +833,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 15px;
   color: var(--white);
 }
 .max-btn {
@@ -841,7 +841,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   background: var(--bg-main);
   border: 1px solid var(--border);
   color: var(--white-dim);
-  font-size: 11px;
+  font-size: 14px;
   font-family: var(--font);
   font-weight: 600;
   cursor: pointer;
@@ -853,7 +853,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   background: var(--bg-main);
   border: 1px solid var(--border);
   color: var(--white-muted);
-  font-size: 11px;
+  font-size: 14px;
   font-family: var(--font);
   font-weight: 600;
   cursor: pointer;
@@ -883,7 +883,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 }
 .mat-section-header .check {
   color: var(--teal);
-  font-size: 12px;
+  font-size: 15px;
   margin-right: -4px;
 }
 .mat-section-x:hover { color: var(--red); }
@@ -926,13 +926,13 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   position: absolute;
   top: 14px;
   right: 14px;
-  font-size: 12px;
+  font-size: 15px;
   color: var(--white-dim);
   text-align: right;
 }
 #item-fab-time span { font-weight: 600; color: var(--white); }
 #item-type-line {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--white-muted);
   margin-top: 4px;
   display: flex; align-items: center; gap: 6px;
@@ -940,7 +940,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 #item-type-line .arr { color: var(--teal-dim); }
 .tier-badge {
   display: flex; align-items: center; gap: 4px;
-  font-size: 11px;
+  font-size: 14px;
   color: var(--white-muted);
 }
 .tier-badge .tier-circle {
@@ -949,7 +949,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 15px;
   color: var(--teal-bright);
   border-color: var(--teal-dim);
 }
@@ -966,7 +966,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   padding: 6px 12px;
   background: var(--bg-section);
   border-bottom: 1px solid var(--border);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--white-dim);
@@ -980,7 +980,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   background: var(--bg-header);
 }
 .stats-col {
-  font-size: 10px;
+  font-size: 13px;
   font-family: var(--mono);
   color: var(--white-muted);
   letter-spacing: 0.5px;
@@ -995,12 +995,12 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border-bottom: 1px solid rgba(77,200,176,0.05);
   align-items: center;
 }
-.stat-attr { flex: 1.2; font-size: 12px; color: var(--white-dim); }
-.stat-base, .stat-enhanced { flex: 1; font-size: 11px; font-family: var(--mono); color: var(--white-dim); text-align: right; }
+.stat-attr { flex: 1.2; font-size: 15px; color: var(--white-dim); }
+.stat-base, .stat-enhanced { flex: 1; font-size: 14px; font-family: var(--mono); color: var(--white-dim); text-align: right; }
 .stat-enhanced { color: var(--white); }
 .stat-delta {
   width: 40px;
-  font-size: 11px;
+  font-size: 14px;
   font-family: var(--mono);
   text-align: right;
   display: flex;
@@ -1025,13 +1025,13 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   flex-shrink: 0;
 }
 .deliver-group { display:flex; align-items:center; gap:8px; }
-.deliver-label { font-size: 12px; color: var(--white-muted); }
+.deliver-label { font-size: 15px; color: var(--white-muted); }
 .deliver-sel {
   background: var(--bg-main);
   border: 1px solid var(--border);
   color: var(--white-dim);
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 15px;
   padding: 5px 8px;
   min-width: 140px;
 }
@@ -1076,7 +1076,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 2px;
   color: var(--teal);
 }
@@ -1088,7 +1088,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border: 1px solid var(--border);
   color: var(--white);
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 15px;
   padding: 6px 10px;
   outline: none;
 }
@@ -1105,11 +1105,11 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .modal-ore-row:hover { background: var(--bg-hover); }
 .modal-ore-icon { font-size: 20px; width: 28px; text-align: center; }
 .modal-ore-name { font-size: 13px; font-weight: 600; color: var(--white); }
-.modal-ore-meta { font-size: 10px; font-family: var(--mono); color: var(--white-muted); margin-top: 1px; }
+.modal-ore-meta { font-size: 13px; font-family: var(--mono); color: var(--white-muted); margin-top: 1px; }
 .modal-ore-right { margin-left: auto; text-align: right; }
-.modal-q { font-family: var(--mono); font-size: 12px; }
-.modal-qty { font-family: var(--mono); font-size: 11px; color: var(--white-muted); }
-.modal-low { font-size: 9px; color: var(--red); font-family: var(--mono); }
+.modal-q { font-family: var(--mono); font-size: 15px; }
+.modal-qty { font-family: var(--mono); font-size: 14px; color: var(--white-muted); }
+.modal-low { font-size: 15px; color: var(--red); font-family: var(--mono); }
 
 /* ── ORDER STATUS BADGES ── */
 
@@ -1121,7 +1121,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   padding:5px 12px;
   border-bottom:1px solid rgba(77,200,176,0.05);
   cursor:pointer; transition:background 0.1s;
-  font-size:12px; color:var(--white-dim);
+  font-size:15px; color:var(--white-dim);
   font-family:var(--font);
 }
 .inv-bp-row:hover { background:var(--bg-hover); color:var(--white); }
@@ -1134,7 +1134,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   border:1px solid var(--border);
   border-radius:2px;
   display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; font-size:10px; color:var(--teal);
+  flex-shrink:0; font-size:13px; color:var(--teal);
   transition:all 0.1s;
 }
 .inv-bp-row.owned .inv-bp-check { border-color:var(--teal); background:var(--teal-bg); }
@@ -1143,7 +1143,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   background:var(--bg-section);
   border-top:1px solid var(--border);
   border-bottom:1px solid var(--border);
-  font-size:10px; font-weight:700; letter-spacing:2px;
+  font-size:13px; font-weight:700; letter-spacing:2px;
   color:var(--teal-dim); text-transform:uppercase;
   display:flex; align-items:center; gap:6px;
 }
@@ -1157,8 +1157,8 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 }
 .inv-mat-row:hover { background:var(--bg-hover); }
 .inv-mat-name { flex:1; font-weight:500; }
-.inv-mat-q { font-family:var(--mono);font-size:11px;min-width:60px; text-align:right; }
-.inv-mat-qty { font-family:var(--mono);font-size:11px;color:var(--teal-bright);min-width:70px;text-align:right; }
+.inv-mat-q { font-family:var(--mono);font-size:14px;min-width:60px; text-align:right; }
+.inv-mat-qty { font-family:var(--mono);font-size:14px;color:var(--teal-bright);min-width:70px;text-align:right; }
 .inv-mat-cog {
   width:24px; height:24px;
   display:flex; align-items:center; justify-content:center;
@@ -1217,14 +1217,14 @@ option:checked, option:hover {
       <div style="display:flex;align-items:center;gap:5px;margin-left:12px;">
         <div id="api-status-dot" title="NOT CONNECTED"
           style="width:7px;height:7px;border-radius:50%;background:#3a5a72;transition:background 0.3s;flex-shrink:0;"></div>
-        <span id="api-status-label" style="font-family:var(--mono);font-size:9px;color:var(--white-muted);letter-spacing:1px;"></span>
+        <span id="api-status-label" style="font-family:var(--mono);font-size:15px;color:var(--white-muted);letter-spacing:1px;"></span>
       </div>
     <div class="center-line"></div>
     <div id="admin-btn" onclick="openAdminLogin()"
       title="Gnome Admin"
       style="margin-left:auto;display:flex;align-items:center;gap:5px;cursor:pointer;
              padding:3px 9px;border:1px solid var(--border);color:var(--amber-dim);
-             font-family:var(--mono);font-size:9px;letter-spacing:1px;
+             font-family:var(--mono);font-size:15px;letter-spacing:1px;
              transition:all 0.15s;border-radius:1px;"
       onmouseenter="this.style.borderColor='var(--amber)';this.style.color='var(--amber-bright)'"
       onmouseleave="if(!isAdminMode){this.style.borderColor='var(--border)';this.style.color='var(--amber-dim)'}">
@@ -1236,7 +1236,7 @@ option:checked, option:hover {
     <div id="gsync-btn" onclick="openGSync()" title="Sync from Google Sheets"
       style="margin-left:auto;display:flex;align-items:center;gap:5px;cursor:pointer;
              padding:3px 9px;border:1px solid var(--border);color:var(--teal-dim);
-             font-family:var(--mono);font-size:9px;letter-spacing:1px;
+             font-family:var(--mono);font-size:15px;letter-spacing:1px;
              transition:all 0.15s;border-radius:1px;"
       onmouseenter="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'"
       onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--teal-dim)'">
@@ -1301,7 +1301,7 @@ option:checked, option:hover {
             <button class="sc-btn" onclick="sortInv()">⇅ Sort</button>
             <button class="sc-btn teal" onclick="addOre()">+ Add Ore</button>
             <button class="sc-btn danger hidden" id="del-btn" onclick="deleteOres()">✕ Delete</button>
-            <span style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--white-muted);" id="inv-count"></span>
+            <span style="margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--white-muted);" id="inv-count"></span>
           </div>
           <div class="inv-table-wrap">
             <table class="inv-table">
@@ -1354,10 +1354,10 @@ option:checked, option:hover {
               <div id="tag-affordable" class="filter-tag off" onclick="toggleTag('affordable')">Affordable</div>
               <div id="tag-owned" class="filter-tag off" onclick="toggleTag('owned')">Owned <span class="x">✕</span></div>
               <div style="display:flex;align-items:center;gap:5px;margin-left:6px;">
-                <span style="font-size:11px;color:var(--white-muted);font-family:var(--font);">User:</span>
+                <span style="font-size:14px;color:var(--white-muted);font-family:var(--font);">User:</span>
                 <select id="fab-user-select" onchange="setFabUser(this.value)"
                   style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);
-                         font-family:var(--font);font-size:11px;padding:2px 6px;cursor:pointer;
+                         font-family:var(--font);font-size:14px;padding:2px 6px;cursor:pointer;
                          transition:border-color 0.15s;"
                   onmouseenter="this.style.borderColor='var(--teal-dim)'"
                   onmouseleave="this.style.borderColor='var(--border)'">
@@ -1465,7 +1465,7 @@ option:checked, option:hover {
                   <option>Machine Grid</option>
                 </select>
               </div>
-              <button onclick="addFabBPToOrder()" style="height:34px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--teal-dim);color:var(--teal);font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;margin-right:8px;transition:all 0.15s;" onmouseenter="this.style.background='var(--teal-bg)'" onmouseleave="this.style.background='rgba(77,200,176,0.05)'">+ ADD TO ORDER</button>
+              <button onclick="addFabBPToOrder()" style="height:34px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--teal-dim);color:var(--teal);font-family:var(--font);font-size:15px;font-weight:600;letter-spacing:1px;cursor:pointer;margin-right:8px;transition:all 0.15s;" onmouseenter="this.style.background='var(--teal-bg)'" onmouseleave="this.style.background='rgba(77,200,176,0.05)'">+ ADD TO ORDER</button>
               <button class="fabricate-btn" onclick="doFabricate()">FABRICATE</button>
             </div>
           </div>
@@ -1485,14 +1485,14 @@ option:checked, option:hover {
         <div id="inv-topbar" style="height:40px;background:var(--bg-panel);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:10px;flex-shrink:0;position:relative;">
           <button class="detail-btn" onclick="openAddUser()" style="height:28px;padding:0 14px;border-color:var(--teal-dim);color:var(--teal);background:var(--teal-bg2);">+ ADD USER</button>
           <div style="display:flex;align-items:center;gap:8px;flex:1;max-width:420px;">
-            <span style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">USER:</span>
+            <span style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">USER:</span>
             <select id="inv-user-select" class="deliver-sel" style="flex:1;background:var(--bg-main);color:var(--white-dim);" onchange="selectUser(this.value)">
               <option value="">— Select User —</option>
             </select>
             <button id="del-user-btn" onclick="openDeleteUser()"
               style="height:28px;padding:0 12px;background:rgba(224,68,68,0.08);
                      border:1px solid rgba(224,68,68,0.3);color:var(--red);
-                     font-family:var(--font);font-size:11px;font-weight:600;
+                     font-family:var(--font);font-size:14px;font-weight:600;
                      letter-spacing:1px;cursor:pointer;white-space:nowrap;
                      display:none;transition:all 0.15s;"
               onmouseenter="this.style.background='rgba(224,68,68,0.18)';this.style.borderColor='var(--red)'"
@@ -1503,14 +1503,14 @@ option:checked, option:hover {
           <div style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;">
             <button id="chg-pw-btn" onclick="openChangePw()" style="display:none;height:26px;padding:0 12px;
               background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);
-              font-family:var(--font);font-size:11px;font-weight:600;letter-spacing:1px;
+              font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1px;
               cursor:pointer;transition:all 0.15s;white-space:nowrap;"
               onmouseenter="this.style.borderColor='var(--teal-dim)';this.style.color='var(--teal)'"
               onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--white-muted)'">
               CHANGE PASSWORD
             </button>
           </div>
-          <div style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--teal-dim);" id="inv-user-info"></div>
+          <div style="margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--teal-dim);" id="inv-user-info"></div>
         </div>
 
         <!-- Split body -->
@@ -1531,7 +1531,7 @@ option:checked, option:hover {
             </div>
             <!-- BP List -->
             <div id="inv-bp-list" style="flex:1;overflow-y:auto;padding:4px 0;">
-              <div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>
+              <div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>
             </div>
           </div>
 
@@ -1548,7 +1548,7 @@ option:checked, option:hover {
             </div>
             <!-- Mat List -->
             <div id="inv-mat-list" style="flex:1;overflow-y:auto;">
-              <div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>
+              <div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>
             </div>
           </div>
 
@@ -1567,10 +1567,10 @@ option:checked, option:hover {
                 <div id="ord-cat-row" style="display:flex;gap:3px;align-items:center;flex:1;"></div>
               </div>
               <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                <div class="filter-tag off" id="ord-mybp-tag" onclick="toggleOrdMyBP()" style="white-space:nowrap;font-size:10px;">My BP's</div>
+                <div class="filter-tag off" id="ord-mybp-tag" onclick="toggleOrdMyBP()" style="white-space:nowrap;font-size:13px;">My BP's</div>
                 <select id="ord-user-filter" onchange="setOrdUserFilter(this.value)"
                   style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);
-                         font-family:var(--font);font-size:11px;padding:2px 6px;height:26px;cursor:pointer;
+                         font-family:var(--font);font-size:14px;padding:2px 6px;height:26px;cursor:pointer;
                          transition:border-color 0.15s;max-width:160px;"
                   onmouseenter="this.style.borderColor='var(--teal-dim)'"
                   onmouseleave="this.style.borderColor='var(--border)'">
@@ -1579,12 +1579,12 @@ option:checked, option:hover {
                 <button id="ord-add-btn" onclick="openOrdMultiDetail()"
                   style="height:26px;padding:0 10px;background:rgba(77,200,176,0.05);
                          border:1px solid var(--teal-dim);color:var(--teal);
-                         font-family:var(--font);font-size:11px;font-weight:600;
+                         font-family:var(--font);font-size:14px;font-weight:600;
                          letter-spacing:1px;cursor:pointer;white-space:nowrap;
                          display:flex;align-items:center;gap:5px;transition:all 0.15s;"
                   onmouseenter="this.style.background='var(--teal-bg)'"
                   onmouseleave="this.style.background='rgba(77,200,176,0.05)'">
-                  <span id="ord-sel-count" style="background:var(--teal);color:#020c0e;border-radius:2px;padding:0 5px;font-size:10px;min-width:16px;text-align:center;display:none;">0</span>
+                  <span id="ord-sel-count" style="background:var(--teal);color:#020c0e;border-radius:2px;padding:0 5px;font-size:13px;min-width:16px;text-align:center;display:none;">0</span>
                   + ADD TO ORDER
                 </button>
                 <div class="search-box" style="flex:1;">
@@ -1600,12 +1600,12 @@ option:checked, option:hover {
           <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
             <!-- Order header -->
             <div style="padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg-panel);flex-shrink:0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-              <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">NEW ORDER</div>
-              <input id="ord-callsign" class="sc-input" placeholder="Callsign *" style="width:140px;font-size:12px;" oninput="checkOrderReady()">
-              <input id="ord-rsi" class="sc-input" placeholder="RSI Handle *" style="width:140px;font-size:12px;" oninput="checkOrderReady()">
+              <div style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">NEW ORDER</div>
+              <input id="ord-callsign" class="sc-input" placeholder="Callsign *" style="width:140px;font-size:15px;" oninput="checkOrderReady()">
+              <input id="ord-rsi" class="sc-input" placeholder="RSI Handle *" style="width:140px;font-size:15px;" oninput="checkOrderReady()">
               <button id="ord-place-btn" onclick="placeOrder()" disabled
                 style="height:30px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);
-                       color:var(--white-muted);font-family:var(--font);font-size:11px;font-weight:700;
+                       color:var(--white-muted);font-family:var(--font);font-size:14px;font-weight:700;
                        letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;margin-left:auto;">
                 PLACE ORDER
               </button>
@@ -1614,14 +1614,14 @@ option:checked, option:hover {
             <div style="display:flex;flex:1;overflow:hidden;">
               <!-- Items list -->
               <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
-                <div style="padding:6px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--teal-dim);background:var(--bg-section);">ORDER ITEMS</div>
+                <div style="padding:6px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:15px;letter-spacing:2px;color:var(--teal-dim);background:var(--bg-section);">ORDER ITEMS</div>
                 <div id="ord-items-list" style="flex:1;overflow-y:auto;padding:6px;">
-                  <div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;">Select blueprints from the left to add to your order</div>
+                  <div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;">Select blueprints from the left to add to your order</div>
                 </div>
               </div>
               <!-- Combined materials -->
               <div style="width:260px;flex-shrink:0;display:flex;flex-direction:column;overflow:hidden;">
-                <div style="padding:6px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--teal-dim);background:var(--bg-section);">TOTAL MATERIALS</div>
+                <div style="padding:6px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:15px;letter-spacing:2px;color:var(--teal-dim);background:var(--bg-section);">TOTAL MATERIALS</div>
                 <div id="ord-mats-list" style="flex:1;overflow-y:auto;padding:6px;"></div>
               </div>
             </div>
@@ -1632,12 +1632,12 @@ option:checked, option:hover {
       <!-- ── BLUEPRINT EDITOR SCREEN ── -->
       <div id="screen-bpedit" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
         <div style="padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg-panel);display:flex;align-items:center;gap:10px;flex-shrink:0;" id="bpedit-bar">
-          <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">BLUEPRINT EDITOR</div>
+          <div style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">BLUEPRINT EDITOR</div>
           <button class="detail-btn" onclick="openAddBP()" style="border-color:var(--teal-dim);color:var(--teal);background:var(--teal-bg2);">+ ADD BLUEPRINT</button>
           <button class="detail-btn" onclick="openEditBPPicker()" id="edit-bp-btn">✎ EDIT BLUEPRINT</button>
-          <div style="margin-left:auto;font-size:11px;font-family:var(--mono);color:var(--white-muted);" id="bpedit-user-label"></div>
+          <div style="margin-left:auto;font-size:14px;font-family:var(--mono);color:var(--white-muted);" id="bpedit-user-label"></div>
         </div>
-        <div id="bpedit-locked" style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">
+        <div id="bpedit-locked" style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">
           <svg viewBox="0 0 24 24" style="width:36px;height:36px;stroke:var(--white-muted);fill:none;stroke-width:1.5;opacity:0.3;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
           <div>LOGIN REQUIRED TO USE BLUEPRINT EDITOR</div>
         </div>
@@ -1652,76 +1652,76 @@ option:checked, option:hover {
       <div id="screen-fulfill" style="display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;">
         <!-- Filter bar -->
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);background:var(--bg-panel);display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
-          <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">ORDER FULFILLMENT</div>
+          <div style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">ORDER FULFILLMENT</div>
           <!-- Orders / Complete toggle -->
           <div style="display:flex;gap:0;border:1px solid var(--border);">
             <div id="ff-tab-orders" onclick="setFFTab('orders')"
-              style="padding:4px 14px;font-size:10px;font-family:var(--mono);letter-spacing:1px;cursor:pointer;
+              style="padding:4px 14px;font-size:13px;font-family:var(--mono);letter-spacing:1px;cursor:pointer;
                      background:var(--teal-bg);color:var(--teal-bright);border-right:1px solid var(--border);
                      transition:all 0.15s;">ORDERS</div>
             <div id="ff-tab-complete" onclick="setFFTab('complete')"
-              style="padding:4px 14px;font-size:10px;font-family:var(--mono);letter-spacing:1px;cursor:pointer;
+              style="padding:4px 14px;font-size:13px;font-family:var(--mono);letter-spacing:1px;cursor:pointer;
                      background:var(--bg-main);color:var(--white-muted);
                      transition:all 0.15s;">COMPLETE</div>
           </div>
           <div style="display:flex;align-items:center;gap:5px;position:relative;">
-            <span style="font-size:11px;color:var(--white-muted);font-family:var(--mono);">Status:</span>
+            <span style="font-size:14px;color:var(--white-muted);font-family:var(--mono);">Status:</span>
             <div id="ff-status-dropdown" onclick="toggleFFStatusDD(event)"
               style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);
-                     font-family:var(--font);font-size:11px;padding:3px 24px 3px 8px;min-width:140px;
+                     font-family:var(--font);font-size:14px;padding:3px 24px 3px 8px;min-width:140px;
                      height:28px;display:flex;align-items:center;cursor:pointer;position:relative;user-select:none;">
               <span id="ff-status-label">All Active</span>
               <svg viewBox="0 0 24 24" style="position:absolute;right:5px;top:50%;transform:translateY(-50%);width:12px;height:12px;stroke:var(--white-muted);fill:none;stroke-width:2;pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div id="ff-status-dd-panel" style="display:none;position:fixed;background:var(--bg-header);border:1px solid var(--teal-dim);z-index:500;min-width:180px;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
               <div style="padding:6px 10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);">FILTER BY STATUS</span>
+                <span style="font-size:15px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);">FILTER BY STATUS</span>
                 <div style="display:flex;gap:8px;">
-                  <span onclick="ffStatusSelectAll(true)" style="font-size:10px;color:var(--teal);cursor:pointer;">All</span>
-                  <span onclick="ffStatusSelectAll(false)" style="font-size:10px;color:var(--white-muted);cursor:pointer;">None</span>
+                  <span onclick="ffStatusSelectAll(true)" style="font-size:13px;color:var(--teal);cursor:pointer;">All</span>
+                  <span onclick="ffStatusSelectAll(false)" style="font-size:13px;color:var(--white-muted);cursor:pointer;">None</span>
                 </div>
               </div>
               <div style="padding:4px 0;">
-                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:15px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
                   <input type="checkbox" value="New Order" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> New Order
                 </label>
-                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:15px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
                   <input type="checkbox" value="In Progress" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> In Progress
                 </label>
-                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:15px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
                   <input type="checkbox" value="Awaiting BP" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> Awaiting BP
                 </label>
-                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:15px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
                   <input type="checkbox" value="Awaiting Mats" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> Awaiting Mats
                 </label>
-                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:15px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
                   <input type="checkbox" value="Ready for Pickup" checked onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> Ready for Pickup
                 </label>
-                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:15px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
                   <input type="checkbox" value="Complete" onchange="updateFFStatusLabel();renderFulfill();" style="accent-color:var(--teal);"> Complete
                 </label>
               </div>
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:5px;position:relative;">
-            <span style="font-size:11px;color:var(--white-muted);font-family:var(--mono);">Assigned:</span>
+            <span style="font-size:14px;color:var(--white-muted);font-family:var(--mono);">Assigned:</span>
             <div id="ff-assign-dropdown" onclick="toggleFFAssignDD(event)"
               style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);
-                     font-family:var(--font);font-size:11px;padding:3px 24px 3px 8px;min-width:140px;
+                     font-family:var(--font);font-size:14px;padding:3px 24px 3px 8px;min-width:140px;
                      height:28px;display:flex;align-items:center;cursor:pointer;position:relative;user-select:none;">
               <span id="ff-assign-label">Anyone</span>
               <svg viewBox="0 0 24 24" style="position:absolute;right:5px;top:50%;transform:translateY(-50%);width:12px;height:12px;stroke:var(--white-muted);fill:none;stroke-width:2;pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div id="ff-assign-dd-panel" style="display:none;position:fixed;background:var(--bg-header);border:1px solid var(--teal-dim);z-index:500;min-width:180px;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
               <div style="padding:6px 10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);">FILTER BY ASSIGNEE</span>
+                <span style="font-size:15px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);">FILTER BY ASSIGNEE</span>
                 <div style="display:flex;gap:8px;">
-                  <span onclick="ffAssignSelectAll(true)" style="font-size:10px;color:var(--teal);cursor:pointer;">All</span>
-                  <span onclick="ffAssignSelectAll(false)" style="font-size:10px;color:var(--white-muted);cursor:pointer;">None</span>
+                  <span onclick="ffAssignSelectAll(true)" style="font-size:13px;color:var(--teal);cursor:pointer;">All</span>
+                  <span onclick="ffAssignSelectAll(false)" style="font-size:13px;color:var(--white-muted);cursor:pointer;">None</span>
                 </div>
               </div>
               <div id="ff-assign-dd-items" style="padding:4px 0;max-height:200px;overflow-y:auto;">
-                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
+                <label style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:15px;color:var(--white-dim);" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background=''">
                   <input type="checkbox" value="" checked onchange="updateFFAssignLabel();renderFulfill();" style="accent-color:var(--teal);"> Anyone (unassigned)
                 </label>
               </div>
@@ -1729,14 +1729,14 @@ option:checked, option:hover {
           </div>
           <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
             <span onclick="expandAllFFCards()" title="Expand all"
-              style="font-family:var(--mono);font-size:10px;color:var(--teal-dim);cursor:pointer;padding:3px 8px;border:1px solid var(--border);transition:all 0.15s;"
+              style="font-family:var(--mono);font-size:13px;color:var(--teal-dim);cursor:pointer;padding:3px 8px;border:1px solid var(--border);transition:all 0.15s;"
               onmouseenter="this.style.color='var(--teal)';this.style.borderColor='var(--teal-dim)'"
               onmouseleave="this.style.color='var(--teal-dim)';this.style.borderColor='var(--border)'">▼ ALL</span>
             <span onclick="collapseAllFFCards()" title="Collapse all"
-              style="font-family:var(--mono);font-size:10px;color:var(--teal-dim);cursor:pointer;padding:3px 8px;border:1px solid var(--border);transition:all 0.15s;"
+              style="font-family:var(--mono);font-size:13px;color:var(--teal-dim);cursor:pointer;padding:3px 8px;border:1px solid var(--border);transition:all 0.15s;"
               onmouseenter="this.style.color='var(--teal)';this.style.borderColor='var(--teal-dim)'"
               onmouseleave="this.style.color='var(--teal-dim)';this.style.borderColor='var(--border)'">▲ ALL</span>
-            <span style="font-family:var(--mono);font-size:10px;color:var(--white-muted);" id="ff-order-count"></span>
+            <span style="font-family:var(--mono);font-size:13px;color:var(--white-muted);" id="ff-order-count"></span>
           </div>
         </div>
         <!-- Orders list -->
@@ -1754,11 +1754,11 @@ option:checked, option:hover {
 <div id="gsync-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.88);z-index:700;align-items:center;justify-content:center;">
   <div style="width:560px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(0,0,0,0.7);">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">SYNC FROM GOOGLE SHEETS</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">SYNC FROM GOOGLE SHEETS</span>
       <span onclick="closeGSync()" style="cursor:pointer;color:var(--red);font-size:14px;">✕</span>
     </div>
     <div style="padding:18px;">
-      <div style="font-size:12px;color:var(--white-dim);line-height:1.8;margin-bottom:16px;">
+      <div style="font-size:15px;color:var(--white-dim);line-height:1.8;margin-bottom:16px;">
         <span style="color:var(--teal-dim);">Step 1.</span> Open your Google Sheet → <strong style="color:var(--white);">Extensions → Apps Script</strong><br>
         <span style="color:var(--teal-dim);">Step 2.</span> Paste the <strong style="color:var(--white);">SC_Kiosk_AppScript.js</strong> code and save<br>
         <span style="color:var(--teal-dim);">Step 3.</span> Click <strong style="color:var(--white);">Deploy → New Deployment → Web App</strong><br>
@@ -1766,26 +1766,26 @@ option:checked, option:hover {
         <span style="color:var(--teal-dim);">Step 4.</span> Copy the Web App URL and paste below
       </div>
       <div style="margin-bottom:12px;">
-        <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">APPS SCRIPT WEB APP URL</div>
-        <input id="gsync-url" class="sc-input" style="width:100%;font-size:12px;"
+        <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">APPS SCRIPT WEB APP URL</div>
+        <input id="gsync-url" class="sc-input" style="width:100%;font-size:15px;"
                placeholder="https://script.google.com/macros/s/ABC.../exec"
                oninput="checkGSyncUrl()" value="">
       </div>
-      <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);margin-top:5px;line-height:1.6;">
+      <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);margin-top:5px;line-height:1.6;">
         URL must start with <span style="color:var(--teal-dim);">https://script.google.com/macros/s/</span> and end with <span style="color:var(--teal-dim);">/exec</span><br>
         Get it from: Apps Script → Deploy → Manage deployments → copy URL
       </div>
-      <div id="gsync-status" style="font-size:11px;font-family:var(--mono);padding:8px 10px;background:var(--bg-main);border:1px solid var(--border);min-height:28px;color:var(--white-muted);display:none;margin-top:8px;"></div>
+      <div id="gsync-status" style="font-size:14px;font-family:var(--mono);padding:8px 10px;background:var(--bg-main);border:1px solid var(--border);min-height:28px;color:var(--white-muted);display:none;margin-top:8px;"></div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-      <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);" id="gsync-last-sync"></div>
+      <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);" id="gsync-last-sync"></div>
       <div style="display:flex;gap:8px;">
         <button id="gsync-test-btn" onclick="testGSync()" disabled
-          style="height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:11px;font-weight:600;letter-spacing:1px;cursor:not-allowed;transition:all 0.15s;">
+          style="height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1px;cursor:not-allowed;transition:all 0.15s;">
           TEST CONNECTION
         </button>
         <button id="gsync-save-btn" onclick="saveGSyncUrl()" disabled
-          style="height:32px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
+          style="height:32px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
           SAVE &amp; CONNECT
         </button>
       </div>
@@ -1797,33 +1797,33 @@ option:checked, option:hover {
 <div id="add-user-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.85);z-index:600;align-items:center;justify-content:center;">
   <div style="width:380px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(0,0,0,0.6);">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">ADD NEW USER</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">ADD NEW USER</span>
       <span onclick="closeAddUser()" style="cursor:pointer;color:var(--red);font-size:14px;">✕</span>
     </div>
     <div style="padding:20px;">
       <div style="margin-bottom:14px;">
-        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">RANK</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">RANK</div>
         <input id="add-user-rank" class="sc-input" style="width:100%;font-size:13px;" placeholder="e.g. Captain, Admiral, Citizen..." oninput="checkAddUserForm()">
       </div>
       <div style="margin-bottom:14px;">
-        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">RSI HANDLE</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">RSI HANDLE</div>
         <input id="add-user-name" class="sc-input" style="width:100%;font-size:13px;" placeholder="Enter RSI handle..." oninput="checkAddUserForm()">
       </div>
       <div style="margin-bottom:20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-          <span style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">PASSWORD</span>
-          <span style="font-size:10px;font-family:var(--mono);color:var(--white-muted);opacity:0.6;">(optional)</span>
+          <span style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">PASSWORD</span>
+          <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);opacity:0.6;">(optional)</span>
         </div>
         <div style="position:relative;">
           <input id="add-user-pass" class="sc-input" type="password" style="width:100%;font-size:13px;padding-right:36px;" placeholder="Leave blank for no password">
           <span onclick="togglePassVis('add-user-pass',this)"
-            style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:12px;user-select:none;"
+            style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:15px;user-select:none;"
             title="Show/hide">👁</span>
         </div>
       </div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
-      <button id="add-user-complete" onclick="completeAddUser()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
+      <button id="add-user-complete" onclick="completeAddUser()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
     </div>
   </div>
 </div>
@@ -1832,15 +1832,15 @@ option:checked, option:hover {
 <div id="ord-multi-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.85);z-index:500;align-items:flex-start;justify-content:center;padding-top:40px;overflow-y:auto;">
   <div style="width:560px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(0,0,0,0.6);margin-bottom:40px;">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg-header);z-index:10;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">ADD TO ORDER</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">ADD TO ORDER</span>
       <span onclick="closeOrdMultiDetail()" style="cursor:pointer;color:var(--white-muted);font-size:14px;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</span>
     </div>
     <div id="ord-multi-items" style="padding:14px;display:flex;flex-direction:column;gap:10px;"></div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;bottom:0;background:var(--bg-header);">
-      <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);" id="ord-multi-count"></div>
+      <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);" id="ord-multi-count"></div>
       <button onclick="addAllToOrder()"
         style="height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);
-               color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;
+               color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;
                letter-spacing:2px;cursor:pointer;transition:all 0.15s;">
         ADD ALL TO ORDER
       </button>
@@ -1852,7 +1852,7 @@ option:checked, option:hover {
 <div id="ord-bp-detail" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.82);z-index:500;align-items:center;justify-content:center;">
   <div style="width:420px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(0,0,0,0.6);">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);" id="ord-detail-title">BLUEPRINT DETAILS</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);" id="ord-detail-title">BLUEPRINT DETAILS</span>
       <span onclick="closeOrdDetail()" style="cursor:pointer;color:var(--white-muted);font-size:14px;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</span>
     </div>
     <div style="padding:16px;">
@@ -1860,24 +1860,24 @@ option:checked, option:hover {
         <div style="font-size:40px;" id="ord-detail-icon"></div>
         <div>
           <div style="font-size:14px;font-weight:700;color:var(--white);" id="ord-detail-name"></div>
-          <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);margin-top:3px;" id="ord-detail-meta"></div>
-          <div style="font-size:11px;font-family:var(--mono);color:var(--amber);margin-top:2px;" id="ord-detail-time"></div>
+          <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);margin-top:3px;" id="ord-detail-meta"></div>
+          <div style="font-size:14px;font-family:var(--mono);color:var(--amber);margin-top:2px;" id="ord-detail-time"></div>
         </div>
       </div>
       <div style="background:var(--bg-main);border:1px solid var(--border);padding:10px;margin-bottom:14px;">
-        <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);margin-bottom:8px;">STATS AT 500Q MATERIALS</div>
+        <div style="font-size:15px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);margin-bottom:8px;">STATS AT 500Q MATERIALS</div>
         <div id="ord-detail-stats" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;"></div>
       </div>
       <div style="margin-bottom:14px;">
-        <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);margin-bottom:6px;">MATERIALS REQUIRED</div>
+        <div style="font-size:15px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);margin-bottom:6px;">MATERIALS REQUIRED</div>
         <div id="ord-detail-mats"></div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:11px;color:var(--white-muted);">Qty:</span>
+        <span style="font-size:14px;color:var(--white-muted);">Qty:</span>
         <div class="qty-btn" onclick="ordDetailQty(-1)" style="width:24px;height:24px;background:var(--bg-main);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;">−</div>
-        <div id="ord-detail-qty" style="width:36px;height:24px;background:var(--bg-main);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;">1</div>
+        <div id="ord-detail-qty" style="width:36px;height:24px;background:var(--bg-main);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;color:var(--white);">1</div>
         <div class="qty-btn" onclick="ordDetailQty(1)" style="width:24px;height:24px;background:var(--bg-main);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;">+</div>
-        <button onclick="addBPToOrder()" style="height:30px;padding:0 14px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;margin-left:auto;">ADD TO ORDER</button>
+        <button onclick="addBPToOrder()" style="height:30px;padding:0 14px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;margin-left:auto;">ADD TO ORDER</button>
       </div>
     </div>
   </div>
@@ -1887,18 +1887,18 @@ option:checked, option:hover {
 <div id="bpedit-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.88);z-index:600;align-items:center;justify-content:center;overflow-y:auto;">
   <div style="width:620px;background:var(--bg-header);border:1px solid var(--teal-dim);margin:20px auto;">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg-header);z-index:10;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);" id="bpedit-modal-title">ADD BLUEPRINT</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);" id="bpedit-modal-title">ADD BLUEPRINT</span>
       <span onclick="closeBPEditModal()" style="cursor:pointer;color:var(--white-muted);font-size:14px;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</span>
     </div>
     <div style="padding:18px;" id="bpedit-modal-body">
       <!-- Name & Category row -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
         <div>
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">NAME *</div>
-          <input id="bpe-name" class="sc-input" style="width:100%;font-size:12px;" placeholder="Blueprint name..." oninput="checkBPEForm()">
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">NAME *</div>
+          <input id="bpe-name" class="sc-input" style="width:100%;font-size:15px;" placeholder="Blueprint name..." oninput="checkBPEForm()">
         </div>
         <div>
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">CATEGORY *</div>
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">CATEGORY *</div>
           <select id="bpe-cat" class="sc-select" style="width:100%;" onchange="checkBPEForm()">
             <option value="">Select...</option>
             <option value="armor">Armor</option>
@@ -1914,42 +1914,42 @@ option:checked, option:hover {
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
         <div>
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">SUBCATEGORY</div>
-          <input id="bpe-sub" class="sc-input" style="width:100%;font-size:12px;" placeholder="e.g. Arms, Helmets...">
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">SUBCATEGORY</div>
+          <input id="bpe-sub" class="sc-input" style="width:100%;font-size:15px;" placeholder="e.g. Arms, Helmets...">
         </div>
         <div>
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">TIER</div>
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">TIER</div>
           <select id="bpe-tier" class="sc-select" style="width:100%;">
             <option value="1">T1</option><option value="2">T2</option><option value="3">T3</option>
           </select>
         </div>
         <div>
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">CRAFT TIME</div>
-          <input id="bpe-time" class="sc-input" style="width:100%;font-size:12px;" placeholder="e.g. 4m 30s">
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:5px;">CRAFT TIME</div>
+          <input id="bpe-time" class="sc-input" style="width:100%;font-size:15px;" placeholder="e.g. 4m 30s">
         </div>
       </div>
       <!-- Materials -->
       <div style="margin-bottom:12px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">MATERIALS / PARTS *</div>
-          <button onclick="addBPEMatRow()" style="height:22px;padding:0 8px;background:var(--teal-bg2);border:1px solid var(--teal-dim);color:var(--teal);font-size:10px;cursor:pointer;">+ ADD SLOT</button>
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">MATERIALS / PARTS *</div>
+          <button onclick="addBPEMatRow()" style="height:22px;padding:0 8px;background:var(--teal-bg2);border:1px solid var(--teal-dim);color:var(--teal);font-size:13px;cursor:pointer;">+ ADD SLOT</button>
         </div>
         <div id="bpe-mats-rows"></div>
       </div>
       <!-- Stats -->
       <div style="margin-bottom:6px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">STATS</div>
-          <button onclick="addBPEStatRow()" style="height:22px;padding:0 8px;background:var(--teal-bg2);border:1px solid var(--teal-dim);color:var(--teal);font-size:10px;cursor:pointer;">+ ADD STAT</button>
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">STATS</div>
+          <button onclick="addBPEStatRow()" style="height:22px;padding:0 8px;background:var(--teal-bg2);border:1px solid var(--teal-dim);color:var(--teal);font-size:13px;cursor:pointer;">+ ADD STAT</button>
         </div>
         <div id="bpe-stats-rows"></div>
       </div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;bottom:0;background:var(--bg-header);">
-      <button id="bpe-delete-btn" onclick="deleteBPE()" style="display:none;height:30px;padding:0 14px;background:rgba(224,68,68,0.1);border:1px solid rgba(224,68,68,0.4);color:var(--red);font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;">DELETE BLUEPRINT</button>
+      <button id="bpe-delete-btn" onclick="deleteBPE()" style="display:none;height:30px;padding:0 14px;background:rgba(224,68,68,0.1);border:1px solid rgba(224,68,68,0.4);color:var(--red);font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;">DELETE BLUEPRINT</button>
       <div style="margin-left:auto;">
         <button id="bpe-save-btn" onclick="saveBPE()" disabled
-          style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
+          style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
           SAVE
         </button>
       </div>
@@ -1961,7 +1961,7 @@ option:checked, option:hover {
 <div id="ff-status-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.75);z-index:600;align-items:center;justify-content:center;">
   <div style="width:280px;background:var(--bg-header);border:1px solid var(--teal-dim);">
     <div style="padding:8px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--teal);">SET STATUS</span>
+      <span style="font-family:var(--mono);font-size:15px;letter-spacing:2px;color:var(--teal);">SET STATUS</span>
       <span onclick="closeFFStatusModal()" style="cursor:pointer;color:var(--white-muted);font-size:13px;">✕</span>
     </div>
     <div style="padding:8px;">
@@ -1978,7 +1978,7 @@ option:checked, option:hover {
         <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
         <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
       </svg>
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--amber);">SECURITY NOTICE</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--amber);">SECURITY NOTICE</span>
     </div>
     <div style="padding:24px;">
       <div style="font-size:13px;color:var(--white);line-height:1.8;margin-bottom:20px;">
@@ -1986,7 +1986,7 @@ option:checked, option:hover {
         <br><br>
         <strong style="color:var(--amber);">Do not use a password you do not wish to be seen.</strong>
       </div>
-      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--white-dim);">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:15px;color:var(--white-dim);">
         <input type="checkbox" id="first-visit-chk" onchange="checkFirstVisitForm()" style="width:16px;height:16px;accent-color:var(--amber);cursor:pointer;">
         I understand — do not show this again
       </label>
@@ -1994,7 +1994,7 @@ option:checked, option:hover {
     <div style="padding:10px 16px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
       <button id="first-visit-btn" onclick="closeFirstVisit()" disabled
         style="height:32px;padding:0 24px;background:rgba(200,148,26,0.05);border:1px solid rgba(200,148,26,0.3);
-               color:rgba(200,148,26,0.4);font-family:var(--font);font-size:12px;font-weight:700;
+               color:rgba(200,148,26,0.4);font-family:var(--font);font-size:15px;font-weight:700;
                letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;">
         I UNDERSTAND
       </button>
@@ -2010,27 +2010,27 @@ option:checked, option:hover {
         <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:var(--amber);fill:none;stroke-width:2;">
           <path d="M12 2a5 5 0 1 0 0 10A5 5 0 0 0 12 2z"/><path d="M12 14c-6 0-9 2.5-9 4v1h18v-1c0-1.5-3-4-9-4z"/>
         </svg>
-        <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--amber);">GNOME ADMIN</span>
+        <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--amber);">GNOME ADMIN</span>
       </div>
       <span onclick="closeAdminLogin()" style="cursor:pointer;color:var(--white-muted);font-size:14px;transition:color 0.15s;"
             onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</span>
     </div>
     <div style="padding:20px;">
-      <div style="font-size:11px;color:var(--white-muted);margin-bottom:14px;font-family:var(--mono);">Enter admin password to continue</div>
+      <div style="font-size:14px;color:var(--white-muted);margin-bottom:14px;font-family:var(--mono);">Enter admin password to continue</div>
       <div style="position:relative;">
         <input id="admin-pw-input" class="sc-input" type="password" style="width:100%;font-size:13px;padding-right:36px;"
           placeholder="Admin password..."
           oninput="checkAdminPwForm()"
           onkeydown="if(event.key==='Enter')submitAdminPw()">
         <span onclick="togglePassVis('admin-pw-input',this)"
-          style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:12px;user-select:none;">👁</span>
+          style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:15px;user-select:none;">👁</span>
       </div>
-      <div id="admin-pw-error" style="display:none;margin-top:8px;font-size:11px;font-family:var(--mono);color:var(--red);">✗ Incorrect password</div>
+      <div id="admin-pw-error" style="display:none;margin-top:8px;font-size:14px;font-family:var(--mono);color:var(--red);">✗ Incorrect password</div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
       <button id="admin-pw-submit" onclick="submitAdminPw()" disabled
         style="height:32px;padding:0 20px;background:rgba(200,148,26,0.05);border:1px solid rgba(200,148,26,0.3);
-               color:rgba(200,148,26,0.4);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
+               color:rgba(200,148,26,0.4);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
         ENTER
       </button>
     </div>
@@ -2041,40 +2041,40 @@ option:checked, option:hover {
 <div id="chg-pw-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.88);z-index:660;align-items:center;justify-content:center;">
   <div style="width:380px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(0,0,0,0.6);">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);" id="chg-pw-title">CHANGE PASSWORD</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);" id="chg-pw-title">CHANGE PASSWORD</span>
       <span onclick="closeChangePw()" style="cursor:pointer;color:var(--white-muted);font-size:14px;transition:color 0.15s;"
             onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</span>
     </div>
     <div style="padding:20px;">
       <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:16px;" id="chg-pw-for"></div>
       <div style="margin-bottom:12px;" id="chg-pw-current-wrap">
-        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">CURRENT PASSWORD</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">CURRENT PASSWORD</div>
         <div style="position:relative;">
           <input id="chg-pw-current" class="sc-input" type="password" style="width:100%;font-size:13px;padding-right:36px;" placeholder="Current password..." oninput="checkChangePwForm()">
-          <span onclick="togglePassVis('chg-pw-current',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:12px;">👁</span>
+          <span onclick="togglePassVis('chg-pw-current',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:15px;">👁</span>
         </div>
-        <div id="chg-pw-current-err" style="display:none;margin-top:5px;font-size:11px;font-family:var(--mono);color:var(--red);">✗ Incorrect current password</div>
+        <div id="chg-pw-current-err" style="display:none;margin-top:5px;font-size:14px;font-family:var(--mono);color:var(--red);">✗ Incorrect current password</div>
       </div>
       <div style="margin-bottom:12px;">
-        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">NEW PASSWORD <span style="opacity:0.5;font-size:9px;">(leave blank to remove password)</span></div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">NEW PASSWORD <span style="opacity:0.5;font-size:15px;">(leave blank to remove password)</span></div>
         <div style="position:relative;">
           <input id="chg-pw-new" class="sc-input" type="password" style="width:100%;font-size:13px;padding-right:36px;" placeholder="New password (or blank to remove)..." oninput="checkChangePwForm()">
-          <span onclick="togglePassVis('chg-pw-new',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:12px;">👁</span>
+          <span onclick="togglePassVis('chg-pw-new',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:15px;">👁</span>
         </div>
       </div>
       <div style="margin-bottom:4px;" id="chg-pw-confirm-wrap">
-        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">CONFIRM NEW PASSWORD</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">CONFIRM NEW PASSWORD</div>
         <div style="position:relative;">
           <input id="chg-pw-confirm" class="sc-input" type="password" style="width:100%;font-size:13px;padding-right:36px;" placeholder="Confirm new password..." oninput="checkChangePwForm()">
-          <span onclick="togglePassVis('chg-pw-confirm',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:12px;">👁</span>
+          <span onclick="togglePassVis('chg-pw-confirm',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:15px;">👁</span>
         </div>
-        <div id="chg-pw-match-err" style="display:none;margin-top:5px;font-size:11px;font-family:var(--mono);color:var(--red);">✗ Passwords do not match</div>
+        <div id="chg-pw-match-err" style="display:none;margin-top:5px;font-size:14px;font-family:var(--mono);color:var(--red);">✗ Passwords do not match</div>
       </div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
       <button id="chg-pw-save-btn" onclick="saveChangePw()" disabled
         style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);
-               color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;
+               color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;
                letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
         SAVE
       </button>
@@ -2086,13 +2086,13 @@ option:checked, option:hover {
 <div id="pw-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.88);z-index:660;align-items:center;justify-content:center;">
   <div style="width:340px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(0,0,0,0.6);">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">USER LOGIN</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">USER LOGIN</span>
       <span onclick="closePwModal()" style="cursor:pointer;color:var(--white-muted);font-size:14px;transition:color 0.15s;"
             onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</span>
     </div>
     <div style="padding:20px;">
       <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:4px;" id="pw-modal-user"></div>
-      <div style="font-size:11px;color:var(--white-muted);margin-bottom:16px;">Enter password to access this user's inventory</div>
+      <div style="font-size:14px;color:var(--white-muted);margin-bottom:16px;">Enter password to access this user's inventory</div>
       <div style="position:relative;">
         <input id="pw-modal-input" class="sc-input" type="password"
           style="width:100%;font-size:13px;padding-right:36px;"
@@ -2100,15 +2100,15 @@ option:checked, option:hover {
           oninput="checkPwForm()"
           onkeydown="if(event.key==='Enter')submitPw()">
         <span onclick="togglePassVis('pw-modal-input',this)"
-          style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:12px;user-select:none;"
+          style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--white-muted);font-size:15px;user-select:none;"
           title="Show/hide">👁</span>
       </div>
-      <div id="pw-error" style="display:none;margin-top:8px;font-size:11px;font-family:var(--mono);color:var(--red);">✗ Incorrect password</div>
+      <div id="pw-error" style="display:none;margin-top:8px;font-size:14px;font-family:var(--mono);color:var(--red);">✗ Incorrect password</div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
       <button id="pw-submit-btn" onclick="submitPw()" disabled
         style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);
-               color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;
+               color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;
                letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
         ENTER
       </button>
@@ -2120,28 +2120,28 @@ option:checked, option:hover {
 <div id="del-user-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.88);z-index:650;align-items:center;justify-content:center;">
   <div style="width:380px;background:var(--bg-header);border:1px solid rgba(224,68,68,0.5);box-shadow:0 0 40px rgba(224,68,68,0.15);">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--red);">DELETE USER</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--red);">DELETE USER</span>
       <span onclick="closeDeleteUser()" style="cursor:pointer;color:var(--white-muted);font-size:14px;transition:color 0.15s;"
             onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</span>
     </div>
     <div style="padding:22px 20px;">
       <div style="font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px;">Are you sure you wish to delete?</div>
-      <div style="font-size:12px;color:var(--white-muted);margin-bottom:20px;" id="del-user-name-display"></div>
+      <div style="font-size:15px;color:var(--white-muted);margin-bottom:20px;" id="del-user-name-display"></div>
       <div style="background:rgba(224,68,68,0.06);border:1px solid rgba(224,68,68,0.2);padding:12px 14px;margin-bottom:18px;">
-        <div style="font-size:11px;color:var(--red);font-family:var(--mono);letter-spacing:0.5px;margin-bottom:10px;">
+        <div style="font-size:14px;color:var(--red);font-family:var(--mono);letter-spacing:0.5px;margin-bottom:10px;">
           ⚠ This will permanently delete the user and ALL of their data including blueprints and materials.
         </div>
         <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
           <input type="checkbox" id="del-user-confirm-chk" onchange="checkDeleteUserForm()"
             style="width:16px;height:16px;accent-color:var(--red);cursor:pointer;">
-          <span style="font-size:12px;color:var(--white-dim);">Yes, I want to permanently delete this user</span>
+          <span style="font-size:15px;color:var(--white-dim);">Yes, I want to permanently delete this user</span>
         </label>
       </div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
       <button id="del-user-sure-btn" onclick="confirmDeleteUser()" disabled
         style="height:32px;padding:0 20px;background:rgba(224,68,68,0.05);border:1px solid rgba(224,68,68,0.2);
-               color:rgba(224,68,68,0.35);font-family:var(--font);font-size:12px;font-weight:700;
+               color:rgba(224,68,68,0.35);font-family:var(--font);font-size:15px;font-weight:700;
                letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;">
         I'm sure!
       </button>
@@ -2153,25 +2153,25 @@ option:checked, option:hover {
 <div id="inv-mat-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.85);z-index:600;align-items:center;justify-content:center;">
   <div style="width:360px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(0,0,0,0.6);">
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);" id="inv-mat-modal-title">ADD MATERIAL</span>
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);" id="inv-mat-modal-title">ADD MATERIAL</span>
       <span onclick="closeInvMatModal()" style="cursor:pointer;color:var(--red);font-size:14px;">✕</span>
     </div>
     <div style="padding:18px;">
       <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:14px;" id="inv-mat-modal-name"></div>
       <div style="margin-bottom:12px;">
-        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">QUALITY (0 – 1000)</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;">QUALITY (0 – 1000)</div>
         <input id="inv-mat-quality" type="number" min="0" max="1000" class="sc-input" style="width:100%;font-size:13px;" placeholder="e.g. 837" oninput="checkInvMatForm()">
       </div>
       <div style="margin-bottom:4px;">
-        <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;" id="inv-mat-qty-label">QUANTITY (cSCU)</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;" id="inv-mat-qty-label">QUANTITY (cSCU)</div>
         <input id="inv-mat-quantity" type="number" min="0.01" step="0.01" class="sc-input" style="width:100%;font-size:13px;" placeholder="e.g. 35.3" oninput="checkInvMatForm()">
       </div>
       <div id="inv-mat-modal-edit-btns" style="display:none;margin-top:12px;">
-        <button onclick="removeUserMat()" style="background:rgba(224,68,68,0.1);border:1px solid rgba(224,68,68,0.4);color:var(--red);font-family:var(--font);font-size:11px;font-weight:600;padding:5px 12px;cursor:pointer;letter-spacing:1px;">REMOVE MATERIAL</button>
+        <button onclick="removeUserMat()" style="background:rgba(224,68,68,0.1);border:1px solid rgba(224,68,68,0.4);color:var(--red);font-family:var(--font);font-size:14px;font-weight:600;padding:5px 12px;cursor:pointer;letter-spacing:1px;">REMOVE MATERIAL</button>
       </div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
-      <button id="inv-mat-complete" onclick="completeInvMat()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
+      <button id="inv-mat-complete" onclick="completeInvMat()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
     </div>
   </div>
 </div>
@@ -2691,14 +2691,14 @@ function renderInv(){
       <td>${ed?`<select class="edit-inp" id="inv-edit-type" style="padding:2px 4px;background:var(--bg-panel);color:var(--white-dim);">${['Gas','Metal','Mineral','Natural','Nonmetal','Processed','Waste'].map(t=>`<option ${t===o.type?'selected':''}>${t}</option>`).join('')}</select>`:
         `<span class="type-badge ${TYPE_CLASS[o.type]||''}">${o.type}</span>`}</td>
       <td>${ed?`<input class="edit-inp" id="inv-edit-qual" type="number" min="0" max="1000" value="${o.quality}" style="width:70px;">`:
-        `<div class="q-bar"><div class="q-track"><div class="q-fill" style="width:${pct}%;background:${qc};"></div></div><span style="font-family:var(--mono);font-size:11px;color:${qc};">${o.quality} Q</span></div>`}</td>
+        `<div class="q-bar"><div class="q-track"><div class="q-fill" style="width:${pct}%;background:${qc};"></div></div><span style="font-family:var(--mono);font-size:14px;color:${qc};">${o.quality} Q</span></div>`}</td>
       <td>${ed?`<input class="edit-inp" id="inv-edit-qty" type="number" min="0" value="${o.qty}" style="width:90px;">`:
-        `<span style="font-family:var(--mono);font-size:11px;">${fmtQty}</span>`}</td>
+        `<span style="font-family:var(--mono);font-size:14px;">${fmtQty}</span>`}</td>
       <td>${ed?`<input class="edit-inp" id="inv-edit-notes" value="${o.notes||''}" style="width:110px;">`:
-        `<span style="color:var(--white-muted);font-size:11px;">${o.notes||'—'}</span>`}</td>
-      <td>${ed?`<button class="sc-btn teal" style="padding:2px 7px;font-size:10px;" onclick="saveOre(${o.id})">SAVE</button>
-               <button class="sc-btn" style="padding:2px 6px;font-size:10px;margin-left:2px;" onclick="cancelOreEdit()">✕</button>`:
-        `<button class="sc-btn" style="padding:2px 7px;font-size:10px;" onclick="editOre(${o.id})">EDIT</button>`}</td>
+        `<span style="color:var(--white-muted);font-size:14px;">${o.notes||'—'}</span>`}</td>
+      <td>${ed?`<button class="sc-btn teal" style="padding:2px 7px;font-size:13px;" onclick="saveOre(${o.id})">SAVE</button>
+               <button class="sc-btn" style="padding:2px 6px;font-size:13px;margin-left:2px;" onclick="cancelOreEdit()">✕</button>`:
+        `<button class="sc-btn" style="padding:2px 7px;font-size:13px;" onclick="editOre(${o.id})">EDIT</button>`}</td>
     `;
     tb.appendChild(tr);
   });
@@ -2761,7 +2761,7 @@ function renderMatOreList(){
   const container = document.getElementById('mat-ore-list');
   if(!container) return;
   container.innerHTML = '';
-  if(!activeBp){ container.innerHTML='<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;">SELECT A BLUEPRINT FIRST</div>'; return; }
+  if(!activeBp){ container.innerHTML='<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;">SELECT A BLUEPRINT FIRST</div>'; return; }
 
   // Only show ores that this blueprint's recipe specifically requires
   const neededOreNames = [...new Set(activeBp.mats.map(m => (m.ore||'').toLowerCase()).filter(Boolean))];
@@ -2785,7 +2785,7 @@ function renderMatOreList(){
   });
 
   if(!filtered.length){
-    container.innerHTML='<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">NO MATCHING ORES IN INVENTORY</div>';
+    container.innerHTML='<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">NO MATCHING ORES IN INVENTORY</div>';
     return;
   }
 
@@ -2803,11 +2803,11 @@ function renderMatOreList(){
     const _adjReq = isHand(ore.name) ? (_slotReq/100)*(fabQty||1) : _slotReq*(fabQty||1);
     const hasEnough = ore.qty >= _adjReq;
     card.innerHTML = `
-      ${isAssigned?`<div style="position:absolute;top:2px;right:3px;color:var(--teal);font-size:11px;font-weight:bold;">✓</div>`:''}
-      ${!isAssigned&&!hasEnough&&activeBp?.mats.find(m=>m.ore===ore.name)?`<div style="position:absolute;top:2px;left:2px;color:var(--red);font-size:8px;font-family:var(--mono);">LOW</div>`:''}
-      <div style="font-size:9px;font-family:var(--mono);color:var(--white);font-weight:600;text-align:center;line-height:1.2;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${ore.name}">${ore.name}</div>
-      <div style="font-size:9px;font-family:var(--mono);color:var(--white-dim);">${fmtQty} <span style="font-size:8px;color:var(--teal-dim);">${isHand(ore.name)?"units":"cSCU"}</span></div>
-      <div style="font-size:9px;font-family:var(--mono);color:${qc};">${ore.quality} <span style="font-size:8px;color:var(--white-muted);">Q</span></div>
+      ${isAssigned?`<div style="position:absolute;top:2px;right:3px;color:var(--teal);font-size:14px;font-weight:bold;">✓</div>`:''}
+      ${!isAssigned&&!hasEnough&&activeBp?.mats.find(m=>m.ore===ore.name)?`<div style="position:absolute;top:2px;left:2px;color:var(--red);font-size:11px;font-family:var(--mono);">LOW</div>`:''}
+      <div style="font-size:15px;font-family:var(--mono);color:var(--white);font-weight:600;text-align:center;line-height:1.2;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${ore.name}">${ore.name}</div>
+      <div style="font-size:15px;font-family:var(--mono);color:var(--white-dim);">${fmtQty} <span style="font-size:11px;color:var(--teal-dim);">${isHand(ore.name)?"units":"cSCU"}</span></div>
+      <div style="font-size:15px;font-family:var(--mono);color:${qc};">${ore.quality} <span style="font-size:11px;color:var(--white-muted);">Q</span></div>
     `;
     card.onmouseenter = () => { if(!isAssigned) card.style.borderColor='var(--teal-dim)'; };
     card.onmouseleave = () => { if(!isAssigned) card.style.borderColor='var(--border)'; };
@@ -2962,7 +2962,7 @@ function renderBp(){
   });
 
   if(allSections.length===0){
-    container.innerHTML='<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">NO BLUEPRINTS FOUND</div>';
+    container.innerHTML='<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">NO BLUEPRINTS FOUND</div>';
   }
 }
 
@@ -3016,13 +3016,13 @@ function renderMatSlots(){
     const hdr = document.createElement('div');
     hdr.style.cssText = `display:flex;align-items:center;gap:8px;padding:6px 10px;background:${ore?'rgba(77,200,176,0.08)':'var(--bg-section)'};border-bottom:1px solid var(--border);`;
     hdr.innerHTML = `
-      ${ore?'<span style="color:var(--teal);font-size:12px;font-weight:bold;">&#10003;</span>':''}
-      <span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--white);text-transform:uppercase;flex:1;">${getSlotName(m.ore, activeBp.mats).toUpperCase()}</span>
-      <span style="font-size:10px;color:var(--white-muted);font-style:italic;">(Choose a material)</span>
-      ${ore?`<span style="font-family:var(--mono);font-size:11px;color:${qc};margin-left:6px;">${ore.quality} Avg. Q</span>
-             <span style="font-family:var(--mono);font-size:11px;color:var(--white);margin-left:6px;">${fmtQtyFor(m.ore,reqDisplay(m.ore,m.req)*fabQty)}/${fmtQtyFor(m.ore,reqDisplay(m.ore,m.req)*fabQty)} ${reqUnit(m.ore, m)}</span>
+      ${ore?'<span style="color:var(--teal);font-size:15px;font-weight:bold;">&#10003;</span>':''}
+      <span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:var(--white);text-transform:uppercase;flex:1;">${getSlotName(m.ore, activeBp.mats).toUpperCase()}</span>
+      <span style="font-size:13px;color:var(--white-muted);font-style:italic;">(Choose a material)</span>
+      ${ore?`<span style="font-family:var(--mono);font-size:14px;color:${qc};margin-left:6px;">${ore.quality} Avg. Q</span>
+             <span style="font-family:var(--mono);font-size:14px;color:var(--white);margin-left:6px;">${fmtQtyFor(m.ore,reqDisplay(m.ore,m.req)*fabQty)}/${fmtQtyFor(m.ore,reqDisplay(m.ore,m.req)*fabQty)} ${reqUnit(m.ore, m)}</span>
              <span onclick="clearSlot(${i});event.stopPropagation();" style="margin-left:8px;color:var(--white-muted);cursor:pointer;font-size:13px;padding:0 4px;" title="Remove">&#10005;</span>`
-           :`<span style="font-family:var(--mono);font-size:10px;color:var(--white-muted);">Q</span>`}
+           :`<span style="font-family:var(--mono);font-size:13px;color:var(--white-muted);">Q</span>`}
     `;
     sec.appendChild(hdr);
 
@@ -3036,11 +3036,11 @@ function renderMatSlots(){
         </div>
         <div style="flex:1;">
           <div style="font-size:13px;font-weight:600;color:var(--white);">${ore.name}</div>
-          <div style="font-size:10px;font-family:var(--mono);color:${qc};">${ore.quality} Avg. Q</div>
+          <div style="font-size:13px;font-family:var(--mono);color:${qc};">${ore.quality} Avg. Q</div>
         </div>
         <div style="text-align:right;">
-          <div style="font-family:var(--mono);font-size:12px;color:var(--white);">${fmtQtyFor(m.ore,reqDisplay(m.ore,m.req)*fabQty)}/${fmtQtyFor(m.ore,reqDisplay(m.ore,m.req)*fabQty)}</div>
-          <div style="font-family:var(--mono);font-size:10px;color:var(--teal-dim);">CSCU</div>
+          <div style="font-family:var(--mono);font-size:15px;color:var(--white);">${fmtQtyFor(m.ore,reqDisplay(m.ore,m.req)*fabQty)}/${fmtQtyFor(m.ore,reqDisplay(m.ore,m.req)*fabQty)}</div>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--teal-dim);">CSCU</div>
         </div>
       `;
       row.onclick = () => openMatModal(i);
@@ -3056,11 +3056,11 @@ function renderMatSlots(){
             <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--teal-dim);fill:none;stroke-width:2;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
           <div>
-            <div style="font-size:11px;color:var(--teal-dim);font-family:var(--mono);letter-spacing:0.5px;">${m.ore}</div>
-            <div style="font-size:10px;color:var(--white-muted);">${m.type} &bull; ${fmtQtyFor(m.ore, reqDisplay(m.ore, m.req, m)*fabQty)} ${reqUnit(m.ore, m)} required</div>
+            <div style="font-size:14px;color:var(--teal-dim);font-family:var(--mono);letter-spacing:0.5px;">${m.ore}</div>
+            <div style="font-size:13px;color:var(--white-muted);">${m.type} &bull; ${fmtQtyFor(m.ore, reqDisplay(m.ore, m.req, m)*fabQty)} ${reqUnit(m.ore, m)} required</div>
           </div>
         </div>
-        <button onclick="openMatModal(${i})" style="background:var(--bg-main);border:1px solid var(--border);color:var(--teal-dim);font-family:var(--font);font-size:10px;font-weight:600;letter-spacing:1px;padding:4px 10px;cursor:pointer;transition:all 0.15s;" onmouseenter="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--teal-dim)'">SELECT</button>
+        <button onclick="openMatModal(${i})" style="background:var(--bg-main);border:1px solid var(--border);color:var(--teal-dim);font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:1px;padding:4px 10px;cursor:pointer;transition:all 0.15s;" onmouseenter="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--teal-dim)'">SELECT</button>
       `;
       sec.appendChild(emptyRow);
     }
@@ -3175,7 +3175,7 @@ function renderModal(){
   }).sort((a,b)=>b.quality-a.quality);
 
   if(!matching.length){
-    list.innerHTML+='<div style="padding:18px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;">NO MATCHING ORES</div>';
+    list.innerHTML+='<div style="padding:18px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;">NO MATCHING ORES</div>';
     return;
   }
   matching.forEach(ore=>{
@@ -3243,7 +3243,7 @@ function openAddUser() {
   document.getElementById('add-user-pass').value = '';
   const btn = document.getElementById('add-user-complete');
   btn.disabled = true;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('add-user-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('add-user-rank').focus(), 50);
 }
@@ -3257,9 +3257,9 @@ function checkAddUserForm() {
   const ready = rank.length > 0 && name.length > 0;
   btn.disabled = !ready;
   if (ready) {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
   } else {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   }
 }
 async function completeAddUser() {
@@ -3328,8 +3328,8 @@ function selectUser(id) {
     renderInvMats();
   } else {
     info.textContent = '';
-    document.getElementById('inv-bp-list').innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>';
-    document.getElementById('inv-mat-list').innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>';
+    document.getElementById('inv-bp-list').innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>';
+    document.getElementById('inv-mat-list').innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>';
   }
 }
 
@@ -3542,7 +3542,7 @@ function renderInvBP() {
 
   container.innerHTML = '';
   if (!Object.keys(groups).length) {
-    container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;">NO BLUEPRINTS FOUND</div>';
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;">NO BLUEPRINTS FOUND</div>';
     return;
   }
 
@@ -3558,7 +3558,7 @@ function renderInvBP() {
       row.className = 'inv-bp-row' + (owned ? ' owned' : '');
       row.innerHTML = `<div class="inv-bp-check">${owned ? '✓' : ''}</div>
         <span style="flex:1;">${bp.name}</span>
-        <span style="font-size:10px;font-family:var(--mono);color:var(--white-muted);">T${bp.tier}</span>`;
+        <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">T${bp.tier}</span>`;
       row.onclick = () => toggleUserBP(user, bp.name, row);
       container.appendChild(row);
     });
@@ -3633,7 +3633,7 @@ function renderInvMats() {
     entries.sort((a,b) => a.name.localeCompare(b.name) || b.quality - a.quality);
 
     if (!entries.length) {
-      container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">NO MATERIALS IN INVENTORY</div>';
+      container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">NO MATERIALS IN INVENTORY</div>';
       return;
     }
     entries.forEach(e => {
@@ -3656,7 +3656,7 @@ function renderInvMats() {
       return true;
     });
     if (!oreList.length) {
-      container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;">NO MATERIALS FOUND</div>';
+      container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;">NO MATERIALS FOUND</div>';
       return;
     }
     oreList.forEach(name => {
@@ -3666,8 +3666,8 @@ function renderInvMats() {
       row.className = 'inv-mat-row';
       row.style.justifyContent = 'space-between';
       row.innerHTML = `<span class="inv-mat-name">${name}</span>
-        <span style="font-size:10px;font-family:var(--mono);color:var(--white-muted);">${type}</span>
-        ${userCount > 0 ? `<span style="font-size:10px;font-family:var(--mono);color:var(--teal-dim);">${userCount} stack${userCount>1?'s':''}</span>` : '<span style="font-size:10px;color:var(--white-muted);font-family:var(--mono);">+ ADD</span>'}`;
+        <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">${type}</span>
+        ${userCount > 0 ? `<span style="font-size:13px;font-family:var(--mono);color:var(--teal-dim);">${userCount} stack${userCount>1?'s':''}</span>` : '<span style="font-size:13px;color:var(--white-muted);font-family:var(--mono);">+ ADD</span>'}`;
       row.onclick = () => openAddMat(name);
       container.appendChild(row);
     });
@@ -3691,7 +3691,7 @@ function openAddMat(oreName) {
   document.getElementById('inv-mat-modal-edit-btns').style.display = 'none';
   const btn = document.getElementById('inv-mat-complete');
   btn.disabled = true;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('inv-mat-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('inv-mat-quality').focus(), 50);
 }
@@ -3712,7 +3712,7 @@ function openEditMat(e, entryId) {
   document.getElementById('inv-mat-modal-edit-btns').style.display = 'block';
   const btn = document.getElementById('inv-mat-complete');
   btn.disabled = false;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
   document.getElementById('inv-mat-modal').style.display = 'flex';
 }
 function closeInvMatModal() {
@@ -3727,9 +3727,9 @@ function checkInvMatForm() {
   const ready = q !== '' && qty !== '' && parseFloat(qty) > 0 && parseInt(q) >= 0 && parseInt(q) <= 1000;
   btn.disabled = !ready;
   if (ready) {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
   } else {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   }
 }
 function completeInvMat() {
@@ -3832,8 +3832,8 @@ function checkAdminPwForm() {
   const btn = document.getElementById('admin-pw-submit');
   btn.disabled = !val.length;
   btn.style.cssText = val.length
-    ? 'height:32px;padding:0 20px;background:var(--amber-bg);border:1px solid var(--amber);color:var(--amber-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
-    : 'height:32px;padding:0 20px;background:rgba(200,148,26,0.05);border:1px solid rgba(200,148,26,0.3);color:rgba(200,148,26,0.4);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    ? 'height:32px;padding:0 20px;background:var(--amber-bg);border:1px solid var(--amber);color:var(--amber-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
+    : 'height:32px;padding:0 20px;background:rgba(200,148,26,0.05);border:1px solid rgba(200,148,26,0.3);color:rgba(200,148,26,0.4);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('admin-pw-error').style.display = 'none';
 }
 function submitAdminPw() {
@@ -3893,9 +3893,9 @@ function deactivateAdmin() {
     const info = document.getElementById('inv-user-info');
     if(info) info.textContent = '';
     const bpList = document.getElementById('inv-bp-list');
-    if(bpList) bpList.innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>';
+    if(bpList) bpList.innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>';
     const matList = document.getElementById('inv-mat-list');
-    if(matList) matList.innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>';
+    if(matList) matList.innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>';
   }
   const chgBtn = document.getElementById('chg-pw-btn');
   if(chgBtn) chgBtn.style.display = 'none';
@@ -3934,7 +3934,7 @@ function openChangePw() {
   document.getElementById('chg-pw-current-wrap').style.display = hasCurrentPw ? '' : 'none';
   const saveBtn = document.getElementById('chg-pw-save-btn');
   saveBtn.disabled = true;
-  saveBtn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+  saveBtn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('chg-pw-modal').style.display = 'flex';
   const firstField = hasCurrentPw ? 'chg-pw-current' : 'chg-pw-new';
   setTimeout(() => document.getElementById(firstField).focus(), 50);
@@ -3961,8 +3961,8 @@ function checkChangePwForm() {
   const btn = document.getElementById('chg-pw-save-btn');
   btn.disabled = !ready;
   btn.style.cssText = ready
-    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
-    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
+    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
 }
 function saveChangePw() {
   const context = document.getElementById('chg-pw-btn').dataset.context;
@@ -4015,7 +4015,7 @@ function openPwModal(user) {
   document.getElementById('pw-error').style.display = 'none';
   const btn = document.getElementById('pw-submit-btn');
   btn.disabled = true;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('pw-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('pw-modal-input').focus(), 50);
 }
@@ -4031,8 +4031,8 @@ function checkPwForm() {
   const ready = val.length > 0;
   btn.disabled = !ready;
   btn.style.cssText = ready
-    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
-    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
+    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('pw-error').style.display = 'none';
 }
 
@@ -4072,7 +4072,7 @@ function openDeleteUser() {
     user.rank + ' ' + user.name + ' — ' + user.blueprints.length + ' blueprints, ' + user.materials.length + ' ore entries';
   const btn = document.getElementById('del-user-sure-btn');
   btn.disabled = true;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(224,68,68,0.05);border:1px solid rgba(224,68,68,0.2);color:rgba(224,68,68,0.35);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(224,68,68,0.05);border:1px solid rgba(224,68,68,0.2);color:rgba(224,68,68,0.35);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;';
   document.getElementById('del-user-modal').style.display = 'flex';
 }
 
@@ -4085,9 +4085,9 @@ function checkDeleteUserForm() {
   const btn = document.getElementById('del-user-sure-btn');
   btn.disabled = !checked;
   if(checked) {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(224,68,68,0.2);border:1px solid var(--red);color:var(--red);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.2s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(224,68,68,0.2);border:1px solid var(--red);color:var(--red);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.2s;';
   } else {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(224,68,68,0.05);border:1px solid rgba(224,68,68,0.2);color:rgba(224,68,68,0.35);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(224,68,68,0.05);border:1px solid rgba(224,68,68,0.2);color:rgba(224,68,68,0.35);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;';
   }
 }
 
@@ -4111,8 +4111,8 @@ function confirmDeleteUser() {
   // Reset UI
   document.getElementById('del-user-btn').style.display = 'none';
   document.getElementById('inv-user-info').textContent = '';
-  document.getElementById('inv-bp-list').innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>';
-  document.getElementById('inv-mat-list').innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>';
+  document.getElementById('inv-bp-list').innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">SELECT A USER TO VIEW BLUEPRINTS</div>';
+  document.getElementById('inv-mat-list').innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">SELECT A USER TO VIEW MATERIALS</div>';
 }
 
 function removeUserMat() {
@@ -4163,11 +4163,11 @@ function checkGSyncUrl() {
     btn.disabled = !valid;
     if(valid) {
       btn.style.cursor = 'pointer';
-      if(id==='gsync-save-btn') btn.style.cssText='height:32px;padding:0 16px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
-      else btn.style.cssText='height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--teal-dim);color:var(--teal);font-family:var(--font);font-size:11px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.15s;';
+      if(id==='gsync-save-btn') btn.style.cssText='height:32px;padding:0 16px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
+      else btn.style.cssText='height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--teal-dim);color:var(--teal);font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.15s;';
     } else {
-      if(id==='gsync-save-btn') btn.style.cssText='height:32px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
-      else btn.style.cssText='height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:11px;font-weight:600;letter-spacing:1px;cursor:not-allowed;transition:all 0.15s;';
+      if(id==='gsync-save-btn') btn.style.cssText='height:32px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+      else btn.style.cssText='height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1px;cursor:not-allowed;transition:all 0.15s;';
     }
   });
 }
@@ -4342,17 +4342,17 @@ function openOrdMultiDetail() {
         <span style="font-size:22px;">${bp.icon || '⬡'}</span>
         <div style="flex:1;">
           <div style="font-size:13px;font-weight:600;color:var(--white);">${bp.name}</div>
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);">${bp.catLabel} · T${bp.tier} · ⧖ ${bp.time}</div>
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">${bp.catLabel} · T${bp.tier} · ⧖ ${bp.time}</div>
         </div>
         <div style="display:flex;align-items:center;gap:5px;">
-          <span style="font-size:11px;color:var(--white-muted);">Qty:</span>
-          <div onclick="adjMultiQty('${bpName}',-1)" style="width:22px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;">−</div>
-          <div id="ord-multi-qty-${bpName.replace(/[^a-z0-9]/gi,'_')}" style="width:32px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;">${currentQty}</div>
-          <div onclick="adjMultiQty('${bpName}',1)" style="width:22px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;">+</div>
+          <span style="font-size:14px;color:var(--white-muted);">Qty:</span>
+          <div onclick="adjMultiQty('${bpName}',-1)" style="width:22px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--white-dim);">−</div>
+          <div id="ord-multi-qty-${bpName.replace(/[^a-z0-9]/gi,'_')}" style="width:32px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;color:var(--white);">${currentQty}</div>
+          <div onclick="adjMultiQty('${bpName}',1)" style="width:22px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--white-dim);">+</div>
           <div onclick="removeFromMultiSelect('${bpName}')" style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white-muted);font-size:13px;margin-left:4px;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</div>
         </div>
       </div>
-      <div style="font-size:10px;font-family:var(--mono);color:var(--teal-dim);border-top:1px solid var(--border);padding-top:6px;display:flex;flex-wrap:wrap;gap:6px;">
+      <div style="font-size:13px;font-family:var(--mono);color:var(--teal-dim);border-top:1px solid var(--border);padding-top:6px;display:flex;flex-wrap:wrap;gap:6px;">
         ${(bp.mats||[]).map(m=>`<span>${m.ore}: ${isHand(m.ore,m)?Math.ceil(reqDisplay(m.ore,m.req,m)):fmtCSCU(reqDisplay(m.ore,m.req,m))} ${reqUnit(m.ore,m)}</span>`).join(' &nbsp;')}
       </div>`;
     container.appendChild(div);
@@ -4487,12 +4487,12 @@ function renderOrdBPList() {
     row.innerHTML = `
       <div class="inv-bp-check">${isSelected ? '✓' : ''}</div>
       <span style="flex:1;">${bp.name}</span>
-      <span style="font-size:10px;font-family:var(--mono);color:var(--white-muted);margin-right:6px;">T${bp.tier}</span>
-      ${alreadyOrdered ? `<span style="font-size:10px;font-family:var(--mono);color:var(--teal-dim);">in order ×${alreadyOrdered.qty}</span>` : ''}`;
+      <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);margin-right:6px;">T${bp.tier}</span>
+      ${alreadyOrdered ? `<span style="font-size:13px;font-family:var(--mono);color:var(--teal-dim);">in order ×${alreadyOrdered.qty}</span>` : ''}`;
     row.onclick = () => toggleOrdSelect(bp.name);
     container.appendChild(row);
   });
-  if(!list.length) container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;">NO BLUEPRINTS FOUND</div>';
+  if(!list.length) container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;">NO BLUEPRINTS FOUND</div>';
 }
 
 function openOrdDetail(bp) {
@@ -4507,12 +4507,12 @@ function openOrdDetail(bp) {
   // Stats at 500Q
   const statsEl = document.getElementById('ord-detail-stats');
   statsEl.innerHTML = (bp.stats||[]).map(s=>`
-    <div style="font-size:10px;color:var(--white-muted);">${s.attr}</div>
-    <div style="font-size:10px;font-family:var(--mono);color:var(--white);">${s.base}</div>`).join('');
+    <div style="font-size:13px;color:var(--white-muted);">${s.attr}</div>
+    <div style="font-size:13px;font-family:var(--mono);color:var(--white);">${s.base}</div>`).join('');
   // Mats
   const matsEl = document.getElementById('ord-detail-mats');
   matsEl.innerHTML = (bp.mats||[]).map(m=>`
-    <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(77,200,176,0.06);font-size:11px;">
+    <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(77,200,176,0.06);font-size:14px;">
       <span style="color:var(--white-dim);">${m.name}</span>
       <span style="font-family:var(--mono);color:var(--teal-bright);">${isHand(m.ore,m)?Math.round(reqDisplay(m.ore,m.req,m)):fmtCSCU(reqDisplay(m.ore,m.req,m))} ${reqUnit(m.ore,m)}</span>
     </div>`).join('');
@@ -4551,7 +4551,7 @@ function renderOrderItems() {
   const matsEl  = document.getElementById('ord-mats-list');
   if(!itemsEl || !matsEl) return;
   if(!orderItems.length) {
-    itemsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;">Select blueprints from the left to add to your order</div>';
+    itemsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;">Select blueprints from the left to add to your order</div>';
     matsEl.innerHTML  = '';
     return;
   }
@@ -4560,13 +4560,13 @@ function renderOrderItems() {
     <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--border);margin-bottom:5px;background:var(--bg-main);">
       <span style="font-size:18px;">${item.bp.icon||'⬡'}</span>
       <div style="flex:1;">
-        <div style="font-size:12px;font-weight:600;color:var(--white);">${item.bp.name}</div>
-        <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);">${item.bp.catLabel} · T${item.bp.tier} · ⧖ ${item.bp.time}</div>
+        <div style="font-size:15px;font-weight:600;color:var(--white);">${item.bp.name}</div>
+        <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">${item.bp.catLabel} · T${item.bp.tier} · ⧖ ${item.bp.time}</div>
       </div>
       <div style="display:flex;align-items:center;gap:4px;">
-        <div onclick="adjOrderItemQty(${i},-1)" style="width:20px;height:20px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">−</div>
-        <div style="width:28px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--white);">×${item.qty}</div>
-        <div onclick="adjOrderItemQty(${i},1)" style="width:20px;height:20px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">+</div>
+        <div onclick="adjOrderItemQty(${i},-1)" style="width:20px;height:20px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--white-dim);">−</div>
+        <div style="width:28px;text-align:center;font-family:var(--mono);font-size:15px;color:var(--white);">×${item.qty}</div>
+        <div onclick="adjOrderItemQty(${i},1)" style="width:20px;height:20px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--white-dim);">+</div>
         <div onclick="removeOrderItem(${i})" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white-muted);font-size:13px;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</div>
       </div>
     </div>`).join('');
@@ -4584,10 +4584,10 @@ function renderOrderItems() {
     });
   });
   matsEl.innerHTML = Object.values(combined).sort((a,b)=>a.ore.localeCompare(b.ore)).map(c=>`
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-bottom:1px solid rgba(77,200,176,0.06);font-size:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-bottom:1px solid rgba(77,200,176,0.06);font-size:15px;">
       <span style="color:var(--white-dim);">${c.ore}</span>
       <span style="font-family:var(--mono);color:var(--teal-bright);">${c.unit==='units'?Math.ceil(c.total):fmtCSCU(c.total)} ${c.unit}</span>
-    </div>`).join('') || '<div style="padding:12px;color:var(--white-muted);font-size:11px;text-align:center;">No materials</div>';
+    </div>`).join('') || '<div style="padding:12px;color:var(--white-muted);font-size:14px;text-align:center;">No materials</div>';
 }
 function adjOrderItemQty(i,d){ if(orderItems[i]){ orderItems[i].qty=Math.max(1,orderItems[i].qty+d); renderOrderItems(); } }
 function removeOrderItem(i){ orderItems.splice(i,1); renderOrderItems(); renderOrdBPList(); checkOrderReady(); }
@@ -4600,8 +4600,8 @@ function checkOrderReady() {
   const ok   = cs && rsi && orderItems.length > 0;
   btn.disabled = !ok;
   btn.style.cssText = ok
-    ? 'height:30px;padding:0 16px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;margin-left:auto;'
-    : 'height:30px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;margin-left:auto;';
+    ? 'height:30px;padding:0 16px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;margin-left:auto;'
+    : 'height:30px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:14px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;margin-left:auto;';
 }
 
 async function placeOrder() {
@@ -4681,18 +4681,18 @@ function renderCustomBPList() {
   const el = document.getElementById('bpedit-custom-list');
   if(!el) return;
   if(!customBlueprints.length) {
-    el.innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">NO CUSTOM BLUEPRINTS YET — CLICK "+ ADD BLUEPRINT" TO CREATE ONE</div>';
+    el.innerHTML = '<div style="padding:24px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">NO CUSTOM BLUEPRINTS YET — CLICK "+ ADD BLUEPRINT" TO CREATE ONE</div>';
     return;
   }
-  el.innerHTML = '<div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--teal-dim);margin-bottom:8px;">CUSTOM BLUEPRINTS</div>' +
+  el.innerHTML = '<div style="font-family:var(--mono);font-size:15px;letter-spacing:2px;color:var(--teal-dim);margin-bottom:8px;">CUSTOM BLUEPRINTS</div>' +
     customBlueprints.map(bp=>`
     <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--border);margin-bottom:5px;background:var(--bg-main);">
       <span style="font-size:22px;">${bp.icon||'⬡'}</span>
       <div style="flex:1;">
         <div style="font-size:13px;font-weight:600;color:var(--white);">${bp.name}</div>
-        <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);">${bp.catLabel||bp.cat} · T${bp.tier} · ${bp.mats?.length||0} materials</div>
+        <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">${bp.catLabel||bp.cat} · T${bp.tier} · ${bp.mats?.length||0} materials</div>
       </div>
-      <button onclick="openEditBP(${bp.id})" style="height:26px;padding:0 10px;background:var(--bg-panel);border:1px solid var(--border);color:var(--teal);font-size:11px;cursor:pointer;">EDIT</button>
+      <button onclick="openEditBP(${bp.id})" style="height:26px;padding:0 10px;background:var(--bg-panel);border:1px solid var(--border);color:var(--teal);font-size:14px;cursor:pointer;">EDIT</button>
     </div>`).join('');
 }
 
@@ -4753,9 +4753,9 @@ function addBPEMatRow(m) {
   const oreVal  = m?.ore||'';
   const reqVal  = m?.req||'';
   row.innerHTML = `
-    <input class="sc-input" style="font-size:11px;" placeholder="Slot name (e.g. Protective Sheathing)" value="${slotVal}" oninput="checkBPEForm()">
-    <input class="sc-input" style="font-size:11px;" placeholder="Ore name (e.g. Tungsten)" value="${oreVal}" oninput="checkBPEForm()">
-    <input class="sc-input" style="font-size:11px;" type="number" placeholder="Qty" min="0.01" step="0.01" value="${reqVal}" oninput="checkBPEForm()">
+    <input class="sc-input" style="font-size:14px;" placeholder="Slot name (e.g. Protective Sheathing)" value="${slotVal}" oninput="checkBPEForm()">
+    <input class="sc-input" style="font-size:14px;" placeholder="Ore name (e.g. Tungsten)" value="${oreVal}" oninput="checkBPEForm()">
+    <input class="sc-input" style="font-size:14px;" type="number" placeholder="Qty" min="0.01" step="0.01" value="${reqVal}" oninput="checkBPEForm()">
     <div onclick="this.parentElement.remove();checkBPEForm();" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white-muted);font-size:14px;border:1px solid var(--border);" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</div>`;
   document.getElementById('bpe-mats-rows').appendChild(row);
 }
@@ -4764,8 +4764,8 @@ function addBPEStatRow(s) {
   const row = document.createElement('div');
   row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 28px;gap:6px;margin-bottom:6px;align-items:center;';
   row.innerHTML = `
-    <input class="sc-input" style="font-size:11px;" placeholder="Attribute (e.g. Damage)" value="${s?.attr||''}" oninput="checkBPEForm()">
-    <input class="sc-input" style="font-size:11px;" placeholder="Base value (e.g. 0.40)" value="${s?.base||''}">
+    <input class="sc-input" style="font-size:14px;" placeholder="Attribute (e.g. Damage)" value="${s?.attr||''}" oninput="checkBPEForm()">
+    <input class="sc-input" style="font-size:14px;" placeholder="Base value (e.g. 0.40)" value="${s?.base||''}">
     <div onclick="this.parentElement.remove();" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white-muted);font-size:14px;border:1px solid var(--border);" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</div>`;
   document.getElementById('bpe-stats-rows').appendChild(row);
 }
@@ -4783,8 +4783,8 @@ function checkBPEForm() {
   if(!btn) return;
   btn.disabled = !ok;
   btn.style.cssText = ok
-    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
-    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
+    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
 }
 
 async function saveBPE() {
@@ -4874,7 +4874,7 @@ function refreshFulfillAssigneeFilter() {
   if(firstItem) items.appendChild(firstItem);
   invUsers.forEach(u => {
     const label = document.createElement('label');
-    label.style.cssText = 'display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:12px;color:var(--white-dim);';
+    label.style.cssText = 'display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;font-size:15px;color:var(--white-dim);';
     label.onmouseenter = ()=>{ label.style.background='var(--bg-hover)'; };
     label.onmouseleave = ()=>{ label.style.background=''; };
     const chk = document.createElement('input');
@@ -4987,7 +4987,7 @@ function renderFulfill() {
   container.innerHTML = '';
   if(!list.length) {
     const msg = ffCurrentTab==='complete' ? 'NO COMPLETED ORDERS' : 'NO ORDERS MATCH CURRENT FILTERS';
-    container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;letter-spacing:1px;">'+msg+'</div>';
+    container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:14px;letter-spacing:1px;">'+msg+'</div>';
     return;
   }
 
@@ -5003,34 +5003,34 @@ function renderFulfill() {
         <svg id="ff-arrow-${order.id}" viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--white-muted);fill:none;stroke-width:2.5;flex-shrink:0;transition:transform 0.2s;transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
         <div style="display:flex;align-items:center;gap:6px;">
           <div style="width:10px;height:10px;border-radius:50%;background:${stColor};flex-shrink:0;"></div>
-          <span style="font-size:11px;font-family:var(--mono);color:${stColor};letter-spacing:1px;">${order.status}</span>
+          <span style="font-size:14px;font-family:var(--mono);color:${stColor};letter-spacing:1px;">${order.status}</span>
           ${canEdit?`<div onclick="openFFStatusModal('${order.id}')" title="Change status" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white-muted);border:1px solid var(--border);margin-left:2px;" onmouseenter="this.style.color='var(--teal)'" onmouseleave="this.style.color='var(--white-muted)'">
             <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
           </div>`:''}
         </div>
         <div style="display:flex;align-items:center;gap:6px;margin-left:6px;">
-          <span style="font-size:11px;color:var(--white-muted);font-family:var(--mono);">Assigned:</span>
+          <span style="font-size:14px;color:var(--white-muted);font-family:var(--mono);">Assigned:</span>
           ${canEdit
-            ? `<select onchange="setOrderAssignee('${order.id}',this.value)" style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);font-family:var(--font);font-size:11px;padding:1px 4px;">
+            ? `<select onchange="setOrderAssignee('${order.id}',this.value)" style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);font-family:var(--font);font-size:14px;padding:1px 4px;">
                 <option value="">— Unassigned —</option>
                 ${invUsers.filter(u=>String(u.role)!=='admin'||isAdminMode).map(u=>`<option value="${u.rank+' '+u.name}" ${order.assignedTo===u.rank+' '+u.name?'selected':''}>${u.rank} ${u.name}</option>`).join('')}
               </select>`
-            : `<span style="font-size:11px;color:var(--white);">${order.assignedTo||'Unassigned'}</span>`}
+            : `<span style="font-size:14px;color:var(--white);">${order.assignedTo||'Unassigned'}</span>`}
           ${canEdit && ffCurrentTab==='complete' ? `
           <span onclick="unarchiveOrder('${order.id}')" title="Move back to Orders"
-            style="margin-left:8px;font-size:10px;font-family:var(--mono);color:var(--teal);cursor:pointer;padding:2px 8px;border:1px solid var(--teal-dim);">↩ UNARCHIVE</span>` : ''}
+            style="margin-left:8px;font-size:13px;font-family:var(--mono);color:var(--teal);cursor:pointer;padding:2px 8px;border:1px solid var(--teal-dim);">↩ UNARCHIVE</span>` : ''}
           ${canEdit && ffCurrentTab==='orders' ? `
           <span onclick="deleteOrder('${order.id}')" title="Delete order"
-            style="margin-left:8px;font-size:10px;font-family:var(--mono);color:var(--red);cursor:pointer;padding:2px 8px;border:1px solid rgba(224,68,68,0.4);" onmouseenter="this.style.borderColor='var(--red)'" onmouseleave="this.style.borderColor='rgba(224,68,68,0.4)'">✕ DELETE</span>` : ''}
+            style="margin-left:8px;font-size:13px;font-family:var(--mono);color:var(--red);cursor:pointer;padding:2px 8px;border:1px solid rgba(224,68,68,0.4);" onmouseenter="this.style.borderColor='var(--red)'" onmouseleave="this.style.borderColor='rgba(224,68,68,0.4)'">✕ DELETE</span>` : ''}
         </div>
         <div style="flex:1;margin-left:10px;overflow:hidden;">
-          <div style="font-size:11px;color:var(--white-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+          <div style="font-size:14px;color:var(--white-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
             ${(order.items||[]).map(i=>`${i.name} ×${i.qty}`).join(' &nbsp;·&nbsp; ')}
           </div>
         </div>
         <div style="flex-shrink:0;text-align:right;margin-left:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--white);">${order.callsign}</div>
-          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);">${order.rsiHandle} · ${new Date(order.created).toLocaleDateString()}</div>
+          <div style="font-size:15px;font-weight:600;color:var(--white);">${order.callsign}</div>
+          <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">${order.rsiHandle} · ${new Date(order.created).toLocaleDateString()}</div>
         </div>
       </div>
       <!-- Card body — collapsed by default -->
@@ -5067,22 +5067,22 @@ function buildOrderCardBody(order) {
     const matLines = bp ? (bp.mats || []).map(m => {
       const reqAmt = reqDisplay(m.ore, m.req, m) * item.qty;
       const unit   = reqUnit(m.ore, m);
-      return `<div style="display:flex;justify-content:space-between;font-size:11px;
+      return `<div style="display:flex;justify-content:space-between;font-size:14px;
                 padding:2px 0 2px 10px;color:var(--dim);">
                 <span>${m.ore}</span>
                 <span style="font-family:var(--mono);color:var(--white-dim);">
                   ${unit==='units' ? Math.ceil(reqAmt) : fmtCSCU(reqAmt)} ${unit}
                 </span>
               </div>`;
-    }).join('') : '<div style="padding:2px 10px;font-size:11px;color:var(--white-muted);font-style:italic;">Blueprint data not found</div>';
+    }).join('') : '<div style="padding:2px 10px;font-size:14px;color:var(--white-muted);font-style:italic;">Blueprint data not found</div>';
 
     return `<div style="margin-bottom:6px;border:1px solid rgba(77,200,176,0.12);background:var(--bg-main);">
       <div style="display:flex;align-items:center;gap:8px;padding:5px 10px;background:var(--bg-section);
                   border-bottom:1px solid rgba(77,200,176,0.08);">
         <span style="font-size:15px;">${item.icon || '⬡'}</span>
-        <span style="font-size:12px;font-weight:600;color:var(--white);flex:1;">${item.name}</span>
-        <span style="font-family:var(--mono);font-size:11px;color:var(--teal-dim);">×${item.qty}</span>
-        <span style="font-family:var(--mono);font-size:10px;color:var(--white-muted);">${item.cat || ''}</span>
+        <span style="font-size:15px;font-weight:600;color:var(--white);flex:1;">${item.name}</span>
+        <span style="font-family:var(--mono);font-size:14px;color:var(--teal-dim);">×${item.qty}</span>
+        <span style="font-family:var(--mono);font-size:13px;color:var(--white-muted);">${item.cat || ''}</span>
       </div>
       <div style="padding:4px 0;">${matLines}</div>
     </div>`;
@@ -5090,25 +5090,25 @@ function buildOrderCardBody(order) {
 
   // Combined total column
   const totalRows = combinedList.map(c =>
-    `<div style="display:flex;justify-content:space-between;font-size:12px;
+    `<div style="display:flex;justify-content:space-between;font-size:15px;
                  padding:4px 0;border-bottom:1px solid rgba(77,200,176,0.06);">
        <span style="color:var(--white-dim);">${c.ore}</span>
        <span style="font-family:var(--mono);color:var(--teal-bright);">
          ${c.unit==='units' ? Math.ceil(c.total) : fmtCSCU(c.total)} ${c.unit}
        </span>
      </div>`
-  ).join('') || '<div style="font-size:11px;color:var(--white-muted);padding:4px 0;">No materials found</div>';
+  ).join('') || '<div style="font-size:14px;color:var(--white-muted);padding:4px 0;">No materials found</div>';
 
   return `<div style="display:flex;gap:0;border-top:1px solid var(--border);">
     <!-- Left: per-item breakdown -->
     <div style="flex:1;padding:10px 12px;border-right:1px solid var(--border);overflow-y:auto;max-height:320px;">
-      <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);
+      <div style="font-size:15px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);
                   margin-bottom:8px;">ORDER ITEMS &amp; MATERIALS</div>
       ${itemRows}
     </div>
     <!-- Right: combined totals -->
     <div style="width:230px;flex-shrink:0;padding:10px 12px;overflow-y:auto;max-height:320px;">
-      <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);
+      <div style="font-size:15px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);
                   margin-bottom:8px;">TOTAL MATERIALS</div>
       ${totalRows}
     </div>
@@ -5153,7 +5153,7 @@ function openFFStatusModal(orderId) {
   listDiv.innerHTML = '';
   ORDER_STATUSES.forEach(s => {
     const item = document.createElement('div');
-    item.style.cssText = 'padding:8px 10px;cursor:pointer;font-size:12px;color:var(--white-dim);transition:background 0.1s;';
+    item.style.cssText = 'padding:8px 10px;cursor:pointer;font-size:15px;color:var(--white-dim);transition:background 0.1s;';
     item.textContent = s;
     item.onmouseenter = ()=>{ item.style.background='var(--bg-hover)'; item.style.color='var(--white)'; };
     item.onmouseleave = ()=>{ item.style.background=''; item.style.color='var(--white-dim)'; };
@@ -5233,9 +5233,9 @@ function checkFirstVisitForm() {
   const btn = document.getElementById('first-visit-btn');
   btn.disabled = !checked;
   if(checked) {
-    btn.style.cssText = 'height:32px;padding:0 24px;background:var(--amber-bg);border:1px solid var(--amber);color:var(--amber-bright);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.2s;';
+    btn.style.cssText = 'height:32px;padding:0 24px;background:var(--amber-bg);border:1px solid var(--amber);color:var(--amber-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.2s;';
   } else {
-    btn.style.cssText = 'height:32px;padding:0 24px;background:rgba(200,148,26,0.05);border:1px solid rgba(200,148,26,0.3);color:rgba(200,148,26,0.4);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;';
+    btn.style.cssText = 'height:32px;padding:0 24px;background:rgba(200,148,26,0.05);border:1px solid rgba(200,148,26,0.3);color:rgba(200,148,26,0.4);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.2s;';
   }
 }
 function closeFirstVisit() {
