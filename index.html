@@ -1557,6 +1557,17 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
                   onmouseleave="this.style.borderColor='var(--border)'">
                   <option value="">All Blueprints</option>
                 </select>
+                <button id="ord-add-btn" onclick="openOrdMultiDetail()"
+                  style="height:26px;padding:0 10px;background:rgba(77,200,176,0.05);
+                         border:1px solid var(--teal-dim);color:var(--teal);
+                         font-family:var(--font);font-size:11px;font-weight:600;
+                         letter-spacing:1px;cursor:pointer;white-space:nowrap;
+                         display:flex;align-items:center;gap:5px;transition:all 0.15s;"
+                  onmouseenter="this.style.background='var(--teal-bg)'"
+                  onmouseleave="this.style.background='rgba(77,200,176,0.05)'">
+                  <span id="ord-sel-count" style="background:var(--teal);color:#020c0e;border-radius:2px;padding:0 5px;font-size:10px;min-width:16px;text-align:center;display:none;">0</span>
+                  + ADD TO ORDER
+                </button>
                 <div class="search-box" style="flex:1;">
                   <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                   <input placeholder="Search blueprints..." id="ord-bp-search" oninput="renderOrdBPList()">
@@ -1794,6 +1805,26 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
       <button id="add-user-complete" onclick="completeAddUser()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER MULTI-SELECT DETAIL POPUP -->
+<div id="ord-multi-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.85);z-index:500;align-items:flex-start;justify-content:center;padding-top:40px;overflow-y:auto;">
+  <div style="width:560px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(0,0,0,0.6);margin-bottom:40px;">
+    <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg-header);z-index:10;">
+      <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);">ADD TO ORDER</span>
+      <span onclick="closeOrdMultiDetail()" style="cursor:pointer;color:var(--white-muted);font-size:14px;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</span>
+    </div>
+    <div id="ord-multi-items" style="padding:14px;display:flex;flex-direction:column;gap:10px;"></div>
+    <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;bottom:0;background:var(--bg-header);">
+      <div style="font-size:11px;font-family:var(--mono);color:var(--white-muted);" id="ord-multi-count"></div>
+      <button onclick="addAllToOrder()"
+        style="height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);
+               color:var(--teal-bright);font-family:var(--font);font-size:12px;font-weight:700;
+               letter-spacing:2px;cursor:pointer;transition:all 0.15s;">
+        ADD ALL TO ORDER
+      </button>
     </div>
   </div>
 </div>
@@ -4204,10 +4235,13 @@ let ordCatFilter = '';
 let ordSubFilter = '';
 let ordShowMyBP  = false;
 let ordUserFilter = ''; // user id to filter blueprints by
+let ordSelected  = new Set(); // set of bp names currently selected
 let ordDetailBP  = null;
 let ordDetailQtyVal = 1;
 
 function initOrdersTab() {
+  ordSelected.clear();
+  updateOrdSelCount();
   buildOrdCatRow();
   refreshOrdUserDropdown();
   renderOrdBPList();
@@ -4244,6 +4278,120 @@ function buildOrdCatRow() {
   });
 }
 function setOrdCatSub(cat,sub){ ordCatFilter=cat; ordSubFilter=sub==='All Categories'?'':sub; buildOrdCatRow(); renderOrdBPList(); }
+// ── Orders multi-select ─────────────────────────────────────────
+function toggleOrdSelect(bpName) {
+  if(ordSelected.has(bpName)) {
+    ordSelected.delete(bpName);
+  } else {
+    ordSelected.add(bpName);
+  }
+  updateOrdSelCount();
+  renderOrdBPList();
+}
+
+function updateOrdSelCount() {
+  const count = ordSelected.size;
+  const badge = document.getElementById('ord-sel-count');
+  const btn   = document.getElementById('ord-add-btn');
+  if(badge) {
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'block' : 'none';
+  }
+  if(btn) {
+    btn.style.borderColor = count > 0 ? 'var(--teal)' : 'var(--teal-dim)';
+    btn.style.color       = count > 0 ? 'var(--teal-bright)' : 'var(--teal)';
+  }
+}
+
+function openOrdMultiDetail() {
+  if(ordSelected.size === 0) {
+    // Nothing selected — show hint
+    alert('Select blueprints from the list first (click to select, click again to deselect), then click Add to Order.');
+    return;
+  }
+  const container = document.getElementById('ord-multi-items');
+  container.innerHTML = '';
+  ordSelected.forEach(bpName => {
+    const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === bpName);
+    if(!bp) return;
+    const existing = orderItems.find(i => i.bp.name === bpName);
+    const currentQty = existing ? existing.qty : 1;
+    const div = document.createElement('div');
+    div.style.cssText = 'background:var(--bg-main);border:1px solid var(--border);padding:10px 12px;';
+    div.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <span style="font-size:22px;">${bp.icon || '⬡'}</span>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:600;color:var(--white);">${bp.name}</div>
+          <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);">${bp.catLabel} · T${bp.tier} · ⧖ ${bp.time}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <span style="font-size:11px;color:var(--white-muted);">Qty:</span>
+          <div onclick="adjMultiQty('${bpName}',-1)" style="width:22px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;">−</div>
+          <div id="ord-multi-qty-${bpName.replace(/[^a-z0-9]/gi,'_')}" style="width:32px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;">${currentQty}</div>
+          <div onclick="adjMultiQty('${bpName}',1)" style="width:22px;height:22px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;">+</div>
+          <div onclick="removeFromMultiSelect('${bpName}')" style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white-muted);font-size:13px;margin-left:4px;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--white-muted)'">✕</div>
+        </div>
+      </div>
+      <div style="font-size:10px;font-family:var(--mono);color:var(--teal-dim);border-top:1px solid var(--border);padding-top:6px;display:flex;flex-wrap:wrap;gap:6px;">
+        ${(bp.mats||[]).map(m=>`<span>${m.ore}: ${isHand(m.ore,m)?Math.ceil(reqDisplay(m.ore,m.req,m)):fmtCSCU(reqDisplay(m.ore,m.req,m))} ${reqUnit(m.ore,m)}</span>`).join(' &nbsp;')}
+      </div>`;
+    container.appendChild(div);
+  });
+  const count = ordSelected.size;
+  document.getElementById('ord-multi-count').textContent = count + ' blueprint' + (count!==1?'s':'') + ' selected';
+  document.getElementById('ord-multi-modal').style.display = 'flex';
+}
+
+function adjMultiQty(bpName, delta) {
+  const key = 'ord-multi-qty-' + bpName.replace(/[^a-z0-9]/gi,'_');
+  const el  = document.getElementById(key);
+  if(!el) return;
+  const cur = parseInt(el.textContent) || 1;
+  el.textContent = Math.max(1, cur + delta);
+}
+
+function removeFromMultiSelect(bpName) {
+  ordSelected.delete(bpName);
+  updateOrdSelCount();
+  renderOrdBPList();
+  // Rebuild modal content
+  const container = document.getElementById('ord-multi-items');
+  const item = container.querySelector('[data-bp="' + bpName + '"]');
+  if(item) item.remove();
+  if(ordSelected.size === 0) closeOrdMultiDetail();
+  else {
+    const count = ordSelected.size;
+    document.getElementById('ord-multi-count').textContent = count + ' blueprint' + (count!==1?'s':'') + ' selected';
+    // Re-open to rebuild cleanly
+    openOrdMultiDetail();
+  }
+}
+
+function closeOrdMultiDetail() {
+  document.getElementById('ord-multi-modal').style.display = 'none';
+}
+
+function addAllToOrder() {
+  ordSelected.forEach(bpName => {
+    const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === bpName);
+    if(!bp) return;
+    const key = 'ord-multi-qty-' + bpName.replace(/[^a-z0-9]/gi,'_');
+    const el  = document.getElementById(key);
+    const qty = el ? (parseInt(el.textContent)||1) : 1;
+    const existing = orderItems.find(i => i.bp.name === bpName);
+    if(existing) existing.qty = qty;
+    else orderItems.push({ bp, qty });
+  });
+  // Clear selection
+  ordSelected.clear();
+  updateOrdSelCount();
+  closeOrdMultiDetail();
+  renderOrderItems();
+  renderOrdBPList();
+  checkOrderReady();
+}
+
 function toggleOrdMyBP(){
   ordShowMyBP=!ordShowMyBP;
   document.getElementById('ord-mybp-tag').classList.toggle('off',!ordShowMyBP);
@@ -4313,13 +4461,16 @@ function renderOrdBPList() {
       container.appendChild(hdr);
     }
     const row = document.createElement('div');
-    row.className = 'inv-bp-row';
-    row.style.padding = '6px 12px';
+    const isSelected = ordSelected.has(bp.name);
     const alreadyOrdered = orderItems.find(i=>i.bp.name===bp.name);
-    row.innerHTML = `<span style="flex:1;">${bp.name}</span>
+    row.className = 'inv-bp-row' + (isSelected ? ' owned' : '');
+    row.style.padding = '6px 12px';
+    row.innerHTML = `
+      <div class="inv-bp-check">${isSelected ? '✓' : ''}</div>
+      <span style="flex:1;">${bp.name}</span>
       <span style="font-size:10px;font-family:var(--mono);color:var(--white-muted);margin-right:6px;">T${bp.tier}</span>
-      ${alreadyOrdered?`<span style="font-size:10px;font-family:var(--mono);color:var(--teal-dim);">×${alreadyOrdered.qty}</span>`:''}`;
-    row.onclick = () => openOrdDetail(bp);
+      ${alreadyOrdered ? `<span style="font-size:10px;font-family:var(--mono);color:var(--teal-dim);">in order ×${alreadyOrdered.qty}</span>` : ''}`;
+    row.onclick = () => toggleOrdSelect(bp.name);
     container.appendChild(row);
   });
   if(!list.length) container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white-muted);font-family:var(--mono);font-size:11px;">NO BLUEPRINTS FOUND</div>';
@@ -4853,32 +5004,96 @@ function renderFulfill() {
           <span onclick="deleteOrder('${order.id}')" title="Delete order"
             style="margin-left:8px;font-size:10px;font-family:var(--mono);color:var(--red);cursor:pointer;padding:2px 8px;border:1px solid rgba(224,68,68,0.4);" onmouseenter="this.style.borderColor='var(--red)'" onmouseleave="this.style.borderColor='rgba(224,68,68,0.4)'">✕ DELETE</span>` : ''}
         </div>
-        <div style="margin-left:auto;text-align:right;">
+        <div style="flex:1;margin-left:10px;overflow:hidden;">
+          <div style="font-size:11px;color:var(--white-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+            ${(order.items||[]).map(i=>`${i.name} ×${i.qty}`).join(' &nbsp;·&nbsp; ')}
+          </div>
+        </div>
+        <div style="flex-shrink:0;text-align:right;margin-left:10px;">
           <div style="font-size:12px;font-weight:600;color:var(--white);">${order.callsign}</div>
           <div style="font-size:10px;font-family:var(--mono);color:var(--white-muted);">${order.rsiHandle} · ${new Date(order.created).toLocaleDateString()}</div>
         </div>
       </div>
       <!-- Card body — collapsed by default -->
-      <div id="ff-body-${order.id}" style="display:none;flex-direction:row;overflow:hidden;">
-        <!-- Items -->
-        <div style="flex:1;padding:8px 12px;border-right:1px solid var(--border);">
-          <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);margin-bottom:6px;">ITEMS</div>
-          ${(order.items||[]).map(i=>`<div style="font-size:12px;color:var(--white-dim);padding:2px 0;">
-            <span style="font-size:16px;margin-right:5px;">${i.icon||'⬡'}</span>
-            ${i.name} <span style="color:var(--white-muted);">×${i.qty}</span>
-          </div>`).join('')}
-        </div>
-        <!-- Materials -->
-        <div style="width:260px;flex-shrink:0;padding:8px 12px;">
-          <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);margin-bottom:6px;">TOTAL MATERIALS</div>
-          ${(order.materials||[]).map(m=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0;border-bottom:1px solid rgba(77,200,176,0.04);">
-            <span style="color:var(--white-dim);">${m.ore}</span>
-            <span style="font-family:var(--mono);color:var(--teal-bright);">${m.unit==='units'?Math.ceil(m.total):fmtCSCU(m.total)} ${m.unit}</span>
-          </div>`).join('')}
-        </div>
+      <div id="ff-body-${order.id}" style="display:none;flex-direction:column;overflow:hidden;">
+        ${buildOrderCardBody(order)}
       </div>`;
     container.appendChild(card);
   });
+}
+
+// Build the expanded card body — recalculates materials from blueprint data
+// so old orders without stored materials still show correctly
+function buildOrderCardBody(order) {
+  const items = order.items || [];
+
+  // Recalculate combined materials from blueprint data
+  const combined = {};
+  items.forEach(item => {
+    const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === item.name);
+    if(!bp) return;
+    (bp.mats || []).forEach(m => {
+      const reqAmt = reqDisplay(m.ore, m.req, m) * item.qty;
+      const unit   = reqUnit(m.ore, m);
+      const key    = m.ore + '|' + unit;
+      if(!combined[key]) combined[key] = { ore: m.ore, unit, total: 0, type: m.type || '' };
+      combined[key].total += reqAmt;
+    });
+  });
+  const combinedList = Object.values(combined).sort((a,b) => a.ore.localeCompare(b.ore));
+
+  // Per-item breakdown rows
+  const itemRows = items.map(item => {
+    const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === item.name);
+    const matLines = bp ? (bp.mats || []).map(m => {
+      const reqAmt = reqDisplay(m.ore, m.req, m) * item.qty;
+      const unit   = reqUnit(m.ore, m);
+      return `<div style="display:flex;justify-content:space-between;font-size:11px;
+                padding:2px 0 2px 10px;color:var(--dim);">
+                <span>${m.ore}</span>
+                <span style="font-family:var(--mono);color:var(--white-dim);">
+                  ${unit==='units' ? Math.ceil(reqAmt) : fmtCSCU(reqAmt)} ${unit}
+                </span>
+              </div>`;
+    }).join('') : '<div style="padding:2px 10px;font-size:11px;color:var(--white-muted);font-style:italic;">Blueprint data not found</div>';
+
+    return `<div style="margin-bottom:6px;border:1px solid rgba(77,200,176,0.12);background:var(--bg-main);">
+      <div style="display:flex;align-items:center;gap:8px;padding:5px 10px;background:var(--bg-section);
+                  border-bottom:1px solid rgba(77,200,176,0.08);">
+        <span style="font-size:15px;">${item.icon || '⬡'}</span>
+        <span style="font-size:12px;font-weight:600;color:var(--white);flex:1;">${item.name}</span>
+        <span style="font-family:var(--mono);font-size:11px;color:var(--teal-dim);">×${item.qty}</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--white-muted);">${item.cat || ''}</span>
+      </div>
+      <div style="padding:4px 0;">${matLines}</div>
+    </div>`;
+  }).join('');
+
+  // Combined total column
+  const totalRows = combinedList.map(c =>
+    `<div style="display:flex;justify-content:space-between;font-size:12px;
+                 padding:4px 0;border-bottom:1px solid rgba(77,200,176,0.06);">
+       <span style="color:var(--white-dim);">${c.ore}</span>
+       <span style="font-family:var(--mono);color:var(--teal-bright);">
+         ${c.unit==='units' ? Math.ceil(c.total) : fmtCSCU(c.total)} ${c.unit}
+       </span>
+     </div>`
+  ).join('') || '<div style="font-size:11px;color:var(--white-muted);padding:4px 0;">No materials found</div>';
+
+  return `<div style="display:flex;gap:0;border-top:1px solid var(--border);">
+    <!-- Left: per-item breakdown -->
+    <div style="flex:1;padding:10px 12px;border-right:1px solid var(--border);overflow-y:auto;max-height:320px;">
+      <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);
+                  margin-bottom:8px;">ORDER ITEMS &amp; MATERIALS</div>
+      ${itemRows}
+    </div>
+    <!-- Right: combined totals -->
+    <div style="width:230px;flex-shrink:0;padding:10px 12px;overflow-y:auto;max-height:320px;">
+      <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);
+                  margin-bottom:8px;">TOTAL MATERIALS</div>
+      ${totalRows}
+    </div>
+  </div>`;
 }
 
 function toggleFFCard(orderId) {
