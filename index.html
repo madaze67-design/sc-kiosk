@@ -38,6 +38,15 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Global dark theme for all form elements */
+input, select, textarea, button {
+  color-scheme: dark;
+}
+select option {
+  background-color: #0d272d;
+  color: #b8d4d4;
+}
+
 body {
   background: #1a0e08;
   display: flex;
@@ -1182,6 +1191,16 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .inv-cat-btn .cat-dropdown { z-index:201; }
 .inv-cat-btn.dd-open .cat-dropdown { display:block; }
 
+/* Option elements — override browser default black */
+option {
+  background: var(--bg-main);
+  color: var(--white-dim);
+}
+option:checked, option:hover {
+  background: var(--teal-bg);
+  color: var(--teal-bright);
+}
+
 /* Utility */
 .hidden { display: none !important; }
 .flex { display: flex; }
@@ -1467,7 +1486,7 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
           <button class="detail-btn" onclick="openAddUser()" style="height:28px;padding:0 14px;border-color:var(--teal-dim);color:var(--teal);background:var(--teal-bg2);">+ ADD USER</button>
           <div style="display:flex;align-items:center;gap:8px;flex:1;max-width:420px;">
             <span style="font-size:11px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;">USER:</span>
-            <select id="inv-user-select" class="deliver-sel" style="flex:1;" onchange="selectUser(this.value)">
+            <select id="inv-user-select" class="deliver-sel" style="flex:1;background:var(--bg-main);color:var(--white-dim);" onchange="selectUser(this.value)">
               <option value="">— Select User —</option>
             </select>
             <button id="del-user-btn" onclick="openDeleteUser()"
@@ -2669,7 +2688,7 @@ function renderInv(){
       <td><input type="checkbox" ${sel?'checked':''} onchange="toggleInvSel(${o.id})" style="accent-color:var(--teal)"></td>
       <td>${ed?`<input class="edit-inp" id="inv-edit-name" value="${o.name}" onkeydown="if(event.key==='Enter')saveOre(${o.id})">`:
         `<span style="font-weight:600;">${o.name}</span>`}</td>
-      <td>${ed?`<select class="edit-inp" id="inv-edit-type" style="padding:2px 4px;">${['Gas','Metal','Mineral','Natural','Nonmetal','Processed','Waste'].map(t=>`<option ${t===o.type?'selected':''}>${t}</option>`).join('')}</select>`:
+      <td>${ed?`<select class="edit-inp" id="inv-edit-type" style="padding:2px 4px;background:var(--bg-panel);color:var(--white-dim);">${['Gas','Metal','Mineral','Natural','Nonmetal','Processed','Waste'].map(t=>`<option ${t===o.type?'selected':''}>${t}</option>`).join('')}</select>`:
         `<span class="type-badge ${TYPE_CLASS[o.type]||''}">${o.type}</span>`}</td>
       <td>${ed?`<input class="edit-inp" id="inv-edit-qual" type="number" min="0" max="1000" value="${o.quality}" style="width:70px;">`:
         `<div class="q-bar"><div class="q-track"><div class="q-fill" style="width:${pct}%;background:${qc};"></div></div><span style="font-family:var(--mono);font-size:11px;color:${qc};">${o.quality} Q</span></div>`}</td>
