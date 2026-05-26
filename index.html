@@ -2958,8 +2958,11 @@ function renderBp(){
       card.innerHTML=`<div class="bp-tier t${bp.tier}">T${bp.tier}</div>
         <div class="bp-placeholder">${bp.icon}</div>
         <div class="bp-name-tip">${bp.name}</div>`;
-      card.ondblclick=()=>openBpDetail(bp);
-      card.onclick=()=>{document.querySelectorAll('.bp-card').forEach(c=>c.classList.remove('selected'));card.classList.add('selected');};
+      card.onclick=()=>{
+        document.querySelectorAll('.bp-card').forEach(c=>c.classList.remove('selected'));
+        card.classList.add('selected');
+        openBpDetail(bp);
+      };
       grid.appendChild(card);
     });
     container.appendChild(grid);
@@ -3588,10 +3591,11 @@ function toggleUserBP(user, bpName, row) {
 // ── Materials panel ─────────────────────────────────────────
 const ALL_ORE_NAMES = [
   'Agricium','Aluminum','Aphorite','Aslarite','Beradom','Beryl','Bexalite',
-  'Carinite','Copper','Corundum','Dolivine','Gold','Hadanite','Hephaestanite',
-  'Iron','Jaclium','Janalite','Laranite','Lindinium','Ouratite','Quartz',
-  'Riccite','Sadaryx','Saldynium','Savrilium','Silicon','Stileron','Taranite',
-  'Tin','Titanium','Torite','Feynmaline','Glacosite'
+  'Borase','Carinite','Copper','Corundum','Dolivine','Feynmaline','Glacosite',
+  'Gold','Hadanite','Hephaestanite','Iron','Jaclium','Janalite','Laranite',
+  'Lindinium','Ouratite','Pressurized Ice','Quantainium','Quartz','Riccite',
+  'Sadaryx','Saldynium','Savrilium','Silicon','Stileron','Taranite',
+  'Tin','Titanium','Torite','Tungsten','Yormandi Eye',
 ];
 
 function buildInvMatTypeRow() {
