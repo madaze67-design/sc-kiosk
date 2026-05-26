@@ -42,6 +42,10 @@
 input, select, textarea, button {
   color-scheme: dark;
 }
+select {
+  color: var(--white-dim);
+  background: var(--bg-main);
+}
 select option {
   background-color: #0d272d;
   color: #b8d4d4;
@@ -1740,7 +1744,7 @@ option:checked, option:hover {
           </div>
         </div>
         <!-- Orders list -->
-        <div id="ff-orders-list" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:0;"></div>
+        <div id="ff-orders-list" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:0;color:var(--white-dim);"></div>
       </div>
 
     </div><!-- content -->
@@ -4996,7 +5000,7 @@ function renderFulfill() {
     const canEdit = canEditOrders();
     const cardId  = 'ff-card-' + order.id;
     const card    = document.createElement('div');
-    card.style.cssText = 'background:var(--bg-panel);border:1px solid var(--border);overflow:hidden;';
+    card.style.cssText = 'background:var(--bg-panel);border:1px solid var(--border);overflow:hidden;color:var(--white-dim);';
     card.innerHTML = `
       <!-- Card header — click to collapse/expand -->
       <div onclick="toggleFFCard('${order.id}')" style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-section);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background='var(--bg-section)'">
@@ -5011,7 +5015,7 @@ function renderFulfill() {
         <div style="display:flex;align-items:center;gap:6px;margin-left:6px;">
           <span style="font-size:14px;color:var(--white-muted);font-family:var(--mono);">Assigned:</span>
           ${canEdit
-            ? `<select onchange="setOrderAssignee('${order.id}',this.value)" style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);font-family:var(--font);font-size:14px;padding:1px 4px;">
+            ? `<select onchange="setOrderAssignee('${order.id}',this.value)" style="background:var(--bg-main);border:1px solid var(--border);color:var(--white-dim);font-family:var(--font);font-size:14px;padding:1px 4px;color-scheme:dark;">
                 <option value="">— Unassigned —</option>
                 ${invUsers.filter(u=>String(u.role)!=='admin'||isAdminMode).map(u=>`<option value="${u.rank+' '+u.name}" ${order.assignedTo===u.rank+' '+u.name?'selected':''}>${u.rank} ${u.name}</option>`).join('')}
               </select>`
@@ -5155,6 +5159,7 @@ function openFFStatusModal(orderId) {
     const item = document.createElement('div');
     item.style.cssText = 'padding:8px 10px;cursor:pointer;font-size:15px;color:var(--white-dim);transition:background 0.1s;';
     item.textContent = s;
+    item.style.color = 'var(--white-dim)';
     item.onmouseenter = ()=>{ item.style.background='var(--bg-hover)'; item.style.color='var(--white)'; };
     item.onmouseleave = ()=>{ item.style.background=''; item.style.color='var(--white-dim)'; };
     item.onclick = () => setOrderStatus(s);
