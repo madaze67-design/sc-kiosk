@@ -1659,9 +1659,9 @@ option:checked, option:hover {
       </div>
 
       <!-- ── ORDER FULFILLMENT SCREEN ── -->
-      <div id="screen-fulfill" style="display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;">
+      <div id="screen-fulfill" style="display:none;flex:1;overflow:hidden;position:relative;">
         <!-- Filter bar -->
-        <div style="padding:8px 14px;border-bottom:1px solid var(--border);background:var(--bg-panel);display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
+        <div style="padding:8px 14px;border-bottom:1px solid var(--border);background:var(--bg-panel);display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;position:relative;z-index:2;">
           <div style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">ORDER FULFILLMENT</div>
           <!-- Orders / Complete toggle -->
           <div style="display:flex;gap:0;border:1px solid var(--border);">
@@ -1750,7 +1750,7 @@ option:checked, option:hover {
           </div>
         </div>
         <!-- Orders list -->
-        <div id="ff-orders-list" style="flex:1;overflow-y:scroll;padding:12px;min-height:0;color:var(--white-dim);scrollbar-width:thin;"></div>
+        <div id="ff-orders-list" style="position:absolute;left:0;right:0;top:48px;bottom:0;overflow-y:auto;padding:12px;color:var(--white-dim);scrollbar-width:thin;"</div>
       </div>
 
     </div><!-- content -->
