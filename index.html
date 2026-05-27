@@ -1750,7 +1750,7 @@ option:checked, option:hover {
           </div>
         </div>
         <!-- Orders list -->
-        <div id="ff-orders-list" style="flex:1;overflow-y:scroll;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:0;color:var(--white-dim);scrollbar-width:thin;"></div>
+        <div id="ff-orders-list" style="flex:1;overflow-y:scroll;padding:12px;min-height:0;color:var(--white-dim);scrollbar-width:thin;"></div>
       </div>
 
     </div><!-- content -->
@@ -5010,7 +5010,7 @@ function renderFulfill() {
     const canEdit = canEditOrders();
     const cardId  = 'ff-card-' + order.id;
     const card    = document.createElement('div');
-    card.style.cssText = 'background:var(--bg-panel);border:1px solid var(--border);overflow:hidden;color:var(--white-dim);';
+    card.style.cssText = 'background:var(--bg-panel);border:1px solid var(--border);overflow:hidden;color:var(--white-dim);margin-bottom:8px;flex-shrink:0;';
     card.innerHTML = `
       <!-- Card header — click to collapse/expand -->
       <div onclick="toggleFFCard('${order.id}')" style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-section);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background='var(--bg-section)'">
