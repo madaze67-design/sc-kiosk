@@ -57,6 +57,11 @@ select option {
 #ff-orders-list::-webkit-scrollbar-thumb { background: var(--teal-dim); border-radius: 2px; }
 #ff-orders-list::-webkit-scrollbar-thumb:hover { background: var(--teal); }
 
+/* Scrollbar for expanded order card body */
+[id^="ff-body-"] > div::-webkit-scrollbar { width: 6px; }
+[id^="ff-body-"] > div::-webkit-scrollbar-track { background: var(--bg-panel); }
+[id^="ff-body-"] > div::-webkit-scrollbar-thumb { background: var(--teal-dim); border-radius: 2px; }
+
 body {
   background: #1a0e08;
   display: flex;
@@ -1659,7 +1664,7 @@ option:checked, option:hover {
       </div>
 
       <!-- ── ORDER FULFILLMENT SCREEN ── -->
-      <div id="screen-fulfill" style="display:none;flex:1;overflow:hidden;position:relative;">
+      <div id="screen-fulfill" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
         <!-- Filter bar -->
         <div style="padding:8px 14px;border-bottom:1px solid var(--border);background:var(--bg-panel);display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;position:relative;z-index:2;">
           <div style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">ORDER FULFILLMENT</div>
@@ -1750,7 +1755,7 @@ option:checked, option:hover {
           </div>
         </div>
         <!-- Orders list -->
-        <div id="ff-orders-list" style="position:absolute;left:0;right:0;top:48px;bottom:0;overflow-y:auto;padding:12px;color:var(--white-dim);scrollbar-width:thin;"</div>
+        <div id="ff-orders-list" style="flex:1;overflow-y:auto;padding:12px;color:var(--white-dim);scrollbar-width:thin;"></div>
       </div>
 
     </div><!-- content -->
@@ -5048,8 +5053,10 @@ function renderFulfill() {
         </div>
       </div>
       <!-- Card body — collapsed by default -->
-      <div id="ff-body-${order.id}" style="display:none;flex-direction:column;overflow:hidden;">
+      <div id="ff-body-${order.id}" style="display:none;flex-direction:column;overflow:hidden;max-height:340px;">
+        <div style="overflow-y:auto;flex:1;scrollbar-width:thin;">
         ${buildOrderCardBody(order)}
+        </div>
       </div>`;
     container.appendChild(card);
   });
