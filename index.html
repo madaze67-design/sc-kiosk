@@ -2401,11 +2401,19 @@ function setFabUser(id) {
 // - If a user is selected: their personal material inventory (converted to ore format)
 //   plus any missing required ores at 0 qty so they still appear
 // - If no user: the global ore inventory (but capped at 100 cSCU / 100 units at Q500 for display)
+const ALL_ORE_NAMES = [
+  'Agricium','Aluminum','Aphorite','Aslarite','Beradom','Beryl','Bexalite',
+  'Borase','Carinite','Copper','Corundum','Dolivine','Feynmaline','Glacosite',
+  'Gold','Hadanite','Hephaestanite','Iron','Jaclium','Janalite','Laranite',
+  'Lindinium','Ouratite','Pressurized Ice','Quantainium','Quartz','Riccite',
+  'Sadaryx','Saldynium','Savrilium','Silicon','Stileron','Taranite',
+  'Tin','Titanium','Torite','Tungsten','Yormandi Eye',
+];
 function getFabOres() {
   if(!fabUserId) {
     // No user: return a synthetic inventory of every known ore at 100 cSCU, Q500
     
-    return KNOWN_ORES.map((name,i) => ({
+    return ALL_ORE_NAMES.map((name,i) => ({
       id: 9000+i, name, type: ORE_TYPE_MAP[name]||'Mineral',
       quality: 500, qty: isHand(name) ? 100 : 100, notes: ''
     }));
@@ -3443,14 +3451,6 @@ function toggleUserBP(user, bpName, row) {
 }
 
 // ── Materials panel ─────────────────────────────────────────
-const ALL_ORE_NAMES = [
-  'Agricium','Aluminum','Aphorite','Aslarite','Beradom','Beryl','Bexalite',
-  'Borase','Carinite','Copper','Corundum','Dolivine','Feynmaline','Glacosite',
-  'Gold','Hadanite','Hephaestanite','Iron','Jaclium','Janalite','Laranite',
-  'Lindinium','Ouratite','Pressurized Ice','Quantainium','Quartz','Riccite',
-  'Sadaryx','Saldynium','Savrilium','Silicon','Stileron','Taranite',
-  'Tin','Titanium','Torite','Tungsten','Yormandi Eye',
-];
 
 function buildInvMatTypeRow() {
   const row = document.getElementById('inv-mat-type-row');
