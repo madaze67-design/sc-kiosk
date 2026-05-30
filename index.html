@@ -1844,11 +1844,11 @@ option:checked, option:hover {
       <div style="font-size:13px;font-family:var(--mono);color:var(--white-muted);" id="gsync-last-sync"></div>
       <div style="display:flex;gap:8px;">
         <button id="gsync-test-btn" onclick="testGSync()" disabled
-          style="height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1px;cursor:not-allowed;transition:all 0.15s;">
+          style="height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:1px;cursor:not-allowed;transition:all 0.15s;">
           TEST CONNECTION
         </button>
         <button id="gsync-save-btn" onclick="saveGSyncUrl()" disabled
-          style="height:32px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
+          style="height:32px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
           SAVE &amp; CONNECT
         </button>
       </div>
@@ -1886,7 +1886,7 @@ option:checked, option:hover {
       </div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
-      <button id="add-user-complete" onclick="completeAddUser()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
+      <button id="add-user-complete" onclick="completeAddUser()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
     </div>
   </div>
 </div>
@@ -2012,7 +2012,7 @@ option:checked, option:hover {
       <button id="bpe-delete-btn" onclick="deleteBPE()" style="display:none;height:30px;padding:0 14px;background:rgba(224,68,68,0.1);border:1px solid rgba(224,68,68,0.4);color:var(--red);font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;">DELETE BLUEPRINT</button>
       <div style="margin-left:auto;">
         <button id="bpe-save-btn" onclick="saveBPE()" disabled
-          style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
+          style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">
           SAVE
         </button>
       </div>
@@ -2234,7 +2234,7 @@ option:checked, option:hover {
       </div>
     </div>
     <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
-      <button id="inv-mat-complete" onclick="completeInvMat()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
+      <button id="inv-mat-complete" onclick="completeInvMat()" disabled style="height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;">COMPLETE</button>
     </div>
   </div>
 </div>
@@ -2990,6 +2990,23 @@ function calcExactStatMult(statName) {
 // When ore is assigned to slot, it's locked to ore.quality.
 let slotQualities = {};
 
+// Per-order per-item crafted checkboxes — { "orderId:itemIndex": true/false }
+// Persists in sessionStorage so it survives tab switches but resets on page reload
+const CRAFTED_KEY = 'sc_crafted_items';
+function getCraftedState() {
+  try { return JSON.parse(sessionStorage.getItem(CRAFTED_KEY) || '{}'); }
+  catch { return {}; }
+}
+function setCraftedItem(orderId, itemIdx, checked) {
+  const state = getCraftedState();
+  const key = orderId + ':' + itemIdx;
+  if (checked) state[key] = true; else delete state[key];
+  sessionStorage.setItem(CRAFTED_KEY, JSON.stringify(state));
+}
+function isCrafted(orderId, itemIdx) {
+  return !!getCraftedState()[orderId + ':' + itemIdx];
+}
+
 function getSlotQuality(slotIdx) {
   const assignedId = matAssign[slotIdx];
   if (assignedId) {
@@ -3458,7 +3475,7 @@ function openAddUser() {
   document.getElementById('add-user-pass').value = '';
   const btn = document.getElementById('add-user-complete');
   btn.disabled = true;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('add-user-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('add-user-rank').focus(), 50);
 }
@@ -3472,9 +3489,9 @@ function checkAddUserForm() {
   const ready = rank.length > 0 && name.length > 0;
   btn.disabled = !ready;
   if (ready) {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
   } else {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   }
 }
 async function completeAddUser() {
@@ -3899,7 +3916,7 @@ function openAddMat(oreName) {
   document.getElementById('inv-mat-modal-edit-btns').style.display = 'none';
   const btn = document.getElementById('inv-mat-complete');
   btn.disabled = true;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('inv-mat-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('inv-mat-quality').focus(), 50);
 }
@@ -3920,7 +3937,7 @@ function openEditMat(e, entryId) {
   document.getElementById('inv-mat-modal-edit-btns').style.display = 'block';
   const btn = document.getElementById('inv-mat-complete');
   btn.disabled = false;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
   document.getElementById('inv-mat-modal').style.display = 'flex';
 }
 function closeInvMatModal() {
@@ -3935,9 +3952,9 @@ function checkInvMatForm() {
   const ready = q !== '' && qty !== '' && parseFloat(qty) > 0 && parseInt(q) >= 0 && parseInt(q) <= 1000;
   btn.disabled = !ready;
   if (ready) {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
   } else {
-    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   }
 }
 function completeInvMat() {
@@ -4141,7 +4158,7 @@ function openChangePw() {
   document.getElementById('chg-pw-current-wrap').style.display = hasCurrentPw ? '' : 'none';
   const saveBtn = document.getElementById('chg-pw-save-btn');
   saveBtn.disabled = true;
-  saveBtn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+  saveBtn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('chg-pw-modal').style.display = 'flex';
   const firstField = hasCurrentPw ? 'chg-pw-current' : 'chg-pw-new';
   setTimeout(() => document.getElementById(firstField).focus(), 50);
@@ -4168,8 +4185,8 @@ function checkChangePwForm() {
   const btn = document.getElementById('chg-pw-save-btn');
   btn.disabled = !ready;
   btn.style.cssText = ready
-    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
-    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
+    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
 }
 function saveChangePw() {
   const context = document.getElementById('chg-pw-btn').dataset.context;
@@ -4221,7 +4238,7 @@ function openPwModal(user) {
   document.getElementById('pw-error').style.display = 'none';
   const btn = document.getElementById('pw-submit-btn');
   btn.disabled = true;
-  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+  btn.style.cssText = 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('pw-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('pw-modal-input').focus(), 50);
 }
@@ -4237,8 +4254,8 @@ function checkPwForm() {
   const ready = val.length > 0;
   btn.disabled = !ready;
   btn.style.cssText = ready
-    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
-    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
+    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
   document.getElementById('pw-error').style.display = 'none';
 }
 
@@ -4369,11 +4386,11 @@ function checkGSyncUrl() {
     btn.disabled = !valid;
     if(valid) {
       btn.style.cursor = 'pointer';
-      if(id==='gsync-save-btn') btn.style.cssText='height:32px;padding:0 16px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
-      else btn.style.cssText='height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--teal-dim);color:var(--teal);font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.15s;';
+      if(id==='gsync-save-btn') btn.style.cssText='height:32px;padding:0 16px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;';
+      else btn.style.cssText='height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--teal-dim);color:var(--teal);font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.15s;';
     } else {
-      if(id==='gsync-save-btn') btn.style.cssText='height:32px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
-      else btn.style.cssText='height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1px;cursor:not-allowed;transition:all 0.15s;';
+      if(id==='gsync-save-btn') btn.style.cssText='height:32px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+      else btn.style.cssText='height:32px;padding:0 16px;background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:1px;cursor:not-allowed;transition:all 0.15s;';
     }
   });
 }
@@ -4989,8 +5006,8 @@ function checkBPEForm() {
   if(!btn) return;
   btn.disabled = !ok;
   btn.style.cssText = ok
-    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
-    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
+    ? 'height:32px;padding:0 20px;background:var(--teal-bg);border:1px solid var(--teal);color:var(--teal-bright);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;'
+    : 'height:32px;padding:0 20px;background:rgba(77,200,176,0.05);border:1px solid var(--border);color:var(--white-muted);font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;';
 }
 
 async function saveBPE() {
@@ -5270,7 +5287,7 @@ function buildOrderCardBody(order) {
   const combinedList = Object.values(combined).sort((a,b) => a.ore.localeCompare(b.ore));
 
   // Per-item breakdown rows
-  const itemRows = items.map(item => {
+  const itemRows = items.map((item, idx) => {
     const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === item.name);
     const matLines = bp ? (bp.mats || []).map(m => {
       const reqAmt = reqDisplay(m.ore, m.req, m) * item.qty;
@@ -5284,15 +5301,27 @@ function buildOrderCardBody(order) {
               </div>`;
     }).join('') : '<div style="padding:2px 10px;font-size:14px;color:var(--white-muted);font-style:italic;">Blueprint data not found</div>';
 
-    return `<div style="margin-bottom:6px;border:1px solid rgba(77,200,176,0.12);background:var(--bg-main);">
-      <div style="display:flex;align-items:center;gap:8px;padding:5px 10px;background:var(--bg-section);
+    const itemKey = order.id + ':' + idx;
+    const crafted = isCrafted(order.id, idx);
+    const canCheck = canEditOrders();
+    return `<div style="margin-bottom:6px;border:1px solid ${crafted ? 'rgba(77,200,176,0.35)' : 'rgba(77,200,176,0.12)'};background:${crafted ? 'rgba(77,200,176,0.04)' : 'var(--bg-main)'};">
+      <div style="display:flex;align-items:center;gap:8px;padding:5px 10px;background:${crafted ? 'rgba(77,200,176,0.08)' : 'var(--bg-section)'};
                   border-bottom:1px solid rgba(77,200,176,0.08);">
+        <label style="display:flex;align-items:center;gap:0;flex-shrink:0;${canCheck ? 'cursor:pointer;' : 'cursor:default;'}"
+               title="${canCheck ? 'Mark as crafted' : 'Artificer or Admin required'}">
+          <input type="checkbox" ${crafted ? 'checked' : ''} ${canCheck ? '' : 'disabled'}
+            onchange="(function(cb){setCraftedItem('${order.id}',${idx},cb.checked);renderFulfill();})(this)"
+            style="width:15px;height:15px;accent-color:var(--teal);flex-shrink:0;
+                   ${canCheck ? 'cursor:pointer;' : 'cursor:default;opacity:0.4;'}"/>
+        </label>
         <span style="font-size:15px;">${item.icon || '⬡'}</span>
-        <span style="font-size:15px;font-weight:600;color:var(--white);flex:1;">${item.name}</span>
+        <span style="font-size:15px;font-weight:600;color:${crafted ? 'var(--teal-dim)' : 'var(--white)'};flex:1;
+                     ${crafted ? 'text-decoration:line-through;' : ''}">${item.name}</span>
         <span style="font-family:var(--mono);font-size:14px;color:var(--teal-dim);">×${item.qty}</span>
         <span style="font-family:var(--mono);font-size:13px;color:var(--white-muted);">${item.cat || ''}</span>
+        ${crafted ? '<span style="font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:1px;">✓ CRAFTED</span>' : ''}
       </div>
-      <div style="padding:4px 0;">${matLines}</div>
+      <div style="padding:4px 0;${crafted ? 'opacity:0.45;' : ''}">${matLines}</div>
     </div>`;
   }).join('');
 
