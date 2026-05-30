@@ -2990,21 +2990,22 @@ function calcExactStatMult(statName) {
 // When ore is assigned to slot, it's locked to ore.quality.
 let slotQualities = {};
 
-// Per-order per-item crafted checkboxes — { "orderId:itemIndex": true/false }
-// Persists in sessionStorage so it survives tab switches but resets on page reload
-const CRAFTED_KEY = 'sc_crafted_items';
-function getCraftedState() {
-  try { return JSON.parse(sessionStorage.getItem(CRAFTED_KEY) || '{}'); }
-  catch { return {}; }
-}
-function setCraftedItem(orderId, itemIdx, checked) {
-  const state = getCraftedState();
-  const key = orderId + ':' + itemIdx;
-  if (checked) state[key] = true; else delete state[key];
-  sessionStorage.setItem(CRAFTED_KEY, JSON.stringify(state));
-}
+// Per-order per-item crafted tracking — stored on the order object and synced to Google Sheets
 function isCrafted(orderId, itemIdx) {
-  return !!getCraftedState()[orderId + ':' + itemIdx];
+  const order = (allOrders||[]).find(function(o){ return String(o.id)===String(orderId); });
+  if(!order || !order.craftedItems) return false;
+  return !!order.craftedItems[itemIdx];
+}
+
+async function setCraftedItem(orderId, itemIdx, checked) {
+  const order = (allOrders||[]).find(function(o){ return String(o.id)===String(orderId); });
+  if(!order) return;
+  if(!order.craftedItems) order.craftedItems = {};
+  if(checked) order.craftedItems[itemIdx] = true;
+  else delete order.craftedItems[itemIdx];
+  // Save to Google Sheet immediately
+  await apiCall({ action:'saveorder', payload: order });
+  renderFulfill();
 }
 
 function getSlotQuality(slotIdx) {
@@ -5310,7 +5311,7 @@ function buildOrderCardBody(order) {
         <label style="display:flex;align-items:center;gap:0;flex-shrink:0;${canCheck ? 'cursor:pointer;' : 'cursor:default;'}"
                title="${canCheck ? 'Mark as crafted' : 'Artificer or Admin required'}">
           <input type="checkbox" ${crafted ? 'checked' : ''} ${canCheck ? '' : 'disabled'}
-            onchange="(function(cb){setCraftedItem('${order.id}',${idx},cb.checked);renderFulfill();})(this)"
+            onchange="(function(cb){cb.disabled=true;setCraftedItem('${order.id}',${idx},cb.checked);})(this)"
             style="width:15px;height:15px;accent-color:var(--teal);flex-shrink:0;
                    ${canCheck ? 'cursor:pointer;' : 'cursor:default;opacity:0.4;'}"/>
         </label>
