@@ -2994,15 +2994,15 @@ let slotQualities = {};
 function isCrafted(orderId, itemIdx) {
   const order = (allOrders||[]).find(function(o){ return String(o.id)===String(orderId); });
   if(!order || !order.craftedItems) return false;
-  return !!order.craftedItems[itemIdx];
+  return !!(order.craftedItems[itemIdx] || order.craftedItems[String(itemIdx)]);
 }
 
 async function setCraftedItem(orderId, itemIdx, checked) {
   const order = (allOrders||[]).find(function(o){ return String(o.id)===String(orderId); });
   if(!order) return;
   if(!order.craftedItems) order.craftedItems = {};
-  if(checked) order.craftedItems[itemIdx] = true;
-  else delete order.craftedItems[itemIdx];
+  if(checked) order.craftedItems[String(itemIdx)] = true;
+  else delete order.craftedItems[String(itemIdx)];
   // Save to Google Sheet immediately
   await apiCall({ action:'saveorder', payload: order });
   renderFulfill();
