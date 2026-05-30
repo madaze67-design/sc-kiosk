@@ -2993,17 +2993,17 @@ let slotQualities = {};
 // Per-order per-item crafted tracking — stored on the order object and synced to Google Sheets
 function isCrafted(orderId, itemIdx) {
   const order = (allOrders||[]).find(function(o){ return String(o.id)===String(orderId); });
-  if(!order || !order.craftedItems) return false;
-  return !!(order.craftedItems[itemIdx] || order.craftedItems[String(itemIdx)]);
+  if(!order || !order.items || !order.items[itemIdx]) return false;
+  return !!order.items[itemIdx].crafted;
 }
 
 async function setCraftedItem(orderId, itemIdx, checked) {
   const order = (allOrders||[]).find(function(o){ return String(o.id)===String(orderId); });
-  if(!order) return;
-  if(!order.craftedItems) order.craftedItems = {};
-  if(checked) order.craftedItems[String(itemIdx)] = true;
-  else delete order.craftedItems[String(itemIdx)];
-  // Save to Google Sheet immediately
+  if(!order || !order.items || !order.items[itemIdx]) return;
+  // Embed crafted flag directly in the item object — stored in existing Items (JSON) column
+  if(checked) order.items[itemIdx].crafted = true;
+  else delete order.items[itemIdx].crafted;
+  // Save using existing saveorder — no AppScript changes needed
   await apiCall({ action:'saveorder', payload: order });
   renderFulfill();
 }
