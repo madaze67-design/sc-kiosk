@@ -1678,10 +1678,21 @@ option:checked, option:hover {
               <div style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">NEW ORDER</div>
               <input id="ord-callsign" class="sc-input" placeholder="Callsign *" style="width:140px;font-size:15px;" oninput="checkOrderReady()">
               <input id="ord-rsi" class="sc-input" placeholder="RSI Handle *" style="width:140px;font-size:15px;" oninput="checkOrderReady()">
+              <button onclick="openOrderNoteInput()" title="Add a note to your order"
+                style="height:30px;padding:0 14px;background:transparent;border:1px solid var(--border);
+                       color:var(--white-muted);font-family:var(--font);font-size:14px;
+                       letter-spacing:1px;cursor:pointer;transition:all 0.15s;margin-left:auto;display:flex;align-items:center;gap:5px;"
+                onmouseenter="this.style.borderColor='var(--teal-dim)';this.style.color='var(--white)'"
+                onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--white-muted)'">
+                <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;">
+                  <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+                ADD NOTE
+              </button>
               <button id="ord-place-btn" onclick="placeOrder()" disabled
                 style="height:30px;padding:0 16px;background:rgba(77,200,176,0.05);border:1px solid var(--border);
                        color:var(--white-muted);font-family:var(--font);font-size:14px;font-weight:700;
-                       letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;margin-left:auto;">
+                       letter-spacing:2px;cursor:not-allowed;transition:all 0.15s;margin-left:8px;">
                 PLACE ORDER
               </button>
             </div>
@@ -2041,6 +2052,45 @@ option:checked, option:hover {
     </div>
     <div style="padding:8px;">
       <div id="ff-status-items"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER NOTES MODAL -->
+<div id="order-notes-modal" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.82);z-index:650;align-items:center;justify-content:center;">
+  <div style="width:420px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(77,200,176,0.1);">
+    <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">ORDER NOTES</span>
+      <span onclick="closeOrderNotesModal()" style="cursor:pointer;color:var(--white-muted);font-size:14px;">✕</span>
+    </div>
+    <div style="padding:14px;">
+      <div id="order-notes-readonly" style="display:none;font-size:15px;color:var(--white-dim);font-family:var(--font);line-height:1.6;padding:8px 10px;background:var(--bg-main);border:1px solid var(--border);min-height:80px;white-space:pre-wrap;"></div>
+      <textarea id="order-notes-input" rows="5"
+        style="width:100%;background:var(--bg-main);border:1px solid var(--border);color:var(--white);
+               font-family:var(--font);font-size:15px;padding:8px 10px;resize:vertical;outline:none;
+               transition:border-color 0.15s;"
+        onfocus="this.style.borderColor='var(--teal-dim)'"
+        onblur="this.style.borderColor='var(--border)'"
+        placeholder="Add notes for this order..."></textarea>
+      <div style="margin-top:4px;font-size:13px;font-family:var(--mono);color:var(--white-muted);" id="order-notes-perm-msg"></div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;">
+        <button onclick="closeOrderNotesModal()"
+          style="height:30px;padding:0 16px;background:transparent;border:1px solid var(--border);
+                 color:var(--white-muted);font-family:var(--font);font-size:14px;cursor:pointer;
+                 transition:all 0.15s;"
+          onmouseenter="this.style.borderColor='var(--teal-dim)';this.style.color='var(--white)'"
+          onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--white-muted)'">
+          CANCEL
+        </button>
+        <button id="order-notes-save-btn" onclick="saveOrderNotes()"
+          style="height:30px;padding:0 16px;background:var(--teal-bg2);border:1px solid var(--teal-dim);
+                 color:var(--teal);font-family:var(--font);font-size:14px;font-weight:700;
+                 letter-spacing:1px;cursor:pointer;transition:all 0.15s;"
+          onmouseenter="this.style.borderColor='var(--teal)';this.style.color='var(--teal-bright)'"
+          onmouseleave="this.style.borderColor='var(--teal-dim)';this.style.color='var(--teal)'">
+          SAVE
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -3661,6 +3711,7 @@ async function loadInvUsers() {
   const result = await apiCall({ action: 'getusers' });
   if(result.success && Array.isArray(result.users)) {
     invUsers = result.users;
+    rebuildGnomeMasterList();
     rebuildUserDropdown();
     refreshFabUserDropdown();
     setApiStatus('ok');
@@ -3710,6 +3761,7 @@ async function refreshUsersFromSheet() {
   const result = await apiCall({ action: 'getusers' });
   if(result.success && Array.isArray(result.users)) {
     invUsers = result.users;
+    rebuildGnomeMasterList();
     rebuildUserDropdown();
     refreshFabUserDropdown();
     // If viewing inventory tab, refresh it
@@ -4034,6 +4086,7 @@ async function loadAdminPw() {
       const result = await apiCall({ action: 'getusers' });
       if(result.success) {
         invUsers = result.users || [];
+        rebuildGnomeMasterList();
         rebuildUserDropdown();
         refreshFabUserDropdown();
         refreshFulfillAssigneeFilter();
@@ -4444,6 +4497,7 @@ async function saveGSyncUrl() {
   const result = await apiCall({ action: 'getusers' });
   if(result.success) {
     invUsers = result.users || [];
+    rebuildGnomeMasterList();
     rebuildUserDropdown();
     refreshFabUserDropdown();
     refreshFulfillAssigneeFilter();
@@ -4498,6 +4552,12 @@ function initOrdersTab() {
   ordSelected.clear();
   updateOrdSelCount();
   buildOrdCatRow();
+  // Default the filter to the Gnome Admin master list so users see
+  // only blueprints that artificers actually own
+  if (!ordUserFilter) {
+    const adminUser = invUsers.find(u => String(u.role) === 'admin');
+    if (adminUser) ordUserFilter = String(adminUser.id);
+  }
   refreshOrdUserDropdown();
   renderOrdBPList();
   renderOrderItems();
@@ -4672,18 +4732,60 @@ function setOrdUserFilter(userId) {
   renderOrdBPList();
 }
 
+// ── Gnome Admin Master List ─────────────────────────────────────
+// Rebuilds the Gnome Admin's blueprints array to be the union of all
+// blueprints owned by users with the 'artificer' permission/role.
+function rebuildGnomeMasterList() {
+  const adminUser = invUsers.find(u => String(u.role) === 'admin');
+  if (!adminUser) return;
+
+  // Collect every BP name owned by any artificer-permissioned user
+  const masterSet = new Set();
+  invUsers.forEach(u => {
+    if (String(u.id) === String(adminUser.id)) return; // skip the admin itself
+    const role  = String(u.role         || '').toLowerCase();
+    const perms = String(u.permissions  || '').toLowerCase();
+    const isArtificer = role.includes('artificer') || perms.includes('artificer') || perms.includes('admin');
+    if (isArtificer) {
+      (u.blueprints || []).forEach(bp => masterSet.add(bp));
+    }
+  });
+
+  adminUser.blueprints = Array.from(masterSet);
+}
+
 function refreshOrdUserDropdown() {
   const sel = document.getElementById('ord-user-filter');
   if(!sel) return;
   const cur = sel.value;
+
+  // Rebuild Gnome Admin master list before populating
+  rebuildGnomeMasterList();
+
+  const adminUser = invUsers.find(u => String(u.role) === 'admin');
+  const defaultId = adminUser ? String(adminUser.id) : '';
+
   sel.innerHTML = '<option value="">All Blueprints</option>';
+
+  // Add Gnome Admin as first, labelled entry
+  if (adminUser) {
+    const gnomeOpt = document.createElement('option');
+    gnomeOpt.value = String(adminUser.id);
+    gnomeOpt.textContent = '⚙ Gnome Admin Master List';
+    sel.appendChild(gnomeOpt);
+  }
+
   invUsers.forEach(u => {
+    if (adminUser && String(u.id) === String(adminUser.id)) return; // already added above
     const opt = document.createElement('option');
     opt.value = String(u.id);
     opt.textContent = u.rank + ' ' + u.name + " BP's";
-    if(String(u.id) === String(cur)) opt.selected = true;
     sel.appendChild(opt);
   });
+
+  // Restore previous selection, or default to Gnome Admin master list
+  const toSelect = cur || defaultId;
+  if (toSelect) sel.value = toSelect;
 }
 
 function renderOrdBPList() {
@@ -4866,6 +4968,7 @@ async function placeOrder() {
     materials:   Object.values(combined).sort((a,b)=>a.ore.localeCompare(b.ore)),
     status:      'New Order',
     assignedTo:  '',
+    notes:       pendingOrderNote || '',
     created:     new Date().toISOString(),
     updated:     new Date().toISOString(),
   };
@@ -4873,6 +4976,9 @@ async function placeOrder() {
   if(result.success) {
     allOrders.push(order);
     orderItems = [];
+    pendingOrderNote = '';
+    const noteWrapper = document.getElementById('ord-note-wrapper');
+    if (noteWrapper) noteWrapper.remove();
     document.getElementById('ord-callsign').value = '';
     document.getElementById('ord-rsi').value = '';
     renderOrderItems();
@@ -5352,8 +5458,20 @@ function buildOrderCardBody(order) {
   return `<div style="display:flex;gap:0;border-top:1px solid var(--border);">
     <!-- Left: per-item breakdown -->
     <div style="flex:1;padding:10px 12px;border-right:1px solid var(--border);">
-      <div style="font-size:15px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);
-                  margin-bottom:8px;">ORDER ITEMS &amp; MATERIALS</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="font-size:15px;font-family:var(--mono);letter-spacing:1.5px;color:var(--teal-dim);">ORDER ITEMS &amp; MATERIALS</div>
+        <button onclick="openOrderNotesModal('${order.id}')"
+          style="height:22px;padding:0 10px;background:transparent;border:1px solid var(--border);
+                 color:var(--white-muted);font-family:var(--mono);font-size:12px;letter-spacing:1px;
+                 cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:4px;"
+          onmouseenter="this.style.borderColor='var(--teal-dim)';this.style.color='var(--teal)'"
+          onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--white-muted)'">
+          <svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          ORDER NOTES
+        </button>
+      </div>
       ${itemRows}
     </div>
     <!-- Right: combined totals -->
@@ -5553,8 +5671,76 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
     if(document.getElementById('mat-modal').classList.contains('open'))closeModal();
     if(invEditId)cancelOreEdit();
+    closeOrderNotesModal();
   }
 });
+
+// ── Order Notes (Fulfillment tab) ───────────────────────────────
+let orderNotesModalId = null;
+
+function openOrderNotesModal(orderId) {
+  orderNotesModalId = orderId;
+  const order = allOrders.find(o => String(o.id) === String(orderId));
+  if (!order) return;
+  const canEdit = canEditOrders();
+  const input   = document.getElementById('order-notes-input');
+  const rdOnly  = document.getElementById('order-notes-readonly');
+  const saveBtn = document.getElementById('order-notes-save-btn');
+  const permMsg = document.getElementById('order-notes-perm-msg');
+  const note    = order.notes || '';
+
+  if (canEdit) {
+    input.style.display  = 'block';
+    rdOnly.style.display = 'none';
+    input.value          = note;
+    saveBtn.style.display = 'inline-flex';
+    permMsg.textContent  = '';
+  } else {
+    input.style.display  = 'none';
+    rdOnly.style.display = 'block';
+    rdOnly.textContent   = note || '— No notes —';
+    saveBtn.style.display = 'none';
+    permMsg.textContent  = 'Only Artificers can edit notes.';
+  }
+  document.getElementById('order-notes-modal').style.display = 'flex';
+}
+
+function closeOrderNotesModal() {
+  document.getElementById('order-notes-modal').style.display = 'none';
+  orderNotesModalId = null;
+}
+
+async function saveOrderNotes() {
+  if (!orderNotesModalId) return;
+  const order = allOrders.find(o => String(o.id) === String(orderNotesModalId));
+  if (!order) return;
+  order.notes   = document.getElementById('order-notes-input').value.trim();
+  order.updated = new Date().toISOString();
+  closeOrderNotesModal();
+  await apiCall({ action: 'saveorder', payload: order });
+}
+
+// ── Order Note Input (Orders tab — pre-submit) ──────────────────
+let pendingOrderNote = '';
+
+function openOrderNoteInput() {
+  const existing = document.getElementById('ord-note-area');
+  if (existing) { existing.focus(); return; }
+  // Insert a note textarea below the header bar, above the items/materials split
+  const header = document.getElementById('ord-callsign').closest('div');
+  const noteDiv = document.createElement('div');
+  noteDiv.id = 'ord-note-wrapper';
+  noteDiv.style.cssText = 'padding:6px 14px;border-bottom:1px solid var(--border);background:var(--bg-section);display:flex;align-items:center;gap:8px;flex-shrink:0;';
+  noteDiv.innerHTML = `
+    <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--teal-dim);fill:none;stroke-width:2;flex-shrink:0;">
+      <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+    </svg>
+    <input id="ord-note-area" class="sc-input" placeholder="Add a note for the Artificer..." style="flex:1;font-size:14px;"
+      oninput="pendingOrderNote=this.value">
+  `;
+  header.insertAdjacentElement('afterend', noteDiv);
+  noteDiv.querySelector('#ord-note-area').focus();
+}
 </script>
 
 </body>
