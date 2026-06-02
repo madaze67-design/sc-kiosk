@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SC Fabrication Kiosk — User Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;800&family=Exo+2:wght@300;400;600&display=swap');
+
+  :root {
+    --bg:       #030d10;
+    --bg2:      #061418;
+    --bg3:      #0a1f24;
+    --teal:     #4dc8b0;
+    --teal-dim: #2a7a68;
+    --amber:    #c8941a;
+    --white:    #e8f4f4;
+    --dim:      #5a8a8a;
+    --red:      #e07040;
+    --green:    #4dc870;
+    --border:   #1a4a52;
+    --mono:     'Share Tech Mono', monospace;
+    --title:    'Orbitron', sans-serif;
+    --body:     'Exo 2', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--body);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none; z-index: 9999;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 60px 40px 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: radial-gradient(ellipse at 50% 0%, rgba(77,200,176,0.08) 0%, transparent 60%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--teal-dim);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: var(--title);
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--teal);
+    text-shadow: 0 0 40px rgba(77,200,176,0.4);
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--dim);
+    letter-spacing: 1px;
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+  .hero-badges {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  }
+  .badge {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 1px;
+    padding: 4px 12px; border: 1px solid var(--teal-dim);
+    color: var(--teal); background: rgba(77,200,176,0.05);
+  }
+
+  /* Layout */
+  .layout { display: flex; min-height: calc(100vh - 200px); }
+
+  /* Sidebar TOC */
+  .sidebar {
+    width: 240px; flex-shrink: 0;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    position: sticky; top: 0; height: 100vh;
+    overflow-y: auto; padding: 20px 0;
+  }
+  .toc-title {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 3px;
+    color: var(--teal-dim); padding: 0 20px 10px; border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .toc-link {
+    display: block; padding: 7px 20px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.5px;
+    color: var(--dim); text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .toc-link:hover { color: var(--teal); border-left-color: var(--teal); background: rgba(77,200,176,0.04); }
+  .toc-link.sub { padding-left: 32px; font-size: 11px; }
+  .toc-section { font-family: var(--mono); font-size: 9px; letter-spacing: 3px;
+    color: var(--teal-dim); padding: 16px 20px 4px; }
+
+  /* Main content */
+  .main { flex: 1; padding: 40px 48px; max-width: 900px; }
+
+  /* Sections */
+  .section { margin-bottom: 56px; scroll-margin-top: 20px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .section-header::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; width: 60px; height: 1px;
+    background: var(--teal);
+  }
+  .section-num {
+    font-family: var(--mono); font-size: 11px; color: var(--teal-dim);
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: 2px 8px; letter-spacing: 1px; flex-shrink: 0;
+  }
+  h2 {
+    font-family: var(--title); font-size: 16px; font-weight: 600;
+    letter-spacing: 2px; color: var(--white);
+  }
+  h3 {
+    font-family: var(--title); font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; color: var(--teal); margin: 24px 0 10px;
+    text-transform: uppercase;
+  }
+  p { font-size: 14px; color: var(--dim); margin-bottom: 12px; line-height: 1.7; }
+  p strong { color: var(--white); font-weight: 600; }
+  p em { color: var(--teal); font-style: normal; }
+
+  /* Info cards */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+    padding: 16px 20px; margin-bottom: 16px;
+  }
+  .card.amber { border-left-color: var(--amber); }
+  .card.red   { border-left-color: var(--red); }
+  .card-title {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+    color: var(--teal); margin-bottom: 8px;
+  }
+  .card.amber .card-title { color: var(--amber); }
+  .card.red .card-title   { color: var(--red); }
+
+  /* Steps */
+  .steps { list-style: none; counter-reset: step; }
+  .steps li {
+    counter-increment: step;
+    display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start;
+  }
+  .steps li::before {
+    content: counter(step);
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    color: var(--bg); background: var(--teal);
+    min-width: 22px; height: 22px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .steps li span { font-size: 14px; color: var(--dim); line-height: 1.7; }
+  .steps li span strong { color: var(--white); }
+
+  /* Key-value table */
+  .kv { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  .kv tr { border-bottom: 1px solid var(--border); }
+  .kv tr:hover { background: rgba(77,200,176,0.03); }
+  .kv td { padding: 9px 12px; font-size: 13px; }
+  .kv td:first-child {
+    font-family: var(--mono); color: var(--teal); width: 38%;
+    border-right: 1px solid var(--border);
+  }
+  .kv td:last-child { color: var(--dim); }
+  .kv td:last-child strong { color: var(--white); }
+
+  /* Tag pills */
+  .tag {
+    display: inline-block;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
+    padding: 2px 8px; margin: 2px;
+    border: 1px solid var(--teal-dim); color: var(--teal);
+    background: rgba(77,200,176,0.06);
+  }
+  .tag.amber { border-color: rgba(200,148,26,0.4); color: var(--amber); background: rgba(200,148,26,0.06); }
+  .tag.red   { border-color: rgba(224,112,64,0.4);  color: var(--red);   background: rgba(224,112,64,0.06); }
+  .tag.dim   { border-color: var(--border); color: var(--dim); background: transparent; }
+
+  /* Inline code */
+  code {
+    font-family: var(--mono); font-size: 12px; color: var(--teal);
+    background: rgba(77,200,176,0.08); padding: 1px 6px;
+    border: 1px solid var(--border);
+  }
+
+  /* Screen mock */
+  .screen-mock {
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: 16px; margin: 16px 0;
+    font-family: var(--mono); font-size: 12px;
+  }
+  .mock-row { display: flex; gap: 16px; margin-bottom: 6px; align-items: center; }
+  .mock-label { color: var(--dim); min-width: 110px; }
+  .mock-val { color: var(--white); }
+  .mock-teal { color: var(--teal); }
+  .mock-amber { color: var(--amber); }
+  .mock-red { color: var(--red); }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* Role table */
+  .role-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+  .role-table th {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+    color: var(--teal-dim); padding: 8px 12px; text-align: left;
+    border-bottom: 1px solid var(--border); background: var(--bg3);
+  }
+  .role-table td {
+    padding: 9px 12px; font-size: 13px; color: var(--dim);
+    border-bottom: 1px solid var(--border);
+  }
+  .role-table td:first-child { font-family: var(--mono); color: var(--white); }
+  .check { color: var(--green); } .cross { color: var(--red); }
+
+  /* Footer */
+  footer {
+    text-align: center; padding: 30px;
+    font-family: var(--mono); font-size: 11px; color: var(--teal-dim);
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">STAR CITIZEN ORG TOOL</div>
+  <h1>FABRICATION KIOSK</h1>
+  <div class="hero-sub">User Guide — Patch 4.8.0 &nbsp;|&nbsp; 1,554 blueprints &nbsp;|&nbsp; 38 ores</div>
+  <div class="hero-badges">
+    <span class="badge">FABRICATE</span>
+    <span class="badge">ORDERS</span>
+    <span class="badge">FULFILLMENT</span>
+    <span class="badge">INVENTORY</span>
+    <span class="badge">BP EDITOR</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="toc-title">CONTENTS</div>
+    <div class="toc-section">SETUP</div>
+    <a class="toc-link" href="#setup">1. First Launch</a>
+    <a class="toc-link sub" href="#google-sheets">Google Sheets Sync</a>
+    <a class="toc-link sub" href="#users">User Accounts</a>
+    <a class="toc-section">FABRICATE TAB</a>
+    <a class="toc-link" href="#fab">2. Blueprint Browser</a>
+    <a class="toc-link sub" href="#materials-tab">Materials Panel</a>
+    <a class="toc-link sub" href="#ore-slots">Ore Slots</a>
+    <a class="toc-link sub" href="#quality">Quality Sliders</a>
+    <a class="toc-link sub" href="#stats">Statistics</a>
+    <a class="toc-section">ORDERS</div>
+    <a class="toc-link" href="#orders">3. Placing Orders</a>
+    <a class="toc-link" href="#fulfill">4. Order Fulfillment</a>
+    <div class="toc-section">INVENTORY</div>
+    <a class="toc-link" href="#inv">5. Inventory</a>
+    <a class="toc-link sub" href="#inv-bps">My Blueprints</a>
+    <a class="toc-link sub" href="#inv-ores">My Ores</a>
+    <div class="toc-section">ADMIN</div>
+    <a class="toc-link" href="#bp-editor">6. Blueprint Editor</a>
+    <a class="toc-link" href="#roles">7. Roles &amp; Permissions</a>
+    <a class="toc-link" href="#tips">8. Tips</a>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- ── SECTION 1: SETUP ── -->
+    <section class="section" id="setup">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>FIRST LAUNCH &amp; SETUP</h2>
+      </div>
+
+      <div class="card amber">
+        <div class="card-title">SECURITY NOTICE</div>
+        <p style="margin:0;font-size:13px;">On first open, a one-time security notice will appear explaining how the kiosk connects to your Google Sheet. Read it and click <strong>Continue</strong>. It will not appear again on the same browser.</p>
+      </div>
+
+      <h3 id="google-sheets">Google Sheets Sync</h3>
+      <p>All user accounts, orders, and custom blueprints are stored in a Google Sheet you control. The kiosk ships with a default Apps Script URL already filled in — if your org has deployed its own sheet, paste that URL instead.</p>
+
+      <ol class="steps">
+        <li><span>Open the kiosk HTML file in any modern browser.</span></li>
+        <li><span>The Google Sheet URL is pre-filled. To change/update the sheet: in the top right open <strong>SYNC → Google Sheet URL</strong>, paste the Apps Script deployment URL, and click <strong>Save & Connect</strong>.</span></li>
+        <li><span>A <strong>ping</strong> test confirms the connection. A green indicator means you're live. Red means the URL is unreachable or the Apps Script is not deployed.</span></li>
+        <li><span>All reads and writes go directly to Google Sheets — no server required beyond the Apps Script itself.</span></li>
+      </ol>
+
+      <h3 id="users">User Accounts</h3>
+      <p>Users are stored in the <code>SC_Users</code> sheet. Each user has a <strong>Rank</strong>, <strong>RSI Handle</strong>, and optionally a <strong>Password</strong>. Select your name from the user dropdown in the top bar to activate your inventory and see blueprints you own.</p>
+
+      <div class="card">
+        <div class="card-title">ADMIN ACCOUNT</div>
+        <p style="margin:0;font-size:13px;">The <strong>Gnome Admin</strong> account (👑 crown) is the super-user. It can edit orders, manage users, and access all features. 
+      </div>
+
+      <table class="kv">
+        <tr><td>Add user</td><td><strong>Inventory → + ADD USER</strong> — enter rank, RSI handle, optional password</td></tr>
+        <tr><td>Delete user</td><td><strong>Inventory → user dropdown → DELETE USER</strong></td></tr>
+        <tr><td>Change password</td><td><strong>Inventory → Change Password</strong></td></tr>
+        <tr><td>Admin mode</td><td>Select <em>Gnome Admin</em> from the user dropdown, or click the Gnome Admin button at the top center and enter the admin password</td></tr>
+      </table>
+    </section>
+
+    <!-- ── SECTION 2: FABRICATE ── -->
+    <section class="section" id="fab">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>FABRICATE TAB</h2>
+      </div>
+
+      <p>The Fabricate tab is the main blueprint browser. <strong>1,554 blueprints</strong> from patch 4.8.0 are embedded directly in the kiosk — no internet connection required to browse them.</p>
+
+      <h3>Blueprint Browser</h3>
+      <p>Blueprints are grouped by <em>category → subcategory</em>, both sorted alphabetically. Use the <strong>category icon bar</strong> at the top to jump to a section, or use the <strong>Search</strong> box to filter by name. The <span class="tag">AFFORDABLE</span> filter shows only blueprints you have enough ores to craft. The <span class="tag">OWNED</span> filter shows blueprints marked as owned by the selected user.</p>
+
+      <table class="kv">
+        <tr><td>Category bar</td><td>Click an icon to jump to that category. Hover for subcategory dropdown.</td></tr>
+        <tr><td>Search</td><td>Filters blueprint names live as you type.</td></tr>
+        <tr><td>AFFORDABLE</td><td>Hides blueprints where your ore inventory is insufficient for any slot.</td></tr>
+        <tr><td>OWNED</td><td>Hides blueprints not marked as owned by the current user.</td></tr>
+        <tr><td>Quantity</td><td><strong>− / +</strong> or <strong>Max</strong> — scales all material requirements.</td></tr>
+        <tr><td>BLUEPRINTS tab</td><td>Shows the blueprint grid.</td></tr>
+        <tr><td>MATERIALS tab</td><td>Shows ore cards for all materials needed across your current selection.</td></tr>
+      </table>
+
+      <h3 id="materials-tab">Materials Panel (right side)</h3>
+      <p>Clicking a blueprint opens the detail panel on the right. The top half shows the item image with its name, category path, tier, and fabrication time. The bottom half shows the <strong>Statistics</strong> panel with real base values from the game files.</p>
+
+      <h3 id="ore-slots">Ore Slots</h3>
+      <p>Each blueprint has 1–3 ore slots. Each slot shows the <strong>part name</strong> (e.g. FRAME, EMITTER, APERTURE IRIS), the required ore, quantity, and unit. The slot header turns <span style="color:var(--red)">orange</span> with <em>"Not enough material"</em> if your inventory is short.</p>
+
+      <ol class="steps">
+        <li><span>Click anywhere on the ore row to open the <strong>material selection modal</strong>. It shows your available ores of that type sorted by quality.</span></li>
+        <li><span>Click an ore to assign it to the slot. The slot updates with the ore's name, average quality, and available quantity.</span></li>
+        <li><span>Click the <strong>✕</strong> in the slot header to remove an assigned ore.</span></li>
+        <li><span>Use <strong>Best material</strong> / <strong>Worst material</strong> to autofill all empty slots at once.</span></li>
+        <li><span>Use <strong>Clear All</strong> to remove all assigned ores.</span></li>
+      </ol>
+
+      <h3 id="quality">Quality Sliders</h3>
+      <p>Below each ore slot is a quality slider (0–1000). At <strong>500</strong> (default) the item is crafted at standard stats. Moving the slider simulates using ore of that quality and updates the Statistics panel in real time.</p>
+
+      <table class="kv">
+        <tr><td>Drag slider</td><td>Moves quality from 0 (worst) to 1000 (perfect). Stats update live.</td></tr>
+        <tr><td>Click the number</td><td>Type an exact quality value and press Enter or click away.</td></tr>
+        <tr><td>Ore assigned</td><td>Slider locks to the ore's actual quality (🔒). Remove the ore to adjust manually.</td></tr>
+        <tr><td>Stat effect preview</td><td>Below each slider a line shows which stats that slot affects and by how much at the current quality, e.g. <em>Integrity +8.3%</em>.</td></tr>
+      </table>
+
+      <div class="card">
+        <div class="card-title">QUALITY DATA SOURCE</div>
+        <p style="margin:0;font-size:13px;">Quality modifiers are sourced directly from the game's <code>crafting.zip</code> data files (patch 4.8.0). All 38 ores have exact quantization curves and 1,465 blueprints have per-slot stat modifier ranges. The formula is:<br><br>
+        <code>mult = modLo + (modHi − modLo) × effectiveQ / 1000</code><br><br>
+        where <em>effectiveQ</em> is the raw quality run through the ore's quantization table.</p>
+      </div>
+
+      <h3 id="stats">Statistics Panel</h3>
+      <p>Stats are pulled from the game's <code>scitem.zip</code> item definition files. 1,496 blueprints have real numeric base values. The panel shows three columns:</p>
+
+      <div class="screen-mock">
+        <div class="mock-row">
+          <span class="mock-label mock-teal">Attribute</span>
+          <span class="mock-label mock-teal">Base Stats</span>
+          <span class="mock-label mock-teal">Enhanced Stats</span>
+          <span class="mock-label mock-teal">Delta</span>
+        </div>
+        <div class="mock-row">
+          <span class="mock-label">Fire Rate</span>
+          <span class="mock-label">180.00 RPM</span>
+          <span class="mock-label mock-teal">196.16 RPM</span>
+          <span class="mock-label mock-teal">+16.16 RPM ▲</span>
+        </div>
+        <div class="mock-row">
+          <span class="mock-label">Impact Force</span>
+          <span class="mock-label">+0.00 %</span>
+          <span class="mock-label mock-teal">+5.61 %</span>
+          <span class="mock-label mock-teal">+5.61 % ▲</span>
+        </div>
+        <div class="mock-row">
+          <span class="mock-label">Recoil Kick</span>
+          <span class="mock-label">+0.00 %</span>
+          <span class="mock-label mock-teal">−31.68 %</span>
+          <span class="mock-label mock-teal" style="color:var(--red)">−31.68 % ▼</span>
+        </div>
+      </div>
+
+      <p><strong>Base Stats</strong> = standard values at quality 500. <strong>Enhanced Stats</strong> = values at your current slider positions. <strong>Delta</strong> = the change, with green ▲ for improvements and red ▼ for reductions. Note that <em>Recoil Kick</em> and similar stats are <strong>negated</strong> — a lower value is better, so a reduction still shows green.</p>
+    </section>
+
+    <!-- ── SECTION 3: ORDERS ── -->
+    <section class="section" id="orders">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>PLACING ORDERS</h2>
+      </div>
+
+      <p>The Orders tab lets members request fabrication jobs. Orders are saved to the Google Sheet and picked up by artificers in the Fulfillment tab.</p>
+
+      <ol class="steps">
+        <li><span>In the Fabricate tab, click blueprints to select them (teal highlight + checkmark). Clicking again deselects. Already-queued items show an <em>in order ×N</em> badge.</span></li>
+        <li><span>Click <strong>+ ADD TO ORDER</strong> (button at the bottom of the detail panel, or the badge in the top bar). A popup shows all selected blueprints with per-item quantity controls.</span></li>
+        <li><span>Enter your <strong>Callsign</strong> and <strong>RSI Handle</strong> in the order popup.</span></li>
+        <li><span>Click <strong>ADD ALL TO ORDER</strong> to submit. The order appears in the Fulfillment tab immediately.</span></li>
+      </ol>
+
+      <p>You can also browse and select blueprints directly from the <strong>Orders</strong> screen tab, which has the same blueprint grid with a <em>User BP filter</em> to show only blueprints owned by a specific user.</p>
+    </section>
+
+    <!-- ── SECTION 4: FULFILLMENT ── -->
+    <section class="section" id="fulfill">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>ORDER FULFILLMENT</h2>
+      </div>
+
+      <p>The Fulfillment tab is the artificer's workspace. It shows all open orders grouped by status, collapsed by default for a clean overview.</p>
+
+      <table class="kv">
+        <tr><td>Expand / collapse</td><td>Click an order header row to toggle. Use <strong>▼ ALL / ▲ ALL</strong> to expand or collapse everything at once.</td></tr>
+        <tr><td>Left panel</td><td>Per-item breakdown — each blueprint with its individual material slots.</td></tr>
+        <tr><td>Right panel</td><td>Combined totals — all materials summed across the whole order.</td></tr>
+        <tr><td>Change status</td><td>Click the <strong>⚙</strong> cog icon on an order to cycle through statuses.</td></tr>
+        <tr><td>Assign</td><td>Use the assignee dropdown to claim an order.</td></tr>
+        <tr><td>Archive / delete</td><td>Artificers and admins can delete orders. Archived orders move to the COMPLETE tab.</td></tr>
+        <tr><td>Unarchive</td><td>Use the ↩ button on completed orders to move them back to active.</td></tr>
+      </table>
+
+      <p>The status filter and assignee filter (custom checkbox dropdowns) let you narrow the view to only what's relevant to you.</p>
+
+      <div class="card amber">
+        <div class="card-title">PERMISSIONS</div>
+        <p style="margin:0;font-size:13px;">Editing orders (status, assignee, delete) requires the <code>artificer</code> or <code>admin</code> permission. See the <a href="#roles" style="color:var(--teal);">Roles section</a> for details.</p>
+      </div>
+    </section>
+
+    <!-- ── SECTION 5: INVENTORY ── -->
+    <section class="section" id="inv">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>INVENTORY</h2>
+      </div>
+
+      <h3 id="inv-bps">My Blueprints</h3>
+      <p>The blueprint list in Inventory shows all 1,554 blueprints. Clicking a blueprint toggles your ownership of it. Owned blueprints appear with a teal highlight and are included when the <span class="tag">OWNED</span> filter is active in the Fabricate tab. Filter by category or use the search box to find specific blueprints. Toggle <strong>My BPs</strong> to show only the ones you own.</p>
+
+      <h3 id="inv-ores">My Ores</h3>
+      <p>The ore panel shows all 38 ores. Switch between <strong>All Ores</strong> and <strong>My Ores</strong> (only ores you have in inventory). Click <strong>Add Ore</strong> or click an existing ore card to open the edit popup.</p>
+
+      <table class="kv">
+        <tr><td>Quality</td><td>0–1000 slider. This quality is used when the ore is assigned to a slot in the Fabricate tab and locks that slot's quality slider.</td></tr>
+        <tr><td>Quantity</td><td>Amount in cSCU (ship ores) or units (hand-mined ores).</td></tr>
+        <tr><td>Notes</td><td>Free text — useful for noting which rock cluster or location the ore came from.</td></tr>
+        <tr><td>Hand-mined ores</td><td><span class="tag dim">Aphorite Beradom Carinite Dolivine Feynmaline Glacosite Hadanite Janalite Sadaryx Saldynium Jaclium Yormandi Eye</span></td></tr>
+      </table>
+    </section>
+
+    <!-- ── SECTION 6: BP EDITOR ── -->
+    <section class="section" id="bp-editor">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>BLUEPRINT EDITOR</h2>
+      </div>
+
+      <p>The Blueprint Editor lets admins and authorised users create <strong>custom blueprints</strong> — items not in the wiki database or org-specific recipes. Custom blueprints are stored in the <code>SC_CustomBlueprints</code> Google Sheet and appear alongside the standard blueprints in the Fabricate and Orders tabs.</p>
+
+      <ol class="steps">
+        <li><span>Log in as a user with editor access (admin role or <code>admin</code> permission).</span></li>
+        <li><span>Click <strong>+ NEW BLUEPRINT</strong> in the BP Editor tab.</span></li>
+        <li><span>Fill in the name, category, subcategory, grade, and craft time.</span></li>
+        <li><span>Add material slots — each slot needs a part name, ore type, quantity, and hand-mined flag.</span></li>
+        <li><span>Click <strong>SAVE</strong>. The blueprint immediately appears in the Fabricate tab.</span></li>
+        <li><span>Edit or delete existing custom blueprints from the same screen.</span></li>
+      </ol>
+    </section>
+
+    <!-- ── SECTION 7: ROLES ── -->
+    <section class="section" id="roles">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2>ROLES &amp; PERMISSIONS</h2>
+      </div>
+
+      <p>Each user has a <strong>Role</strong> (set in the <code>SC_Users</code> sheet) and optionally a <strong>Permissions</strong> field. The permissions field accepts <code>admin</code> or <code>artificer</code> as comma-separated values.</p>
+
+      <table class="role-table">
+        <tr>
+          <th>Role / Permission</th>
+          <th>Place Orders</th>
+          <th>Edit Orders</th>
+          <th>Delete Orders</th>
+          <th>Manage Users</th>
+          <th>BP Editor</th>
+        </tr>
+        <tr>
+          <td>Any user</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td><code>artificer</code> permission</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td><code>admin</code> role or permission</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>👑 Gnome Admin</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+      </table>
+
+      <p>To grant artificer access to a user: open the <code>SC_Users</code> Google Sheet, find the user's row, and add <code>artificer</code> to column J (Permissions). No kiosk restart required — permissions are read on next sync.</p>
+    </section>
+
+    <!-- ── SECTION 8: TIPS ── -->
+    <section class="section" id="tips">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2>TIPS &amp; REFERENCE</h2>
+      </div>
+
+      <h3>Blueprint Coverage</h3>
+      <table class="kv">
+        <tr><td>Total blueprints</td><td><strong>1,554</strong> (patch 4.8.0)</td></tr>
+        <tr><td>With real base stats</td><td><strong>1,496</strong> (96%) — from scitem.zip game files</td></tr>
+        <tr><td>With quality modifiers</td><td><strong>1,465</strong> (94%) — from crafting.zip game files</td></tr>
+        <tr><td>Ores with quant curves</td><td><strong>38 / 38</strong> (100%)</td></tr>
+        <tr><td>Missing radar range</td><td>Radar max detection stored in UUID-referenced shared params not in scitem.zip</td></tr>
+        <tr><td>Missing ammo stats</td><td>Consumable/magazine stats in separate ammo params records</td></tr>
+      </table>
+
+      <h3>Ore Unit Reference</h3>
+      <table class="kv">
+        <tr><td>Ship ores (cSCU)</td><td>Agricium, Aluminum, Aslarite, Beryl, Bexalite, Borase, Copper, Corundum, Gold, Hephaestanite, Iron, Laranite, Lindinium, Ouratite, Quartz, Quantainium, Pressurized Ice, Riccite, Savrilium, Silicon, Stileron, Taranite, Tin, Titanium, Torite, Tungsten</td></tr>
+        <tr><td>Hand-mined (units)</td><td>Aphorite, Beradom, Carinite, Dolivine, Feynmaline, Glacosite, Hadanite, Janalite, Jaclium, Sadaryx, Saldynium, Yormandi Eye</td></tr>
+      </table>
+
+      <h3>Common Issues</h3>
+      <table class="kv">
+        <tr><td>Stats not updating</td><td>Make sure at least one quality slider is not at 500. The Enhanced Stats column only changes when quality deviates from the baseline.</td></tr>
+        <tr><td>Can't edit orders</td><td>Your user needs the <code>artificer</code> or <code>admin</code> permission in column J of SC_Users.</td></tr>
+        <tr><td>Sheet not connecting</td><td>Check that the Apps Script is deployed as <em>Execute as: Me</em> and <em>Who has access: Anyone</em>. Re-deploy if you changed the script.</td></tr>
+        <tr><td>Custom BP not showing</td><td>Reload the page — custom blueprints are fetched from the sheet on load.</td></tr>
+        <tr><td>Quality slider locked</td><td>An ore is assigned to that slot. Click ✕ on the slot header to remove it, then the slider is free again.</td></tr>
+      </table>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  SC FABRICATION KIOSK &nbsp;|&nbsp; PATCH 4.8.0 &nbsp;|&nbsp; NOT AFFILIATED WITH CLOUD IMPERIUM GAMES
+</footer>
+
+<script>
+  // Highlight active TOC link on scroll
+  const sections = document.querySelectorAll('.section, h3[id]');
+  const links = document.querySelectorAll('.toc-link');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) cur = s.id;
+    });
+    links.forEach(l => {
+      l.style.color = l.getAttribute('href') === '#'+cur ? 'var(--teal)' : '';
+      l.style.borderLeftColor = l.getAttribute('href') === '#'+cur ? 'var(--teal)' : 'transparent';
+    });
+  });
+</script>
+</body>
+</html>
