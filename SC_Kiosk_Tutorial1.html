@@ -288,10 +288,12 @@
     <a class="toc-link sub" href="#master-list">Master BP List</a>
     <a class="toc-link" href="#fulfill">4. Order Fulfillment</a>
     <a class="toc-link sub" href="#order-notes-ff">Order Notes</a>
+    <a class="toc-link sub" href="#order-priority">Order Priority</a>
     <div class="toc-section">INVENTORY</div>
     <a class="toc-link" href="#inv">5. Inventory</a>
     <a class="toc-link sub" href="#inv-bps">My Blueprints</a>
     <a class="toc-link sub" href="#inv-ores">My Ores</a>
+    <a class="toc-link sub" href="#inv-view">Viewing Others</a>
     <div class="toc-section">ADMIN</div>
     <a class="toc-link" href="#bp-editor">6. Blueprint Editor</a>
     <a class="toc-link" href="#roles">7. Roles &amp; Permissions</a>
@@ -526,6 +528,28 @@
         <p style="margin:0;font-size:13px;">Editing order notes (and order status, assignee, delete) requires the <code>artificer</code> or <code>admin</code> permission. See the <a href="#roles" style="color:var(--teal);">Roles section</a> for details. All users can <em>read</em> notes.</p>
       </div>
 
+      <h3 id="order-priority">Order Priority</h3>
+      <p>Artificers can flag any order with a priority level to visually sort workload at a glance. The priority changes the <strong>border colour of the entire order card</strong> so high-urgency jobs stand out even when all cards are collapsed.</p>
+
+      <ol class="steps">
+        <li><span>On any order card header, click the <strong>P</strong> button — it sits immediately to the right of the <strong>⚙</strong> cog. The P button is only visible to users with <code>artificer</code> or <code>admin</code> permissions.</span></li>
+        <li><span>A small dropdown opens just below the button with four options.</span></li>
+        <li><span>Click the desired priority. The card border and P button colour update instantly — no page refresh needed.</span></li>
+        <li><span>The priority is saved to the Google Sheet immediately.</span></li>
+      </ol>
+
+      <table class="kv">
+        <tr><td><span style="color:#e04444;font-weight:600;">High</span></td><td>Red border — urgent, needs immediate attention</td></tr>
+        <tr><td><span style="color:#5bb8e8;font-weight:600;">Medium</span></td><td>Light blue border — standard priority</td></tr>
+        <tr><td><span style="color:#4dc870;font-weight:600;">Low</span></td><td>Green border — fulfil when available</td></tr>
+        <tr><td>None</td><td>Default border — no priority set</td></tr>
+      </table>
+
+      <div class="card">
+        <div class="card-title">TIP</div>
+        <p style="margin:0;font-size:13px;">The P button itself takes on the current priority colour, so you can see an order's priority at a glance without opening the dropdown. A P button in the default muted colour means no priority is set.</p>
+      </div>
+
       <p>The status filter and assignee filter (custom checkbox dropdowns) let you narrow the view to only what's relevant to you.</p>
     </section>
 
@@ -548,6 +572,28 @@
         <tr><td>Notes</td><td>Free text — useful for noting which rock cluster or location the ore came from.</td></tr>
         <tr><td>Hand-mined ores</td><td><span class="tag dim">Aphorite Beradom Carinite Dolivine Feynmaline Glacosite Hadanite Janalite Sadaryx Saldynium Jaclium Yormandi Eye</span></td></tr>
       </table>
+
+      <h3 id="inv-view">Viewing Another User's Inventory</h3>
+      <p>The <strong>VIEW</strong> dropdown (to the right of the USER dropdown in the Inventory tab topbar) lets anyone browse any other user's blueprints and ore stocks — no login required.</p>
+
+      <ol class="steps">
+        <li><span>In the Inventory tab, find the <strong>VIEW:</strong> dropdown in the top bar, to the right of the USER dropdown.</span></li>
+        <li><span>Select any user from the list. Their blueprints and ores load immediately.</span></li>
+        <li><span>The top-right info bar changes to <strong>👁 VIEWING: Rank Name (read-only)</strong> so it's always clear you are not in your own account.</span></li>
+        <li><span>To return to your own inventory, set the VIEW dropdown back to <em>— Select User —</em>.</span></li>
+      </ol>
+
+      <table class="kv">
+        <tr><td>Blueprints</td><td>Owned blueprints show the teal ✓ checkmark as normal, but clicking a row does nothing — toggling is disabled in view mode.</td></tr>
+        <tr><td>Ores</td><td>Always shows only ores that user has entered (equivalent to <strong>My Ores</strong> mode). The ore type filter and search still work.</td></tr>
+        <tr><td>Edit controls</td><td>The edit cog on ore rows is hidden. The <strong>+ ADD</strong> prompt is replaced with a dash. No data can be changed.</td></tr>
+        <tr><td>Your session</td><td>Your own login is unaffected — you can be logged in as one user and viewing another's inventory at the same time.</td></tr>
+      </table>
+
+      <div class="card">
+        <div class="card-title">USE CASE</div>
+        <p style="margin:0;font-size:13px;">Useful for artificers checking what ores a member has available before accepting an order, or for members checking whether a fellow artificer owns a specific blueprint before requesting it.</p>
+      </div>
     </section>
 
     <!-- ── SECTION 6: BP EDITOR ── -->
@@ -585,7 +631,9 @@
           <th>Add Order Note</th>
           <th>Edit Orders</th>
           <th>Edit Order Notes</th>
+          <th>Set Priority</th>
           <th>Delete Orders</th>
+          <th>View Inventory</th>
           <th>Manage Users</th>
           <th>BP Editor</th>
         </tr>
@@ -597,10 +645,14 @@
           <td class="cross">✗</td>
           <td class="cross">✗</td>
           <td class="cross">✗</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
           <td class="cross">✗</td>
         </tr>
         <tr>
           <td><code>artificer</code> permission</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
@@ -618,9 +670,13 @@
           <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
         </tr>
         <tr>
           <td>👑 Gnome Admin</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
@@ -660,6 +716,9 @@
       <h3>Common Issues</h3>
       <table class="kv">
         <tr><td>Stats not updating</td><td>Make sure at least one quality slider is not at 500. The Enhanced Stats column only changes when quality deviates from the baseline.</td></tr>
+        <tr><td>Can't see P button</td><td>The priority button only appears for users with <code>artificer</code> or <code>admin</code> permissions. Regular users cannot set priority.</td></tr>
+        <tr><td>Priority not saving</td><td>Ensure the kiosk is connected to Google Sheets (SYNC button in the header). Priority saves via the same <code>saveorder</code> call as status changes.</td></tr>
+        <tr><td>VIEW dropdown is empty</td><td>No users have been loaded yet — connect to Google Sheets first using the SYNC button.</td></tr>
         <tr><td>Can't edit orders</td><td>Your user needs the <code>artificer</code> or <code>admin</code> permission in column J of SC_Users.</td></tr>
         <tr><td>Can't edit Order Notes</td><td>Order Notes in the Fulfillment tab are only editable by users with the <code>artificer</code> or <code>admin</code> permission. Other users see them as read-only.</td></tr>
         <tr><td>Master List is empty</td><td>No users have the <code>artificer</code> permission yet, or no artificer has marked any blueprints as owned. Check the SC_Users sheet and the Inventory tab.</td></tr>
