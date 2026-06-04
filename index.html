@@ -1589,6 +1589,15 @@ option:checked, option:hover {
               DELETE USER
             </button>
           </div>
+          <!-- VIEW dropdown: read-only peek at another user's inventory -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;white-space:nowrap;">VIEW:</span>
+            <select id="inv-view-select" class="deliver-sel"
+              style="min-width:160px;background:var(--bg-main);color:var(--white-dim);border-color:var(--border);"
+              onchange="setInvViewUser(this.value)">
+              <option value="">— Select User —</option>
+            </select>
+          </div>
           <div style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;">
             <button id="chg-pw-btn" onclick="openChangePw()" style="display:none;height:26px;padding:0 12px;
               background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);
@@ -3632,6 +3641,43 @@ function rebuildUserDropdown() {
     if (u.id === activeUserId) opt.selected = true;
     sel.appendChild(opt);
   });
+  rebuildViewDropdown();
+}
+
+// ── Read-only view of another user's inventory ─────────────────
+let viewUserId = null; // when set, inventory renders this user read-only
+
+function rebuildViewDropdown() {
+  const sel = document.getElementById('inv-view-select');
+  if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Select User —</option>';
+  invUsers.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = String(u.id);
+    opt.textContent = `${u.rank} ${u.name}`;
+    if (String(u.id) === String(cur)) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function setInvViewUser(id) {
+  viewUserId = id || null;
+  // Clear the USER dropdown selection so there's no confusion about edit mode
+  if (viewUserId) {
+    document.getElementById('inv-user-select').value = activeUserId || '';
+    // Show a read-only banner
+    const info = document.getElementById('inv-user-info');
+    const u = invUsers.find(u => String(u.id) === String(viewUserId));
+    if (u) info.textContent = `👁 VIEWING: ${u.rank} ${u.name} (read-only)`;
+  } else {
+    // Restore normal info
+    const u = activeUserId ? invUsers.find(u => String(u.id) === String(activeUserId)) : null;
+    const info = document.getElementById('inv-user-info');
+    info.textContent = u ? `${u.blueprints.length} BPs · ${u.materials.length} ore entries` : '';
+  }
+  renderInvBP();
+  renderInvMats();
 }
 let _pendingUserId = null; // holds id awaiting password
 
@@ -3858,7 +3904,10 @@ function toggleInvMyBP() {
 }
 function renderInvBP() {
   const container = document.getElementById('inv-bp-list');
-  const user = getActiveUser();
+  const isViewing = !!viewUserId;
+  const user = isViewing
+    ? invUsers.find(u => String(u.id) === String(viewUserId))
+    : getActiveUser();
   if (!user) return;
   const search = (document.getElementById('inv-bp-search')?.value || '').toLowerCase();
   let list = BLUEPRINTS.filter(bp => {
@@ -3894,15 +3943,25 @@ function renderInvBP() {
       const owned = user.blueprints.includes(bp.name);
       const row = document.createElement('div');
       row.className = 'inv-bp-row' + (owned ? ' owned' : '');
-      row.innerHTML = `<div class="inv-bp-check">${owned ? '✓' : ''}</div>
-        <span style="flex:1;">${bp.name}</span>
-        <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">T${bp.tier}</span>`;
-      row.onclick = () => toggleUserBP(user, bp.name, row);
+      if (isViewing) {
+        // Read-only: no toggle, show a subtle eye cursor
+        row.style.cursor = 'default';
+        row.innerHTML = `<div class="inv-bp-check">${owned ? '✓' : ''}</div>
+          <span style="flex:1;">${bp.name}</span>
+          <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">T${bp.tier}</span>`;
+      } else {
+        row.innerHTML = `<div class="inv-bp-check">${owned ? '✓' : ''}</div>
+          <span style="flex:1;">${bp.name}</span>
+          <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">T${bp.tier}</span>`;
+        row.onclick = () => toggleUserBP(user, bp.name, row);
+      }
       container.appendChild(row);
     });
   });
   // Update info
-  document.getElementById('inv-user-info').textContent = `${user.blueprints.length} BPs · ${user.materials.length} ore entries`;
+  if (!isViewing) {
+    document.getElementById('inv-user-info').textContent = `${user.blueprints.length} BPs · ${user.materials.length} ore entries`;
+  }
 }
 function toggleUserBP(user, bpName, row) {
   const idx = user.blueprints.indexOf(bpName);
@@ -3948,7 +4007,10 @@ function toggleInvMyOres() {
 }
 function renderInvMats() {
   const container = document.getElementById('inv-mat-list');
-  const user = getActiveUser();
+  const isViewing = !!viewUserId;
+  const user = isViewing
+    ? invUsers.find(u => String(u.id) === String(viewUserId))
+    : getActiveUser();
   if (!user) return;
 
   const search = (document.getElementById('inv-mat-search')?.value || '').toLowerCase();
@@ -3974,13 +4036,14 @@ function renderInvMats() {
       row.innerHTML = `<span class="inv-mat-name">${e.name}</span>
         <span class="inv-mat-q" style="color:${qc};">${e.quality} Q</span>
         <span class="inv-mat-qty">${isHand(e.name)?Math.round(e.qty)+' units':fmtCSCU(e.qty)+' cSCU'}</span>
-        <div class="inv-mat-cog" onclick="openEditMat(event,'${e.entryId}')" title="Edit">
+        ${isViewing ? '' : `<div class="inv-mat-cog" onclick="openEditMat(event,'${e.entryId}')" title="Edit">
           <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        </div>`;
+        </div>`}`;
+      if (!isViewing) row.style.cursor = 'default';
       container.appendChild(row);
     });
   } else {
-    // Show all known ores — user can click to add to their inventory
+    // Show all known ores — in view mode just show ownership counts, no click-to-add
     let oreList = ALL_ORE_NAMES.filter(name => {
       if (invMatTypeFilter && typeToId[ORE_TYPE_MAP[name]||'Mineral'] !== invMatTypeFilter) return false;
       if (search && !name.toLowerCase().includes(search)) return false;
@@ -3996,10 +4059,17 @@ function renderInvMats() {
       const row = document.createElement('div');
       row.className = 'inv-mat-row';
       row.style.justifyContent = 'space-between';
-      row.innerHTML = `<span class="inv-mat-name">${name}</span>
-        <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">${type}</span>
-        ${userCount > 0 ? `<span style="font-size:13px;font-family:var(--mono);color:var(--teal-dim);">${userCount} stack${userCount>1?'s':''}</span>` : '<span style="font-size:13px;color:var(--white-muted);font-family:var(--mono);">+ ADD</span>'}`;
-      row.onclick = () => openAddMat(name);
+      if (isViewing) {
+        row.style.cursor = 'default';
+        row.innerHTML = `<span class="inv-mat-name">${name}</span>
+          <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">${type}</span>
+          ${userCount > 0 ? `<span style="font-size:13px;font-family:var(--mono);color:var(--teal-dim);">${userCount} stack${userCount>1?'s':''}</span>` : '<span style="font-size:13px;color:var(--border);font-family:var(--mono);">—</span>'}`;
+      } else {
+        row.innerHTML = `<span class="inv-mat-name">${name}</span>
+          <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">${type}</span>
+          ${userCount > 0 ? `<span style="font-size:13px;font-family:var(--mono);color:var(--teal-dim);">${userCount} stack${userCount>1?'s':''}</span>` : '<span style="font-size:13px;color:var(--white-muted);font-family:var(--mono);">+ ADD</span>'}`;
+        row.onclick = () => openAddMat(name);
+      }
       container.appendChild(row);
     });
   }
