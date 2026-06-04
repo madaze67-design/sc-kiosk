@@ -5315,6 +5315,7 @@ async function initFulfillTab() {
   const result = await apiCall({ action: 'getorders' });
   if(result.success) {
     allOrders = result.orders||[];
+    restorePrioritiesFromLocal();
     renderFulfill();
     refreshFulfillAssigneeFilter();
   }
@@ -5381,6 +5382,7 @@ async function deleteOrder(orderId) {
   const result = await apiCall({ action:'deleteorder', payload:{ id: orderId } });
   if(result.success) {
     allOrders = allOrders.filter(function(o){ return String(o.id)!==String(orderId); });
+    savePrioritiesToLocal(); // remove stale priority entry
     renderFulfill();
   } else {
     alert('Failed to delete: '+(result.error||'unknown'));
@@ -5938,6 +5940,10 @@ async function setPriority(orderId, priority) {
   order.priority = priority || '';
   order.updated  = new Date().toISOString();
 
+  // Persist to localStorage so priority survives refresh/resync
+  // regardless of whether the Apps Script preserves the field
+  savePrioritiesToLocal();
+
   const priColor = priority === 'high' ? '#e04444' : priority === 'medium' ? '#5bb8e8' : priority === 'low' ? '#4dc870' : 'var(--border)';
 
   // Update card border live
@@ -5956,6 +5962,33 @@ async function setPriority(orderId, priority) {
   }
 
   await apiCall({ action: 'saveorder', payload: order });
+}
+
+// ── Priority localStorage persistence ───────────────────────────
+const PRIORITY_LS_KEY = 'sc_order_priorities';
+
+function savePrioritiesToLocal() {
+  const map = {};
+  allOrders.forEach(o => {
+    if (o.priority) map[String(o.id)] = o.priority;
+  });
+  localStorage.setItem(PRIORITY_LS_KEY, JSON.stringify(map));
+}
+
+function restorePrioritiesFromLocal() {
+  try {
+    const raw = localStorage.getItem(PRIORITY_LS_KEY);
+    if (!raw) return;
+    const map = JSON.parse(raw);
+    allOrders.forEach(o => {
+      const saved = map[String(o.id)];
+      if (saved && !o.priority) o.priority = saved;
+    });
+    // Clean up stale entries for orders that no longer exist
+    const activeIds = new Set(allOrders.map(o => String(o.id)));
+    Object.keys(map).forEach(id => { if (!activeIds.has(id)) delete map[id]; });
+    localStorage.setItem(PRIORITY_LS_KEY, JSON.stringify(map));
+  } catch(e) { /* ignore */ }
 }
 
 let orderNotesModalId = null;
