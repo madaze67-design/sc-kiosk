@@ -5315,8 +5315,6 @@ async function initFulfillTab() {
   const result = await apiCall({ action: 'getorders' });
   if(result.success) {
     allOrders = result.orders||[];
-    // Debug: log first order's fields to confirm what the sheet returns
-    if(allOrders.length) console.log('[SC Kiosk] Sample order fields from sheet:', Object.keys(allOrders[0]), '| priority value:', allOrders[0].priority);
     restorePrioritiesFromLocal();
     renderFulfill();
     refreshFulfillAssigneeFilter();
@@ -5942,10 +5940,6 @@ async function setPriority(orderId, priority) {
   order.priority = priority || '';
   order.updated  = new Date().toISOString();
 
-  // Persist to localStorage so priority survives refresh/resync
-  // regardless of whether the Apps Script preserves the field
-  savePrioritiesToLocal();
-
   const priColor = priority === 'high' ? '#e04444' : priority === 'medium' ? '#5bb8e8' : priority === 'low' ? '#4dc870' : 'var(--border)';
 
   // Update card border live
@@ -5966,30 +5960,24 @@ async function setPriority(orderId, priority) {
   await apiCall({ action: 'saveorder', payload: order });
 }
 
-// ── Priority localStorage persistence ───────────────────────────
+// ── Priority localStorage persistence (kept for offline resilience) ──────────
 const PRIORITY_LS_KEY = 'sc_order_priorities';
 
 function savePrioritiesToLocal() {
   const map = {};
-  allOrders.forEach(o => {
-    if (o.priority) map[String(o.id)] = o.priority;
-  });
+  allOrders.forEach(o => { if (o.priority) map[String(o.id)] = o.priority; });
   localStorage.setItem(PRIORITY_LS_KEY, JSON.stringify(map));
 }
 
 function restorePrioritiesFromLocal() {
+  // Only fills in priorities that the sheet didn't return (e.g. old rows without column 13)
   try {
     const raw = localStorage.getItem(PRIORITY_LS_KEY);
     if (!raw) return;
     const map = JSON.parse(raw);
     allOrders.forEach(o => {
-      const saved = map[String(o.id)];
-      if (saved && !o.priority) o.priority = saved;
+      if (!o.priority && map[String(o.id)]) o.priority = map[String(o.id)];
     });
-    // Clean up stale entries for orders that no longer exist
-    const activeIds = new Set(allOrders.map(o => String(o.id)));
-    Object.keys(map).forEach(id => { if (!activeIds.has(id)) delete map[id]; });
-    localStorage.setItem(PRIORITY_LS_KEY, JSON.stringify(map));
   } catch(e) { /* ignore */ }
 }
 
