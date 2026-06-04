@@ -275,6 +275,7 @@
     <a class="toc-link" href="#setup">1. First Launch</a>
     <a class="toc-link sub" href="#google-sheets">Google Sheets Sync</a>
     <a class="toc-link sub" href="#users">User Accounts</a>
+    <a class="toc-link sub" href="#login-btn">Login Button</a>
     <a class="toc-section">FABRICATE TAB</a>
     <a class="toc-link" href="#fab">2. Blueprint Browser</a>
     <a class="toc-link sub" href="#materials-tab">Materials Panel</a>
@@ -283,7 +284,10 @@
     <a class="toc-link sub" href="#stats">Statistics</a>
     <a class="toc-section">ORDERS</div>
     <a class="toc-link" href="#orders">3. Placing Orders</a>
+    <a class="toc-link sub" href="#order-note">Adding a Note</a>
+    <a class="toc-link sub" href="#master-list">Master BP List</a>
     <a class="toc-link" href="#fulfill">4. Order Fulfillment</a>
+    <a class="toc-link sub" href="#order-notes-ff">Order Notes</a>
     <div class="toc-section">INVENTORY</div>
     <a class="toc-link" href="#inv">5. Inventory</a>
     <a class="toc-link sub" href="#inv-bps">My Blueprints</a>
@@ -320,19 +324,36 @@
       </ol>
 
       <h3 id="users">User Accounts</h3>
-      <p>Users are stored in the <code>SC_Users</code> sheet. Each user has a <strong>Rank</strong>, <strong>RSI Handle</strong>, and optionally a <strong>Password</strong>. Select your name from the user dropdown in the top bar to activate your inventory and see blueprints you own.</p>
+      <p>Users are stored in the <code>SC_Users</code> sheet. Each user has a <strong>Rank</strong>, <strong>RSI Handle</strong>, and optionally a <strong>Password</strong>. Select your name from the user dropdown in the Inventory tab, or use the <strong>LOGIN</strong> button in the top bar (see below) to activate your account from any tab.</p>
 
       <div class="card">
         <div class="card-title">ADMIN ACCOUNT</div>
-        <p style="margin:0;font-size:13px;">The <strong>Gnome Admin</strong> account (👑 crown) is the super-user. It can edit orders, manage users, and access all features. 
+        <p style="margin:0;font-size:13px;">The <strong>Gnome Admin</strong> account (👑 crown) is the super-user. It can edit orders, manage users, and access all features.</p>
       </div>
 
       <table class="kv">
         <tr><td>Add user</td><td><strong>Inventory → + ADD USER</strong> — enter rank, RSI handle, optional password</td></tr>
         <tr><td>Delete user</td><td><strong>Inventory → user dropdown → DELETE USER</strong></td></tr>
         <tr><td>Change password</td><td><strong>Inventory → Change Password</strong></td></tr>
-        <tr><td>Admin mode</td><td>Select <em>Gnome Admin</em> from the user dropdown, or click the Gnome Admin button at the top center and enter the admin password</td></tr>
+        <tr><td>Admin mode</td><td>Click the <strong>GNOME ADMIN</strong> button in the top-right and enter the admin password</td></tr>
       </table>
+
+      <h3 id="login-btn">LOGIN Button</h3>
+      <p>The <strong>LOGIN</strong> button sits in the top-right bar, to the left of the GNOME ADMIN button. It lets you log in or switch users from <em>any tab</em> — you no longer need to navigate to Inventory first.</p>
+
+      <ol class="steps">
+        <li><span>Click <strong>LOGIN</strong> in the top-right bar.</span></li>
+        <li><span>A popup lists all user accounts. Users with a password show a <strong>🔒</strong> icon. The currently active user is highlighted with a <em>LOGGED IN</em> tag.</span></li>
+        <li><span>Click your name. If your account has a password, the password prompt appears automatically. If not, you are logged in immediately.</span></li>
+        <li><span>Once logged in, the button label changes from <strong>LOGIN</strong> to your first name in teal so you can always see who is active.</span></li>
+        <li><span>To log out, open the LOGIN button again and click <strong>LOGOUT</strong> at the bottom of the popup.</span></li>
+      </ol>
+
+      <div class="card">
+        <div class="card-title">NOTE</div>
+        <p style="margin:0;font-size:13px;">Logging in via the LOGIN button is identical to selecting a user in the Inventory tab — your blueprints, ore inventory, and permissions are all activated the same way.</p>
+      </div>
+
     </section>
 
     <!-- ── SECTION 2: FABRICATE ── -->
@@ -434,10 +455,39 @@
         <li><span>In the Fabricate tab, click blueprints to select them (teal highlight + checkmark). Clicking again deselects. Already-queued items show an <em>in order ×N</em> badge.</span></li>
         <li><span>Click <strong>+ ADD TO ORDER</strong> (button at the bottom of the detail panel, or the badge in the top bar). A popup shows all selected blueprints with per-item quantity controls.</span></li>
         <li><span>Enter your <strong>Callsign</strong> and <strong>RSI Handle</strong> in the order popup.</span></li>
+        <li><span>Optionally add a note for the artificer — see <a href="#order-note" style="color:var(--teal);">Adding a Note</a> below.</span></li>
         <li><span>Click <strong>ADD ALL TO ORDER</strong> to submit. The order appears in the Fulfillment tab immediately.</span></li>
       </ol>
 
-      <p>You can also browse and select blueprints directly from the <strong>Orders</strong> screen tab, which has the same blueprint grid with a <em>User BP filter</em> to show only blueprints owned by a specific user.</p>
+      <h3 id="order-note">Adding a Note to Your Order</h3>
+      <p>Before placing an order you can attach a free-text note — useful for special requests, delivery instructions, or priority flags that the artificer needs to know.</p>
+
+      <ol class="steps">
+        <li><span>In the Orders tab, click the <strong>ADD NOTE</strong> button to the left of <strong>PLACE ORDER</strong>.</span></li>
+        <li><span>A note input bar appears directly below the Callsign / RSI Handle fields.</span></li>
+        <li><span>Type your message — for example <em>"Please prioritise — ship combat event this weekend"</em>.</span></li>
+        <li><span>Click <strong>PLACE ORDER</strong> as normal. The note is saved with the order and visible to artificers in the Fulfillment tab.</span></li>
+      </ol>
+
+      <div class="card">
+        <div class="card-title">TIP</div>
+        <p style="margin:0;font-size:13px;">The note field clears automatically after the order is submitted. If you close the Orders tab without placing the order, the note is discarded.</p>
+      </div>
+
+      <h3 id="master-list">Gnome Admin Master Blueprint List</h3>
+      <p>The Orders tab blueprint filter defaults to the <strong>⚙ Gnome Admin Master List</strong> — a live union of every blueprint owned by any user with the <code>artificer</code> permission. This means you only see blueprints that can <em>actually be crafted</em> by your org's artificers, rather than the full database of 1,554 items.</p>
+
+      <table class="kv">
+        <tr><td>Default filter</td><td><strong>⚙ Gnome Admin Master List</strong> — all artificer-owned blueprints combined</td></tr>
+        <tr><td>Change filter</td><td>Use the user dropdown in the Orders tab to switch to a specific artificer's list or <em>All Blueprints</em></td></tr>
+        <tr><td>How it updates</td><td>Rebuilt automatically every time users sync from Google Sheets — no manual steps needed</td></tr>
+        <tr><td>Who controls it</td><td>Artificers manage their own blueprint lists in the Inventory tab; the master list reflects their combined ownership</td></tr>
+      </table>
+
+      <div class="card amber">
+        <div class="card-title">NOTE FOR ARTIFICERS</div>
+        <p style="margin:0;font-size:13px;">Keep your blueprint list in Inventory up to date. Any blueprint you toggle as owned is automatically included in the Gnome Admin Master List that all users see when placing orders.</p>
+      </div>
     </section>
 
     <!-- ── SECTION 4: FULFILLMENT ── -->
@@ -457,14 +507,26 @@
         <tr><td>Assign</td><td>Use the assignee dropdown to claim an order.</td></tr>
         <tr><td>Archive / delete</td><td>Artificers and admins can delete orders. Archived orders move to the COMPLETE tab.</td></tr>
         <tr><td>Unarchive</td><td>Use the ↩ button on completed orders to move them back to active.</td></tr>
+        <tr><td>Order Notes</td><td>Click the <strong>ORDER NOTES</strong> button next to the ORDER ITEMS &amp; MATERIALS heading to view or edit notes for that order.</td></tr>
       </table>
 
-      <p>The status filter and assignee filter (custom checkbox dropdowns) let you narrow the view to only what's relevant to you.</p>
+      <h3 id="order-notes-ff">Order Notes</h3>
+      <p>Each order card has an <strong>ORDER NOTES</strong> button inline with the ORDER ITEMS &amp; MATERIALS heading. This is where artificers can record progress updates, material substitutions, or any information relevant to that specific order.</p>
+
+      <ol class="steps">
+        <li><span>Expand an order card in the Fulfillment tab.</span></li>
+        <li><span>Click <strong>ORDER NOTES</strong> next to the ORDER ITEMS &amp; MATERIALS heading.</span></li>
+        <li><span>A popup appears. <strong>Artificers and admins</strong> see an editable text area — type or update the note and click <strong>SAVE</strong>.</span></li>
+        <li><span>Other users see the note as <strong>read-only</strong>. A message indicates that only Artificers can edit notes.</span></li>
+        <li><span>Saved notes are written back to the Google Sheet immediately and persist across sessions.</span></li>
+      </ol>
 
       <div class="card amber">
         <div class="card-title">PERMISSIONS</div>
-        <p style="margin:0;font-size:13px;">Editing orders (status, assignee, delete) requires the <code>artificer</code> or <code>admin</code> permission. See the <a href="#roles" style="color:var(--teal);">Roles section</a> for details.</p>
+        <p style="margin:0;font-size:13px;">Editing order notes (and order status, assignee, delete) requires the <code>artificer</code> or <code>admin</code> permission. See the <a href="#roles" style="color:var(--teal);">Roles section</a> for details. All users can <em>read</em> notes.</p>
       </div>
+
+      <p>The status filter and assignee filter (custom checkbox dropdowns) let you narrow the view to only what's relevant to you.</p>
     </section>
 
     <!-- ── SECTION 5: INVENTORY ── -->
@@ -520,7 +582,9 @@
         <tr>
           <th>Role / Permission</th>
           <th>Place Orders</th>
+          <th>Add Order Note</th>
           <th>Edit Orders</th>
+          <th>Edit Order Notes</th>
           <th>Delete Orders</th>
           <th>Manage Users</th>
           <th>BP Editor</th>
@@ -528,6 +592,8 @@
         <tr>
           <td>Any user</td>
           <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="cross">✗</td>
           <td class="cross">✗</td>
           <td class="cross">✗</td>
           <td class="cross">✗</td>
@@ -535,6 +601,8 @@
         </tr>
         <tr>
           <td><code>artificer</code> permission</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
@@ -548,9 +616,13 @@
           <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
         </tr>
         <tr>
           <td>👑 Gnome Admin</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
           <td class="check">✓</td>
@@ -589,6 +661,9 @@
       <table class="kv">
         <tr><td>Stats not updating</td><td>Make sure at least one quality slider is not at 500. The Enhanced Stats column only changes when quality deviates from the baseline.</td></tr>
         <tr><td>Can't edit orders</td><td>Your user needs the <code>artificer</code> or <code>admin</code> permission in column J of SC_Users.</td></tr>
+        <tr><td>Can't edit Order Notes</td><td>Order Notes in the Fulfillment tab are only editable by users with the <code>artificer</code> or <code>admin</code> permission. Other users see them as read-only.</td></tr>
+        <tr><td>Master List is empty</td><td>No users have the <code>artificer</code> permission yet, or no artificer has marked any blueprints as owned. Check the SC_Users sheet and the Inventory tab.</td></tr>
+        <tr><td>LOGIN button shows wrong name</td><td>Click it and use LOGOUT, then log back in. If the name still doesn't update, try a page refresh — users are loaded on connect.</td></tr>
         <tr><td>Sheet not connecting</td><td>Check that the Apps Script is deployed as <em>Execute as: Me</em> and <em>Who has access: Anyone</em>. Re-deploy if you changed the script.</td></tr>
         <tr><td>Custom BP not showing</td><td>Reload the page — custom blueprints are fetched from the sheet on load.</td></tr>
         <tr><td>Quality slider locked</td><td>An ore is assigned to that slot. Click ✕ on the slot header to remove it, then the slider is free again.</td></tr>
