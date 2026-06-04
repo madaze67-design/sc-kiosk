@@ -5315,6 +5315,8 @@ async function initFulfillTab() {
   const result = await apiCall({ action: 'getorders' });
   if(result.success) {
     allOrders = result.orders||[];
+    // Debug: log first order's fields to confirm what the sheet returns
+    if(allOrders.length) console.log('[SC Kiosk] Sample order fields from sheet:', Object.keys(allOrders[0]), '| priority value:', allOrders[0].priority);
     restorePrioritiesFromLocal();
     renderFulfill();
     refreshFulfillAssigneeFilter();
