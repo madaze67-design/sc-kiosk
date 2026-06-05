@@ -3839,8 +3839,22 @@ function startSyncPolling() {
     if(gsSyncing) return;
     gsSyncing = true;
     await refreshUsersFromSheet();
+    await refreshOrdersFromSheet();
     gsSyncing = false;
   }, 30000);
+}
+
+async function refreshOrdersFromSheet() {
+  if(!gsApiUrl) return;
+  const result = await apiCall({ action: 'getorders' });
+  if(result.success) {
+    allOrders = result.orders || [];
+    restorePrioritiesFromLocal();
+    if(currentScreen === 'fulfill') {
+      renderFulfill();
+      refreshFulfillAssigneeFilter();
+    }
+  }
 }
 
 async function refreshUsersFromSheet() {
