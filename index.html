@@ -1581,6 +1581,15 @@ option:checked, option:hover {
               DELETE USER
             </button>
           </div>
+          <!-- VIEW dropdown: read-only peek at another user's inventory -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;white-space:nowrap;">VIEW:</span>
+            <select id="inv-view-select" class="deliver-sel"
+              style="min-width:160px;background:var(--bg-main);color:var(--white-dim);border-color:var(--border);"
+              onchange="setInvViewUser(this.value)">
+              <option value="">— Select User —</option>
+            </select>
+          </div>
           <div style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;">
             <button id="chg-pw-btn" onclick="openChangePw()" style="display:none;height:26px;padding:0 12px;
               background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);
@@ -3643,7 +3652,43 @@ function rebuildUserDropdown() {
     if (u.id === activeUserId) opt.selected = true;
     sel.appendChild(opt);
   });
+  rebuildViewDropdown();
 }
+
+let viewUserId = null; // when set, inventory renders this user read-only
+
+function rebuildViewDropdown() {
+  const sel = document.getElementById('inv-view-select');
+  if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Select User —</option>';
+  invUsers.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = String(u.id);
+    opt.textContent = `${u.rank} ${u.name}`;
+    if (String(u.id) === String(cur)) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function setInvViewUser(id) {
+  viewUserId = id || null;
+  if (viewUserId) {
+    // Keep USER dropdown showing the logged-in user — view mode is separate
+    document.getElementById('inv-user-select').value = activeUserId || '';
+    const info = document.getElementById('inv-user-info');
+    const u = invUsers.find(u => String(u.id) === String(viewUserId));
+    if (u) info.textContent = `👁 VIEWING: ${u.rank} ${u.name} (read-only)`;
+  } else {
+    // Restore normal info for the active user
+    const u = activeUserId ? invUsers.find(u => String(u.id) === String(activeUserId)) : null;
+    const info = document.getElementById('inv-user-info');
+    info.textContent = u ? `${u.blueprints.length} BPs · ${u.materials.length} ore entries` : '';
+  }
+  renderInvBP();
+  renderInvMats();
+}
+
 let _pendingUserId = null; // holds id awaiting password
 
 function selectUser(id) {
@@ -3660,6 +3705,12 @@ function selectUser(id) {
   }
   _pendingUserId = null;
   activeUserId = newId;
+  // Clear view mode when logging in as someone
+  if (viewUserId) {
+    viewUserId = null;
+    const vsel = document.getElementById('inv-view-select');
+    if (vsel) vsel.value = '';
+  }
   updateLoginBtn();
   const info = document.getElementById('inv-user-info');
   const delBtn = document.getElementById('del-user-btn');
@@ -3869,7 +3920,10 @@ function toggleInvMyBP() {
 }
 function renderInvBP() {
   const container = document.getElementById('inv-bp-list');
-  const user = getActiveUser();
+  const isViewing = !!viewUserId;
+  const user = isViewing
+    ? invUsers.find(u => String(u.id) === String(viewUserId))
+    : getActiveUser();
   if (!user) return;
   const search = (document.getElementById('inv-bp-search')?.value || '').toLowerCase();
   let list = BLUEPRINTS.filter(bp => {
@@ -3905,15 +3959,24 @@ function renderInvBP() {
       const owned = user.blueprints.includes(bp.name);
       const row = document.createElement('div');
       row.className = 'inv-bp-row' + (owned ? ' owned' : '');
-      row.innerHTML = `<div class="inv-bp-check">${owned ? '✓' : ''}</div>
-        <span style="flex:1;">${bp.name}</span>
-        <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">T${bp.tier}</span>`;
-      row.onclick = () => toggleUserBP(user, bp.name, row);
+      if (isViewing) {
+        row.style.cursor = 'default';
+        row.innerHTML = `<div class="inv-bp-check">${owned ? '✓' : ''}</div>
+          <span style="flex:1;">${bp.name}</span>
+          <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">T${bp.tier}</span>`;
+      } else {
+        row.innerHTML = `<div class="inv-bp-check">${owned ? '✓' : ''}</div>
+          <span style="flex:1;">${bp.name}</span>
+          <span style="font-size:13px;font-family:var(--mono);color:var(--white-muted);">T${bp.tier}</span>`;
+        row.onclick = () => toggleUserBP(user, bp.name, row);
+      }
       container.appendChild(row);
     });
   });
-  // Update info
-  document.getElementById('inv-user-info').textContent = `${user.blueprints.length} BPs · ${user.materials.length} ore entries`;
+  // Update info only when not in view mode
+  if (!isViewing) {
+    document.getElementById('inv-user-info').textContent = `${user.blueprints.length} BPs · ${user.materials.length} ore entries`;
+  }
 }
 function toggleUserBP(user, bpName, row) {
   const idx = user.blueprints.indexOf(bpName);
@@ -3959,7 +4022,10 @@ function toggleInvMyOres() {
 }
 function renderInvMats() {
   const container = document.getElementById('inv-mat-list');
-  const user = getActiveUser();
+  const isViewing = !!viewUserId;
+  const user = isViewing
+    ? invUsers.find(u => String(u.id) === String(viewUserId))
+    : getActiveUser();
   if (!user) return;
 
   const search = (document.getElementById('inv-mat-search')?.value || '').toLowerCase();
@@ -3967,8 +4033,8 @@ function renderInvMats() {
 
   container.innerHTML = '';
 
-  if (invShowMyOres) {
-    // Show user's personal material entries
+  if (invShowMyOres || isViewing) {
+    // Show user's personal material entries (always in view mode)
     let entries = [...user.materials];
     if (invMatTypeFilter) entries = entries.filter(e => typeToId[ORE_TYPE_MAP[e.name]||'Mineral'] === invMatTypeFilter);
     if (search) entries = entries.filter(e => e.name.toLowerCase().includes(search));
@@ -3985,9 +4051,10 @@ function renderInvMats() {
       row.innerHTML = `<span class="inv-mat-name">${e.name}</span>
         <span class="inv-mat-q" style="color:${qc};">${e.quality} Q</span>
         <span class="inv-mat-qty">${isHand(e.name)?Math.round(e.qty)+' units':fmtCSCU(e.qty)+' cSCU'}</span>
-        <div class="inv-mat-cog" onclick="openEditMat(event,'${e.entryId}')" title="Edit">
+        ${isViewing ? '' : `<div class="inv-mat-cog" onclick="openEditMat(event,'${e.entryId}')" title="Edit">
           <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        </div>`;
+        </div>`}`;
+      if (!isViewing) row.style.cursor = 'default';
       container.appendChild(row);
     });
   } else {
@@ -5256,6 +5323,7 @@ async function initFulfillTab() {
   const result = await apiCall({ action: 'getorders' });
   if(result.success) {
     allOrders = result.orders||[];
+    restorePrioritiesFromLocal();
     renderFulfill();
     refreshFulfillAssigneeFilter();
   }
@@ -5322,6 +5390,7 @@ async function deleteOrder(orderId) {
   const result = await apiCall({ action:'deleteorder', payload:{ id: orderId } });
   if(result.success) {
     allOrders = allOrders.filter(function(o){ return String(o.id)!==String(orderId); });
+  savePrioritiesToLocal(); // remove stale priority entry
     renderFulfill();
   } else {
     alert('Failed to delete: '+(result.error||'unknown'));
@@ -5391,7 +5460,8 @@ function renderFulfill() {
     const canEdit = canEditOrders();
     const cardId  = 'ff-card-' + order.id;
     const card    = document.createElement('div');
-    card.style.cssText = 'background:var(--bg-panel);border:1px solid var(--border);overflow:hidden;color:var(--white-dim);margin-bottom:8px;flex-shrink:0;';
+    const priColor = order.priority==='high'?'#e04444':order.priority==='medium'?'#5bb8e8':order.priority==='low'?'#4dc870':'var(--border)';
+    card.style.cssText = `background:var(--bg-panel);border:1px solid ${priColor};overflow:hidden;color:var(--white-dim);margin-bottom:8px;flex-shrink:0;`;
     card.innerHTML = `
       <!-- Card header — click to collapse/expand -->
       <div onclick="toggleFFCard('${order.id}')" style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-section);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;" onmouseenter="this.style.background='var(--bg-hover)'" onmouseleave="this.style.background='var(--bg-section)'">
@@ -5401,7 +5471,14 @@ function renderFulfill() {
           <span style="font-size:14px;font-family:var(--mono);color:${stColor};letter-spacing:1px;">${order.status}</span>
           ${canEdit?`<div onclick="openFFStatusModal('${order.id}')" title="Change status" style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white-muted);border:1px solid var(--border);margin-left:2px;" onmouseenter="this.style.color='var(--teal)'" onmouseleave="this.style.color='var(--white-muted)'">
             <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-          </div>`:''}
+          </div>
+          <div onclick="openPriorityDD(event,'${order.id}')" id="ff-pri-btn-${order.id}" title="Set priority"
+            style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+                   font-family:var(--mono);font-size:12px;font-weight:700;
+                   border:1px solid ${priColor === 'var(--border)' ? 'var(--border)' : priColor};
+                   color:${priColor === 'var(--border)' ? 'var(--white-muted)' : priColor};"
+            onmouseenter="this.style.borderColor='var(--amber)';this.style.color='var(--amber)'"
+            onmouseleave="this.style.borderColor='${priColor === 'var(--border)' ? 'var(--border)' : priColor}';this.style.color='${priColor === 'var(--border)' ? 'var(--white-muted)' : priColor}'">P</div>`:''}
         </div>
         <div style="display:flex;align-items:center;gap:6px;margin-left:6px;">
           <span style="font-size:14px;color:var(--white-muted);font-family:var(--mono);">Assigned:</span>
@@ -5844,8 +5921,11 @@ async function saveOrderNotes() {
   if (!order) return;
   order.notes   = document.getElementById('order-notes-input').value.trim();
   order.updated = new Date().toISOString();
+  const saveBtn = document.getElementById('order-notes-save-btn');
+  if (saveBtn) { saveBtn.textContent = 'SAVING...'; saveBtn.disabled = true; }
   closeOrderNotesModal();
-  await apiCall({ action: 'saveorder', payload: order });
+  await apiCall({ action: 'saveorder', payload: { ...order, notes: order.notes } });
+  if (saveBtn) { saveBtn.textContent = 'SAVE'; saveBtn.disabled = false; }
 }
 
 // ── Order Note Input (Orders tab — pre-submit) ──────────────────
@@ -6324,6 +6404,114 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }, 800);
 });
+
+
+// ── Priority Dropdown ────────────────────────────────────────────
+const PRIORITY_OPTIONS = [
+  { value: '',       label: 'None',   color: 'var(--white-muted)', desc: 'No priority set' },
+  { value: 'high',   label: 'High',   color: '#e04444',            desc: 'Urgent' },
+  { value: 'medium', label: 'Medium', color: '#5bb8e8',            desc: 'Standard' },
+  { value: 'low',    label: 'Low',    color: '#4dc870',            desc: 'When available' },
+];
+
+let priDDOpenId = null;
+
+function openPriorityDD(e, orderId) {
+  e.stopPropagation();
+  const existing = document.getElementById('ff-pri-dd');
+  if (existing) {
+    existing.remove();
+    if (priDDOpenId === orderId) { priDDOpenId = null; return; }
+  }
+  priDDOpenId = orderId;
+
+  const btn = document.getElementById('ff-pri-btn-' + orderId);
+  const rect = btn.getBoundingClientRect();
+  const order = allOrders.find(o => String(o.id) === String(orderId));
+
+  const dd = document.createElement('div');
+  dd.id = 'ff-pri-dd';
+  dd.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.bottom+4}px;
+    background:var(--bg-header);border:1px solid var(--teal-dim);z-index:700;min-width:190px;
+    box-shadow:0 4px 24px rgba(0,0,0,0.6);`;
+
+  dd.innerHTML = `
+    <div style="padding:7px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);
+                font-size:12px;letter-spacing:1.5px;color:var(--teal);">ORDER PRIORITY</div>
+    ${PRIORITY_OPTIONS.map(p => {
+      const active = (order?.priority||'') === p.value;
+      return `<div onclick="setPriority('${orderId}','${p.value}')"
+        style="display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;
+               background:${active ? 'rgba(77,200,176,0.07)' : 'transparent'};
+               border-left:3px solid ${active ? p.color : 'transparent'};"
+        onmouseenter="this.style.background='rgba(77,200,176,0.06)'"
+        onmouseleave="this.style.background='${active ? 'rgba(77,200,176,0.07)' : 'transparent'}'">
+        <div style="width:10px;height:10px;border-radius:50%;background:${p.color};flex-shrink:0;border:1px solid rgba(255,255,255,0.15);"></div>
+        <span style="font-size:14px;color:${p.color};font-weight:600;">${p.label}</span>
+        <span style="font-size:12px;color:var(--white-muted);margin-left:auto;">${p.desc}</span>
+      </div>`;
+    }).join('')}
+  `;
+
+  document.body.appendChild(dd);
+  setTimeout(() => {
+    document.addEventListener('click', closePriorityDD, { once: true });
+  }, 0);
+}
+
+function closePriorityDD() {
+  const dd = document.getElementById('ff-pri-dd');
+  if (dd) dd.remove();
+  priDDOpenId = null;
+}
+
+async function setPriority(orderId, priority) {
+  closePriorityDD();
+  const order = allOrders.find(o => String(o.id) === String(orderId));
+  if (!order) return;
+  order.priority = priority || '';
+  order.updated  = new Date().toISOString();
+
+  const priColor = priority === 'high' ? '#e04444' : priority === 'medium' ? '#5bb8e8' : priority === 'low' ? '#4dc870' : 'var(--border)';
+
+  // Update card border live without re-render
+  const card = document.getElementById('ff-card-' + orderId);
+  if (card) card.style.borderColor = priColor;
+
+  // Update P button color live
+  const btn = document.getElementById('ff-pri-btn-' + orderId);
+  if (btn) {
+    btn.style.borderColor = priority ? priColor : 'var(--border)';
+    btn.style.color       = priority ? priColor : 'var(--white-muted)';
+    btn.onmouseleave = () => {
+      btn.style.borderColor = priority ? priColor : 'var(--border)';
+      btn.style.color       = priority ? priColor : 'var(--white-muted)';
+    };
+  }
+
+  await apiCall({ action: 'saveorder', payload: order });
+}
+
+// ── Priority localStorage persistence (offline resilience) ──────────
+const PRIORITY_LS_KEY = 'sc_order_priorities';
+
+function savePrioritiesToLocal() {
+  const map = {};
+  allOrders.forEach(o => { if (o.priority) map[String(o.id)] = o.priority; });
+  localStorage.setItem(PRIORITY_LS_KEY, JSON.stringify(map));
+}
+
+function restorePrioritiesFromLocal() {
+  // Fills in priorities that the sheet didn't return (e.g. old rows without the priority column)
+  try {
+    const raw = localStorage.getItem(PRIORITY_LS_KEY);
+    if (!raw) return;
+    const map = JSON.parse(raw);
+    allOrders.forEach(o => {
+      if (!o.priority && map[String(o.id)]) o.priority = map[String(o.id)];
+    });
+  } catch(e) { /* ignore */ }
+}
 
 </script>
 
