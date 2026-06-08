@@ -256,7 +256,7 @@
 <div class="hero">
   <div class="hero-eyebrow">STAR CITIZEN ORG TOOL</div>
   <h1>FABRICATION KIOSK</h1>
-  <div class="hero-sub">User Guide — Patch 4.8.0 &nbsp;|&nbsp; 1,554 blueprints &nbsp;|&nbsp; 38 ores</div>
+  <div class="hero-sub">User Guide — v8 &nbsp;|&nbsp; 1,554 blueprints &nbsp;|&nbsp; 38 ores</div>
   <div class="hero-badges">
     <span class="badge">FABRICATE</span>
     <span class="badge">ORDERS</span>
@@ -289,6 +289,7 @@
     <a class="toc-link" href="#fulfill">4. Order Fulfillment</a>
     <a class="toc-link sub" href="#order-notes-ff">Order Notes</a>
     <a class="toc-link sub" href="#order-priority">Order Priority</a>
+    <a class="toc-link" href="#ore-manifest">4b. Ore Manifest</a>
     <div class="toc-section">INVENTORY</div>
     <a class="toc-link" href="#inv">5. Inventory</a>
     <a class="toc-link sub" href="#inv-bps">My Blueprints</a>
@@ -310,19 +311,15 @@
         <h2>FIRST LAUNCH &amp; SETUP</h2>
       </div>
 
-      <div class="card amber">
-        <div class="card-title">SECURITY NOTICE</div>
-        <p style="margin:0;font-size:13px;">On first open, a one-time security notice will appear explaining how the kiosk connects to your Google Sheet. Read it and click <strong>Continue</strong>. It will not appear again on the same browser.</p>
-      </div>
-
       <h3 id="google-sheets">Google Sheets Sync</h3>
-      <p>All user accounts, orders, and custom blueprints are stored in a Google Sheet you control. The kiosk ships with a default Apps Script URL already filled in — if your org has deployed its own sheet, paste that URL instead.</p>
+      <p>All user accounts, orders, and custom blueprints are stored in a Google Sheet you control. On first launch the URL field is blank — you must connect the kiosk to your own deployed Apps Script sheet before any data will load.</p>
 
       <ol class="steps">
-        <li><span>Open the kiosk HTML file in any modern browser.</span></li>
-        <li><span>The Google Sheet URL is pre-filled. To change/update the sheet: in the top right open <strong>SYNC → Google Sheet URL</strong>, paste the Apps Script deployment URL, and click <strong>Save & Connect</strong>.</span></li>
-        <li><span>A <strong>ping</strong> test confirms the connection. A green indicator means you're live. Red means the URL is unreachable or the Apps Script is not deployed.</span></li>
-        <li><span>All reads and writes go directly to Google Sheets — no server required beyond the Apps Script itself.</span></li>
+        <li><span>Open your Google Sheet, go to <strong>Extensions → Apps Script</strong>, paste the <code>SC_Kiosk_AppScript.js</code> contents, and save.</span></li>
+        <li><span>Click <strong>Deploy → New Deployment → Web App</strong>. Set <em>Execute as: Me</em> and <em>Who has access: Anyone</em>. Copy the Web App URL.</span></li>
+        <li><span>In the kiosk, click <strong>SYNC</strong> in the top-right bar, paste the URL (must start with <code>https://script.google.com/macros/s/</code> and end with <code>/exec</code>), then click <strong>Save &amp; Connect</strong>.</span></li>
+        <li><span>A ping test confirms the connection — green means live, red means the URL is unreachable or the Apps Script is not yet deployed correctly.</span></li>
+        <li><span><strong>Important:</strong> whenever you edit the Apps Script code, you must create a <em>new deployment version</em> (Deploy → Manage Deployments → pencil icon → New version). Editing the code alone does not update the live endpoint.</span></li>
       </ol>
 
       <h3 id="users">User Accounts</h3>
@@ -398,7 +395,7 @@
       <p>Below each ore slot is a quality slider (0–1000). At <strong>500</strong> (default) the item is crafted at standard stats. Moving the slider simulates using ore of that quality and updates the Statistics panel in real time.</p>
 
       <table class="kv">
-        <tr><td>Drag slider</td><td>Moves quality from 0 (worst) to 1000 (perfect). Stats update live.</td></tr>
+        <tr><td>Drag slider</td><td><strong>Click and hold, then drag</strong> the thumb left or right — quality moves from 0 (worst) to 1000 (perfect). Stats update live. The hit area is intentionally tall to make grabbing easy.</td></tr>
         <tr><td>Click the number</td><td>Type an exact quality value and press Enter or click away.</td></tr>
         <tr><td>Ore assigned</td><td>Slider locks to the ore's actual quality (🔒). Remove the ore to adjust manually.</td></tr>
         <tr><td>Stat effect preview</td><td>Below each slider a line shows which stats that slot affects and by how much at the current quality, e.g. <em>Integrity +8.3%</em>.</td></tr>
@@ -442,6 +439,11 @@
       </div>
 
       <p><strong>Base Stats</strong> = standard values at quality 500. <strong>Enhanced Stats</strong> = values at your current slider positions. <strong>Delta</strong> = the change, with green ▲ for improvements and red ▼ for reductions. Note that <em>Recoil Kick</em> and similar stats are <strong>negated</strong> — a lower value is better, so a reduction still shows green.</p>
+
+      <div class="card">
+        <div class="card-title">ORE QUALITY MODIFIERS (v8)</div>
+        <p style="margin:0;font-size:13px;">In v8, quality sliders live exclusively in the <strong>material slots panel</strong> (centre of the Fabricate screen). The Statistics panel no longer contains its own sliders — the stat preview updates automatically as you drag the sliders in the material slots. This keeps all quality controls in one place and eliminates the dual-slider confusion from earlier versions.</p>
+      </div>
     </section>
 
     <!-- ── SECTION 3: ORDERS ── -->
@@ -454,20 +456,19 @@
       <p>The Orders tab lets members request fabrication jobs. Orders are saved to the Google Sheet and picked up by artificers in the Fulfillment tab.</p>
 
       <ol class="steps">
-        <li><span>In the Fabricate tab, click blueprints to select them (teal highlight + checkmark). Clicking again deselects. Already-queued items show an <em>in order ×N</em> badge.</span></li>
-        <li><span>Click <strong>+ ADD TO ORDER</strong> (button at the bottom of the detail panel, or the badge in the top bar). A popup shows all selected blueprints with per-item quantity controls.</span></li>
-        <li><span>Enter your <strong>Callsign</strong> and <strong>RSI Handle</strong> in the order popup.</span></li>
+        <li><span>Navigate to the <strong>Orders</strong> screen (clipboard icon in the left sidebar). Browse and click blueprints in the left panel to select them (teal highlight + checkmark). Clicking again deselects. You can also click <strong>+ ADD TO ORDER</strong> directly from the Fabricate detail panel to add the currently-open blueprint without switching screens.</span></li>
+        <li><span>Click <strong>+ ADD TO ORDER</strong> in the Orders screen top bar (shows a count badge of how many are selected). The right panel updates immediately with ORDER ITEMS and TOTAL MATERIALS columns.</span></li>
+        <li><span>Enter your <strong>Callsign</strong> and <strong>RSI Handle</strong> in the fields at the top of the right panel. Both are required — the <strong>PLACE ORDER</strong> button stays disabled until both are filled.</span></li>
         <li><span>Optionally add a note for the artificer — see <a href="#order-note" style="color:var(--teal);">Adding a Note</a> below.</span></li>
-        <li><span>Click <strong>ADD ALL TO ORDER</strong> to submit. The order appears in the Fulfillment tab immediately.</span></li>
+        <li><span>Click <strong>PLACE ORDER</strong>. The order is saved to the Google Sheet with <em>New Order</em> status and appears in the Fulfillment screen immediately.</span></li>
       </ol>
 
       <h3 id="order-note">Adding a Note to Your Order</h3>
       <p>Before placing an order you can attach a free-text note — useful for special requests, delivery instructions, or priority flags that the artificer needs to know.</p>
 
       <ol class="steps">
-        <li><span>In the Orders tab, click the <strong>ADD NOTE</strong> button to the left of <strong>PLACE ORDER</strong>.</span></li>
-        <li><span>A note input bar appears directly below the Callsign / RSI Handle fields.</span></li>
-        <li><span>Type your message — for example <em>"Please prioritise — ship combat event this weekend"</em>.</span></li>
+        <li><span>In the <strong>Orders</strong> screen, click the <strong>ADD NOTE</strong> button in the top bar (to the left of <strong>PLACE ORDER</strong>).</span></li>
+        <li><span>A note input bar expands below the callsign/RSI fields. Type your message — for example <em>"Please prioritise — ship combat event this weekend"</em>.</span></li>
         <li><span>Click <strong>PLACE ORDER</strong> as normal. The note is saved with the order and visible to artificers in the Fulfillment tab.</span></li>
       </ol>
 
@@ -505,7 +506,7 @@
         <tr><td>Expand / collapse</td><td>Click an order header row to toggle. Use <strong>▼ ALL / ▲ ALL</strong> to expand or collapse everything at once.</td></tr>
         <tr><td>Left panel</td><td>Per-item breakdown — each blueprint with its individual material slots.</td></tr>
         <tr><td>Right panel</td><td>Combined totals — all materials summed across the whole order.</td></tr>
-        <tr><td>Change status</td><td>Click the <strong>⚙</strong> cog icon on an order to cycle through statuses.</td></tr>
+        <tr><td>Change status</td><td>Expand an order card, then use the status dropdown to move the order through its lifecycle. Requires artificer or admin permissions.</td></tr>
         <tr><td>Assign</td><td>Use the assignee dropdown to claim an order.</td></tr>
         <tr><td>Archive / delete</td><td>Artificers and admins can delete orders. Archived orders move to the COMPLETE tab.</td></tr>
         <tr><td>Unarchive</td><td>Use the ↩ button on completed orders to move them back to active.</td></tr>
@@ -553,6 +554,30 @@
       <p>The status filter and assignee filter (custom checkbox dropdowns) let you narrow the view to only what's relevant to you.</p>
     </section>
 
+
+    <!-- ── SECTION 4b: ORE MANIFEST ── -->
+    <section class="section" id="ore-manifest">
+      <div class="section-header">
+        <span class="section-num">4b</span>
+        <h2>ORE MANIFEST</h2>
+      </div>
+
+      <p>The <strong>Ore Manifest</strong> is the org-wide ore ledger — accessible via the table icon in the left sidebar. This is the master stock list the kiosk uses for the <span class="tag">AFFORDABLE</span> filter and the <strong>Autofill</strong> buttons in the Fabricate screen. It is separate from the per-user ore entries in the Inventory tab.</p>
+
+      <table class="kv">
+        <tr><td>Add ore</td><td>Click <strong>+ Add Ore</strong> or the <strong>+ Add new ore entry</strong> row at the bottom of the table. A blank row appears inline — set the name, type, quality (0–1000), quantity (cSCU or units), and optional notes, then click <strong>SAVE</strong>.</td></tr>
+        <tr><td>Edit ore</td><td>Click the <strong>EDIT</strong> button on any row to edit it inline. Press <span style="font-family:var(--mono);font-size:11px;background:rgba(77,200,176,0.08);border:1px solid #1a4a52;padding:1px 5px;">Enter</span> or click <strong>SAVE</strong> to confirm. Click ✕ to discard.</td></tr>
+        <tr><td>Delete ores</td><td>Check the checkbox on any rows (or the header checkbox to select all), then click the <span style="color:var(--red);">✕ Delete</span> button. Confirm in the dialog.</td></tr>
+        <tr><td>Search &amp; filter</td><td>Use the search bar to filter by name or type. The <strong>All Types</strong> dropdown filters by ore category (Gas, Metal, Mineral, Natural, Nonmetal, Processed, Waste).</td></tr>
+        <tr><td>Hand-mined ores</td><td>Ores like Dolivine, Hadanite, and Aphorite are measured in <strong>units / rocks</strong> rather than cSCU. The kiosk detects these automatically and adjusts requirement calculations.</td></tr>
+      </table>
+
+      <div class="card">
+        <div class="card-title">RELATIONSHIP TO INVENTORY TAB</div>
+        <p style="margin:0;font-size:13px;">The Ore Manifest is the org's shared stock pool. The Inventory tab tracks each <em>individual user's</em> personal ore contributions with per-entry quality values. When an ore is assigned to a fabrication slot, its quality comes from the Inventory entry — the Manifest quantity is used only for affordability checks and autofill matching.</p>
+      </div>
+    </section>
+
     <!-- ── SECTION 5: INVENTORY ── -->
     <section class="section" id="inv">
       <div class="section-header">
@@ -564,7 +589,7 @@
       <p>The blueprint list in Inventory shows all 1,554 blueprints. Clicking a blueprint toggles your ownership of it. Owned blueprints appear with a teal highlight and are included when the <span class="tag">OWNED</span> filter is active in the Fabricate tab. Filter by category or use the search box to find specific blueprints. Toggle <strong>My BPs</strong> to show only the ones you own.</p>
 
       <h3 id="inv-ores">My Ores</h3>
-      <p>The ore panel shows all 38 ores. Switch between <strong>All Ores</strong> and <strong>My Ores</strong> (only ores you have in inventory). Click <strong>Add Ore</strong> or click an existing ore card to open the edit popup.</p>
+      <p>The ore panel on the right shows ore entries for the selected user. Multiple stacks of the same ore at different qualities are supported. Switch between <strong>All Ores</strong> and <strong>My Ores</strong> (only ores you have in stock). Click <strong>+ ADD ORE</strong> to add a new entry, or hover an existing entry and click the edit icon to update quality or quantity.</p>
 
       <table class="kv">
         <tr><td>Quality</td><td>0–1000 slider. This quality is used when the ore is assigned to a slot in the Fabricate tab and locks that slot's quality slider.</td></tr>
@@ -574,7 +599,7 @@
       </table>
 
       <h3 id="inv-view">Viewing Another User's Inventory</h3>
-      <p>The <strong>VIEW</strong> dropdown (to the right of the USER dropdown in the Inventory tab topbar) lets anyone browse any other user's blueprints and ore stocks — no login required.</p>
+      <p>The <strong>VIEW</strong> dropdown (to the right of the USER dropdown in the Inventory tab topbar) lets anyone browse any other user's blueprints and ore stocks — no login or password required, even if the account is password-protected.</p>
 
       <ol class="steps">
         <li><span>In the Inventory tab, find the <strong>VIEW:</strong> dropdown in the top bar, to the right of the USER dropdown.</span></li>
@@ -606,8 +631,8 @@
       <p>The Blueprint Editor lets admins and authorised users create <strong>custom blueprints</strong> — items not in the wiki database or org-specific recipes. Custom blueprints are stored in the <code>SC_CustomBlueprints</code> Google Sheet and appear alongside the standard blueprints in the Fabricate and Orders tabs.</p>
 
       <ol class="steps">
-        <li><span>Log in as a user with editor access (admin role or <code>admin</code> permission).</span></li>
-        <li><span>Click <strong>+ NEW BLUEPRINT</strong> in the BP Editor tab.</span></li>
+        <li><span>Log in as a user with editor access (admin role, <code>admin</code> permission, or Gnome Admin). The Blueprint Editor screen shows a lock state when no eligible user is logged in.</span></li>
+        <li><span>Click <strong>+ ADD BLUEPRINT</strong> in the Blueprint Editor screen toolbar.</span></li>
         <li><span>Fill in the name, category, subcategory, grade, and craft time.</span></li>
         <li><span>Add material slots — each slot needs a part name, ore type, quantity, and hand-mined flag.</span></li>
         <li><span>Click <strong>SAVE</strong>. The blueprint immediately appears in the Fabricate tab.</span></li>
@@ -687,7 +712,7 @@
         </tr>
       </table>
 
-      <p>To grant artificer access to a user: open the <code>SC_Users</code> Google Sheet, find the user's row, and add <code>artificer</code> to column J (Permissions). No kiosk restart required — permissions are read on next sync.</p>
+      <p>To grant artificer access to a user: open the <code>SC_Users</code> Google Sheet, find the user's row, and add <code>artificer</code> to the Permissions column. No kiosk restart required — permissions are read on next sync.</p>
     </section>
 
     <!-- ── SECTION 8: TIPS ── -->
@@ -715,7 +740,7 @@
 
       <h3>Common Issues</h3>
       <table class="kv">
-        <tr><td>Stats not updating</td><td>Make sure at least one quality slider is not at 500. The Enhanced Stats column only changes when quality deviates from the baseline.</td></tr>
+        <tr><td>Stats not updating</td><td>In v8 the quality sliders live in the material slots panel (centre of Fabricate). Drag a slider away from 500 — the Statistics panel updates automatically. There are no separate sliders in the Statistics panel.</td></tr>
         <tr><td>Can't see P button</td><td>The priority button only appears for users with <code>artificer</code> or <code>admin</code> permissions. Regular users cannot set priority.</td></tr>
         <tr><td>Priority not saving</td><td>Ensure the kiosk is connected to Google Sheets (SYNC button in the header). Priority saves via the same <code>saveorder</code> call as status changes.</td></tr>
         <tr><td>VIEW dropdown is empty</td><td>No users have been loaded yet — connect to Google Sheets first using the SYNC button.</td></tr>
@@ -725,7 +750,7 @@
         <tr><td>LOGIN button shows wrong name</td><td>Click it and use LOGOUT, then log back in. If the name still doesn't update, try a page refresh — users are loaded on connect.</td></tr>
         <tr><td>Sheet not connecting</td><td>Check that the Apps Script is deployed as <em>Execute as: Me</em> and <em>Who has access: Anyone</em>. Re-deploy if you changed the script.</td></tr>
         <tr><td>Custom BP not showing</td><td>Reload the page — custom blueprints are fetched from the sheet on load.</td></tr>
-        <tr><td>Quality slider locked</td><td>An ore is assigned to that slot. Click ✕ on the slot header to remove it, then the slider is free again.</td></tr>
+        <tr><td>Quality slider locked</td><td>An ore is assigned to that slot — the slider locks to the ore's actual quality (🔒). Click ✕ on the slot header to remove the ore, then the slider is free to drag again.</td></tr>
       </table>
     </section>
 
@@ -733,7 +758,7 @@
 </div>
 
 <footer>
-  SC FABRICATION KIOSK &nbsp;|&nbsp; PATCH 4.8.0 &nbsp;|&nbsp; NOT AFFILIATED WITH CLOUD IMPERIUM GAMES
+  SC FABRICATION KIOSK &nbsp;|&nbsp; V8 &nbsp;|&nbsp; NOT AFFILIATED WITH CLOUD IMPERIUM GAMES
 </footer>
 
 <script>
