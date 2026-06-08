@@ -34,6 +34,7 @@
   --green-arrow: #4dc870;
   --font: 'Exo 2', sans-serif;
   --mono: 'Share Tech Mono', monospace;
+  --amber-dim: rgba(200,148,26,0.5);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -903,8 +904,6 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 }
 .mat-section-x:hover { color: var(--red); }
 
-/* Assigned material row (expanded) */
-
 /* Empty slot add button */
 .mat-add-btn:hover { background: var(--bg-hover); }
 .mat-add-btn:hover .mat-plus { border-color: var(--teal); color: var(--teal); }
@@ -1164,10 +1163,6 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
 .modal-q { font-family: var(--mono); font-size: 15px; }
 .modal-qty { font-family: var(--mono); font-size: 14px; color: var(--white-muted); }
 .modal-low { font-size: 15px; color: var(--red); font-family: var(--mono); }
-
-/* ── ORDER STATUS BADGES ── */
-
-/* ── BPEDIT MAT HEADERS ── */
 
 /* ── INVENTORY TAB ── */
 .inv-bp-row {
@@ -1554,10 +1549,6 @@ option:checked, option:hover {
         </div>
       </div><!-- screen-fab -->
 
-      <!-- ── DISMANTLE SCREEN ── -->
-      
-
-      <!-- ── QUEUE SCREEN ── -->
 
       <!-- ── INVENTORY SCREEN ── -->
       <div id="screen-inv" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
@@ -2413,10 +2404,7 @@ function fmtCSCU(val) {
   return val.toFixed(1);
 }
 
-// Format µSCU quantity for display
 
-// Parse a material string like "4 Aluminum", "Aluminum x4", "Aluminum (4)"
-;
   
 // Convert raw material count → cSCU using known density map
 // These values are approximate based on in-game fabrication data
@@ -2467,20 +2455,8 @@ const ORE_TYPE_MAP = {
 };
 
 
-
-// ─────────────────────────────────────────────────────────────
-// Blueprint slot name lookup
-// Source: api.star-citizen.wiki requirement_groups data
-// Slot names are context-sensitive (same ore = different slot
-// depending on what other ores are in the recipe)
-// ─────────────────────────────────────────────────────────────
-
-// Static lookup for ores that always map to the same slot name
-
-function getSlotName(ore) {
-  // Fallback for custom BPs created via BP Editor without a Part name set.
-  return ore;
-}
+// Returns the slot name for a given ore (custom BPs may not have a part name)
+function getSlotName(ore) { return ore; }
 
 const CATS = [
   {id:'armor',  name:'ARMOR',     subs:['All Categories','Undersuits','Helmets','Core','Arms','Legs','Backpack','Flair'],
@@ -3554,15 +3530,6 @@ function renderModal(){
   });
 }
 document.getElementById('mat-modal').addEventListener('click',e=>{if(e.target===document.getElementById('mat-modal'))closeModal();});
-
-// ═══════════════════════════════════════
-// DISMANTLE
-// ═══════════════════════════════════════
-
-
-// ═══════════════════════════════════════
-// QUEUE
-// ═══════════════════════════════════════
 
 // ═══════════════════════════════════════
 // INIT
@@ -5461,6 +5428,7 @@ function renderFulfill() {
     const cardId  = 'ff-card-' + order.id;
     const card    = document.createElement('div');
     const priColor = order.priority==='high'?'#e04444':order.priority==='medium'?'#5bb8e8':order.priority==='low'?'#4dc870':'var(--border)';
+    card.id = 'ff-card-' + order.id;
     card.style.cssText = `background:var(--bg-panel);border:1px solid ${priColor};overflow:hidden;color:var(--white-dim);margin-bottom:8px;flex-shrink:0;`;
     card.innerHTML = `
       <!-- Card header — click to collapse/expand -->
@@ -5923,9 +5891,9 @@ async function saveOrderNotes() {
   order.updated = new Date().toISOString();
   const saveBtn = document.getElementById('order-notes-save-btn');
   if (saveBtn) { saveBtn.textContent = 'SAVING...'; saveBtn.disabled = true; }
-  closeOrderNotesModal();
+  // Save FIRST, then close — so the payload is sent before the modal state is cleared
   await apiCall({ action: 'saveorder', payload: { ...order, notes: order.notes } });
-  if (saveBtn) { saveBtn.textContent = 'SAVE'; saveBtn.disabled = false; }
+  closeOrderNotesModal();
 }
 
 // ── Order Note Input (Orders tab — pre-submit) ──────────────────
