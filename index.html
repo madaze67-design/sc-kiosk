@@ -1383,7 +1383,7 @@ option:checked, option:hover {
               <thead>
                 <tr>
                   <th style="width:28px;"><input type="checkbox" id="chk-all" onchange="chkAll()" style="accent-color:var(--teal);"></th>
-                  <th>ORE NAME</th><th>TYPE</th><th>QUALITY</th><th>QTY (cSCU / units)</th><th>NOTES</th><th style="width:72px;">ACTION</th>
+                  <th>ORE NAME</th><th>TYPE</th><th>QUALITY</th><th>QTY (SCU / units)</th><th>NOTES</th><th style="width:72px;">ACTION</th>
                 </tr>
               </thead>
               <tbody id="inv-tbody"></tbody>
@@ -2320,7 +2320,7 @@ option:checked, option:hover {
         <input id="inv-mat-quality" type="number" min="0" max="1000" class="sc-input" style="width:100%;font-size:13px;" placeholder="e.g. 837" oninput="checkInvMatForm()">
       </div>
       <div style="margin-bottom:4px;">
-        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;" id="inv-mat-qty-label">QUANTITY (cSCU)</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--white-muted);letter-spacing:1px;margin-bottom:6px;" id="inv-mat-qty-label">QUANTITY (SCU)</div>
         <input id="inv-mat-quantity" type="number" min="0.01" step="0.01" class="sc-input" style="width:100%;font-size:13px;" placeholder="e.g. 35.3" oninput="checkInvMatForm()">
       </div>
       <div id="inv-mat-modal-edit-btns" style="display:none;margin-top:12px;">
@@ -2395,13 +2395,15 @@ const SCU_TO_CSCU   = 100;        // 1 SCU  = 100 cSCU
 const CSCU_TO_USCU  = 10000;      // 1 cSCU = 10,000 µSCU
 const SCU_TO_USCU   = 1000000;    // 1 SCU  = 1,000,000 µSCU
 
-// Format a cSCU quantity for display
+// Format a cSCU quantity for display as SCU (1 SCU = 100 cSCU)
 function fmtCSCU(val) {
   if (val === undefined || val === null) return '0';
-  if (val >= 1000) return (val/1000).toFixed(1) + 'K';
-  if (val < 0.1)   return val.toFixed(3);
-  if (val < 10)    return val.toFixed(1);
-  return val.toFixed(1);
+  const scu = val / 100;
+  if (scu >= 1000) return (scu/1000).toFixed(2) + 'K';
+  if (scu < 0.01)  return scu.toFixed(4);
+  if (scu < 1)     return scu.toFixed(2);
+  if (scu < 100)   return scu.toFixed(2);
+  return scu.toFixed(1);
 }
 
 
@@ -2425,11 +2427,11 @@ function isHand(oreName, matSlot){
 
 // Convert stored cSCU req → display value for a given ore
 function reqDisplay(oreName, reqCSCU, matSlot){
-  return isHand(oreName, matSlot) ? reqCSCU / 100 : reqCSCU;
+  return reqCSCU / 100; // both hand-mined (rocks) and normal ores now divide by 100 (SCU)
 }
 // Unit label
 function reqUnit(oreName, matSlot){
-  return isHand(oreName, matSlot) ? 'units' : 'cSCU';
+  return isHand(oreName, matSlot) ? 'units' : 'SCU';
 }
 // Format a qty for display given ore name
 function fmtQtyFor(oreName, val, matSlot){
@@ -2640,7 +2642,7 @@ function saveOre(id){
   if(n)o.name=n.value.trim()||o.name;
   if(t)o.type=t.value;
   if(q)o.quality=Math.max(0,Math.min(1000,parseInt(q.value)||0));
-  if(qty)o.qty=parseFloat(qty.value)||0;
+  if(qty)o.qty=isHand(o.name)?(parseFloat(qty.value)||0):(parseFloat(qty.value)||0)*100;
   if(nt)o.notes=nt.value;
   invEditId=null; renderInv();
 }
@@ -2676,7 +2678,7 @@ function renderInv(){
     const qc=qColor(o.quality); const pct=Math.round(o.quality/10);
     const tr=document.createElement('tr');
     tr.className=ed?'editing':'';
-    const fmtQty=isHand(o.name)?Math.round(o.qty)+' units':fmtCSCU(o.qty)+' cSCU';
+    const fmtQty=isHand(o.name)?Math.round(o.qty)+' units':fmtCSCU(o.qty)+' SCU';
     tr.innerHTML=`
       <td><input type="checkbox" ${sel?'checked':''} onchange="toggleInvSel(${o.id})" style="accent-color:var(--teal)"></td>
       <td>${ed?`<input class="edit-inp" id="inv-edit-name" value="${o.name}" onkeydown="if(event.key==='Enter')saveOre(${o.id})">`:
@@ -2685,7 +2687,7 @@ function renderInv(){
         `<span class="type-badge ${TYPE_CLASS[o.type]||''}">${o.type}</span>`}</td>
       <td>${ed?`<input class="edit-inp" id="inv-edit-qual" type="number" min="0" max="1000" value="${o.quality}" style="width:70px;">`:
         `<div class="q-bar"><div class="q-track"><div class="q-fill" style="width:${pct}%;background:${qc};"></div></div><span style="font-family:var(--mono);font-size:14px;color:${qc};">${o.quality} Q</span></div>`}</td>
-      <td>${ed?`<input class="edit-inp" id="inv-edit-qty" type="number" min="0" value="${o.qty}" style="width:90px;">`:
+      <td>${ed?`<input class="edit-inp" id="inv-edit-qty" type="number" min="0" step="0.01" value="${isHand(o.name)?o.qty:(o.qty/100).toFixed(2)}" style="width:90px;">`:
         `<span style="font-family:var(--mono);font-size:14px;">${fmtQty}</span>`}</td>
       <td>${ed?`<input class="edit-inp" id="inv-edit-notes" value="${o.notes||''}" style="width:110px;">`:
         `<span style="color:var(--white-muted);font-size:14px;">${o.notes||'—'}</span>`}</td>
@@ -2799,7 +2801,7 @@ function renderMatOreList(){
       ${isAssigned?`<div style="position:absolute;top:2px;right:3px;color:var(--teal);font-size:14px;font-weight:bold;">✓</div>`:''}
       ${!isAssigned&&!hasEnough&&activeBp?.mats.find(m=>m.ore===ore.name)?`<div style="position:absolute;top:2px;left:2px;color:var(--red);font-size:11px;font-family:var(--mono);">LOW</div>`:''}
       <div style="font-size:15px;font-family:var(--mono);color:var(--white);font-weight:600;text-align:center;line-height:1.2;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${ore.name}">${ore.name}</div>
-      <div style="font-size:15px;font-family:var(--mono);color:var(--white-dim);">${fmtQty} <span style="font-size:11px;color:var(--teal-dim);">${isHand(ore.name)?"units":"cSCU"}</span></div>
+      <div style="font-size:15px;font-family:var(--mono);color:var(--white-dim);">${fmtQty} <span style="font-size:11px;color:var(--teal-dim);">${isHand(ore.name)?"units":"SCU"}</span></div>
       <div style="font-size:15px;font-family:var(--mono);color:${qc};">${ore.quality} <span style="font-size:11px;color:var(--white-muted);">Q</span></div>
     `;
     card.onmouseenter = () => { if(!isAssigned) card.style.borderColor='var(--teal-dim)'; };
@@ -3211,7 +3213,7 @@ function renderMatSlots(){
         +     ore.name.toUpperCase()
         +   '</div>'
         +   '<div style="font-size:11px;font-family:var(--mono);color:' + qc + ';margin-top:1px;">'
-        +     ore.qty.toFixed(1) + ' ' + reqUnit(m.ore, m) + ' available'
+        +     (isHand(m.ore,m)?Math.round(ore.qty):fmtCSCU(ore.qty)) + ' ' + reqUnit(m.ore, m) + ' available'
         +   '</div>'
         + '</div>';
     } else {
@@ -3514,7 +3516,7 @@ function renderModal(){
     const qc=qColor(ore.quality);
     const row=document.createElement('div');
     row.className='modal-ore-row';
-    const fmtQty=ore.qty>=1000000?(ore.qty/1000000).toFixed(1)+'M':ore.qty>=1000?(ore.qty/1000).toFixed(1)+'K':ore.qty;
+    const fmtQty=isHand(ore.name)?Math.round(ore.qty)+' units':fmtCSCU(ore.qty)+' SCU';
     row.innerHTML=`<div class="modal-ore-icon">${TYPE_ICON[ore.type]||'⬡'}</div>
       <div style="flex:1;">
         <div class="modal-ore-name" style="${!enough?'opacity:0.45;':''}">${ore.name}</div>
@@ -4017,7 +4019,7 @@ function renderInvMats() {
       row.className = 'inv-mat-row';
       row.innerHTML = `<span class="inv-mat-name">${e.name}</span>
         <span class="inv-mat-q" style="color:${qc};">${e.quality} Q</span>
-        <span class="inv-mat-qty">${isHand(e.name)?Math.round(e.qty)+' units':fmtCSCU(e.qty)+' cSCU'}</span>
+        <span class="inv-mat-qty">${isHand(e.name)?Math.round(e.qty)+' units':fmtCSCU(e.qty)+' SCU'}</span>
         ${isViewing ? '' : `<div class="inv-mat-cog" onclick="openEditMat(event,'${e.entryId}')" title="Edit">
           <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
         </div>`}`;
@@ -4058,10 +4060,10 @@ function openAddMat(oreName) {
   invEditingMatEntry = null;
   document.getElementById('inv-mat-modal-title').textContent = 'ADD MATERIAL';
   document.getElementById('inv-mat-modal-name').textContent = oreName;
-  document.getElementById('inv-mat-qty-label').textContent = isHand(oreName) ? 'QUANTITY (rocks / units)' : 'QUANTITY (cSCU)';
+  document.getElementById('inv-mat-qty-label').textContent = isHand(oreName) ? 'QUANTITY (rocks / units)' : 'QUANTITY (SCU)';
   document.getElementById('inv-mat-quality').placeholder = 'e.g. 837';
   document.getElementById('inv-mat-quality').value = '';
-  document.getElementById('inv-mat-quantity').placeholder = isHand(oreName) ? 'e.g. 5 rocks' : 'e.g. 35.3';
+  document.getElementById('inv-mat-quantity').placeholder = isHand(oreName) ? 'e.g. 5 rocks' : 'e.g. 0.35';
   document.getElementById('inv-mat-quality').disabled = false;
   document.getElementById('inv-mat-quantity').value = '';
   document.getElementById('inv-mat-modal-edit-btns').style.display = 'none';
@@ -4081,10 +4083,10 @@ function openEditMat(e, entryId) {
   invAddingMatName = null;
   document.getElementById('inv-mat-modal-title').textContent = 'EDIT MATERIAL';
   document.getElementById('inv-mat-modal-name').textContent = entry.name;
-  document.getElementById('inv-mat-qty-label').textContent = isHand(entry.name) ? 'QUANTITY (units / rocks)' : 'QUANTITY (cSCU)';
+  document.getElementById('inv-mat-qty-label').textContent = isHand(entry.name) ? 'QUANTITY (units / rocks)' : 'QUANTITY (SCU)';
   document.getElementById('inv-mat-quality').disabled = false;
   document.getElementById('inv-mat-quality').value = entry.quality;
-  document.getElementById('inv-mat-quantity').value = entry.qty;
+  document.getElementById('inv-mat-quantity').value = isHand(entry.name) ? entry.qty : (entry.qty / 100);
   document.getElementById('inv-mat-modal-edit-btns').style.display = 'block';
   const btn = document.getElementById('inv-mat-complete');
   btn.disabled = false;
@@ -4112,8 +4114,10 @@ function completeInvMat() {
   const user = getActiveUser();
   if (!user) return;
   const quality  = parseInt(document.getElementById('inv-mat-quality').value);
-  const qty      = parseFloat(document.getElementById('inv-mat-quantity').value);
-  if (isNaN(quality) || isNaN(qty)) return;
+  const qtyRaw   = parseFloat(document.getElementById('inv-mat-quantity').value);
+  if (isNaN(quality) || isNaN(qtyRaw)) return;
+  const oreName  = invAddingMatName || (invEditingMatEntry ? (getActiveUser()?.materials.find(m => m.entryId === invEditingMatEntry)?.name || '') : '');
+  const qty      = isHand(oreName) ? qtyRaw : qtyRaw * 100;
 
   if (invEditingMatEntry) {
     // Edit existing
