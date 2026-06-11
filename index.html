@@ -2401,7 +2401,7 @@ function fmtCSCU(val) {
   const scu = val / 100;
   if (scu >= 1000) return (scu/1000).toFixed(2) + 'K';
   if (scu < 0.01)  return scu.toFixed(4);
-  if (scu < 1)     return scu.toFixed(2);
+  if (scu < 1)     return scu.toFixed(3);
   if (scu < 100)   return scu.toFixed(2);
   return scu.toFixed(1);
 }
