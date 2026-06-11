@@ -4077,9 +4077,12 @@ function openEditMat(e, entryId) {
   e.stopPropagation();
   const user = getActiveUser();
   if (!user) return;
-  const entry = user.materials.find(m => m.entryId === entryId);
+  // entryId arrives as a string from the HTML onclick attr; coerce so strict
+  // equality works whether the stored value is a number (scanner push) or string
+  const eid = isNaN(Number(entryId)) ? entryId : Number(entryId);
+  const entry = user.materials.find(m => m.entryId === eid || String(m.entryId) === String(entryId));
   if (!entry) return;
-  invEditingMatEntry = entryId;
+  invEditingMatEntry = eid;
   invAddingMatName = null;
   document.getElementById('inv-mat-modal-title').textContent = 'EDIT MATERIAL';
   document.getElementById('inv-mat-modal-name').textContent = entry.name;
@@ -4116,12 +4119,12 @@ function completeInvMat() {
   const quality  = parseInt(document.getElementById('inv-mat-quality').value);
   const qtyRaw   = parseFloat(document.getElementById('inv-mat-quantity').value);
   if (isNaN(quality) || isNaN(qtyRaw)) return;
-  const oreName  = invAddingMatName || (invEditingMatEntry ? (getActiveUser()?.materials.find(m => m.entryId === invEditingMatEntry)?.name || '') : '');
+  const oreName  = invAddingMatName || (invEditingMatEntry ? (getActiveUser()?.materials.find(m => m.entryId === invEditingMatEntry || String(m.entryId) === String(invEditingMatEntry))?.name || '') : '');
   const qty      = isHand(oreName) ? qtyRaw : qtyRaw * 100;
 
   if (invEditingMatEntry) {
     // Edit existing
-    const entry = user.materials.find(m => m.entryId === invEditingMatEntry);
+    const entry = user.materials.find(m => m.entryId === invEditingMatEntry || String(m.entryId) === String(invEditingMatEntry));
     if (entry) { entry.quality = quality; entry.qty = qty; }
   } else if (invAddingMatName) {
     // Add new entry (allow multiple stacks of same ore at different quality)
@@ -4499,7 +4502,7 @@ function removeUserMat() {
   const user = getActiveUser();
   if (!user || !invEditingMatEntry) return;
   if (!confirm('Remove this material entry?')) return;
-  user.materials = user.materials.filter(m => m.entryId !== invEditingMatEntry);
+  user.materials = user.materials.filter(m => m.entryId !== invEditingMatEntry && String(m.entryId) !== String(invEditingMatEntry));
   saveInvUsers(user).catch(e => console.warn('Remove mat save failed:', e));
   closeInvMatModal();
   renderInvMats();
