@@ -2435,7 +2435,9 @@ function reqUnit(oreName, matSlot){
 }
 // Format a qty for display given ore name
 function fmtQtyFor(oreName, val, matSlot){
-  return isHand(oreName, matSlot) ? Math.round(val) + '' : fmtCSCU(val);
+  // val is already in SCU (from reqDisplay), but fmtCSCU expects cSCU and
+  // divides by 100 internally — re-scale to cSCU so the math lines up.
+  return isHand(oreName, matSlot) ? Math.round(val) + '' : fmtCSCU(val * 100);
 }
 
 // Ore type lookup (used for filtering/display)
