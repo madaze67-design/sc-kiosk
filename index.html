@@ -1004,7 +1004,8 @@ table.inv-table tr.editing td { background: var(--bg-selected); }
   background: radial-gradient(ellipse at center, rgba(77,200,176,0.05) 0%, transparent 70%);
   min-height: 160px;
 }
-#item-render { font-size: 72px; filter: drop-shadow(0 0 20px rgba(77,200,176,0.25)); }
+#item-render { font-size: 72px; filter: drop-shadow(0 0 20px rgba(77,200,176,0.25)); display:flex; align-items:center; justify-content:center; }
+#item-render img { width: 120px; height: 120px; object-fit: contain; image-rendering: auto; filter: drop-shadow(0 0 18px rgba(77,200,176,0.35)); opacity: 0.92; }
 /* Name / fab-time row — sits directly below the image */
 #item-info-row {
   display: flex;
@@ -3480,7 +3481,13 @@ function getDeltaCls(pct, isNegated) {
 
 function renderItemPreview(){
   if(!activeBp)return;
-  document.getElementById('item-render').textContent=activeBp.icon;
+  const _detailIcon = getBpIcon(activeBp);
+  const _renderEl = document.getElementById('item-render');
+  if (_detailIcon) {
+    _renderEl.innerHTML = `<img src="${_detailIcon}" alt="${activeBp.name}" onerror="this.outerHTML='<span style=\\'font-size:72px\\'>${activeBp.icon||'X'}</span>'">`;
+  } else {
+    _renderEl.textContent = activeBp.icon || 'X';
+  }
   document.getElementById('item-preview-name').textContent=activeBp.name.toUpperCase();
   document.getElementById('item-fab-time-val').textContent=activeBp.time;
   document.getElementById('item-cat').textContent=activeBp.catLabel||activeBp.cat;
