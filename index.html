@@ -2598,7 +2598,11 @@ fetch('icon_map_by_slug.json')
 function getBpIcon(bp) {
   if (!bp.wikiUrl) return null;
   const slug = bp.wikiUrl.replace('https://api.star-citizen.wiki/blueprints/', '');
-  return ICON_MAP[slug] || null;
+  if (ICON_MAP[slug]) return ICON_MAP[slug];
+  // Fallback: strip weapon-type word before -magazine or -battery
+  // e.g. fs-9-lmg-magazine-75-cap -> fs-9-magazine-75-cap
+  const fallback = slug.replace(/-(lmg|smg|rifle|pistol|shotgun|sniper-rifle|cannon|repeater|gatling|scattergun|twin-shotgun|laser-shotgun|energy-lmg|energy-smg|energy-assault-rifle|laser-sniper-rifle|laser-pistol|frag-pistol)-(magazine|battery)/g, '-$2');
+  return ICON_MAP[fallback] || null;
 }
 
 // Items for dismantle panel
