@@ -3093,7 +3093,9 @@ function completeInvMat() {
       qty
     });
   }
-  saveInvUsers().catch(e => console.warn('Delete mat failed:', e));
+  // Save only this user — not the whole roster (avoids clobbering other
+  // users' concurrent edits with this browser's possibly-stale copy of them)
+  saveInvUsers(user).catch(e => console.warn('Save material failed:', e));
   closeInvMatModal();
   renderInvMats();
   document.getElementById('inv-user-info').textContent = `${user.blueprints.length} BPs · ${user.materials.length} ore entries`;
@@ -3574,7 +3576,9 @@ function initInvTab() {
 
 
 // Load saved users on startup — load URL then fetch from Sheets
-gsApiUrl = localStorage.getItem(GS_URL_KEY) || '';
+// (gsApiUrl was already initialized from localStorage/DEFAULT_GS_URL above —
+// re-deriving it here with a bare '' fallback used to stomp that default and
+// silently disable all Google Sheets sync. Don't recompute it.)
 if(gsApiUrl) {
   loadInvUsers();
   loadCustomBlueprints();
@@ -4055,6 +4059,24 @@ async function loadCustomBlueprints() {
 
 let allOrders         = [];
 let ffStatusModalId   = null;
+
+// Per-order per-item crafted tracking — stored on the order object and synced to Google Sheets
+function isCrafted(orderId, itemIdx) {
+  const order = (allOrders||[]).find(function(o){ return String(o.id)===String(orderId); });
+  if(!order || !order.items || !order.items[itemIdx]) return false;
+  return !!order.items[itemIdx].crafted;
+}
+
+async function setCraftedItem(orderId, itemIdx, checked) {
+  const order = (allOrders||[]).find(function(o){ return String(o.id)===String(orderId); });
+  if(!order || !order.items || !order.items[itemIdx]) return;
+  // Embed crafted flag directly in the item object — stored in existing Items (JSON) column
+  if(checked) order.items[itemIdx].crafted = true;
+  else delete order.items[itemIdx].crafted;
+  // Save using existing saveorder — no AppScript changes needed
+  await apiCall({ action:'saveorder', payload: order });
+  renderFulfill();
+}
 
 const ORDER_STATUSES  = ['New Order','In Progress','Awaiting BP','Awaiting Mats','Ready for Pickup','Complete'];
 const STATUS_COLORS   = {
