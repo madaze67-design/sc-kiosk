@@ -2768,8 +2768,8 @@ function setApiStatus(state) {
 // Write actions use form-urlencoded POST (no CORS preflight, no URL length limit)
 // Apps Script reads form params via e.parameter — same as GET params
 const WRITE_ACTIONS = new Set([
-  'saveuser','deleteuser','saveorder','savecustombp',
-  'deletecustombp','setconfig','ensureadmin'
+  'saveuser','deleteuser','saveorder',
+  'setconfig','ensureadmin'
 ]);
 
 async function apiCall(params) {
@@ -3660,7 +3660,6 @@ function initInvTab() {
 // silently disable all Google Sheets sync. Don't recompute it.)
 if(gsApiUrl) {
   loadInvUsers();
-  loadCustomBlueprints();
   loadAdminPw();
   startSyncPolling();
 } else {
@@ -3762,7 +3761,7 @@ function openOrdMultiDetail() {
   const container = document.getElementById('ord-multi-items');
   container.innerHTML = '';
   ordSelected.forEach(bpName => {
-    const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === bpName);
+    const bp = BLUEPRINTS.find(b => b.name === bpName);
     if(!bp) return;
     const existing = orderItems.find(i => i.bp.name === bpName);
     const currentQty = existing ? existing.qty : 1;
@@ -3824,7 +3823,7 @@ function closeOrdMultiDetail() {
 
 function addAllToOrder() {
   ordSelected.forEach(bpName => {
-    const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === bpName);
+    const bp = BLUEPRINTS.find(b => b.name === bpName);
     if(!bp) return;
     const key = 'ord-multi-qty-' + bpName.replace(/[^a-z0-9]/gi,'_');
     const el  = document.getElementById(key);
@@ -3933,7 +3932,7 @@ function renderOrdBPList() {
     ? invUsers.find(u=>String(u.id)===String(ordUserFilter))
     : (ordShowMyBP ? activeUser : null);
 
-  let list = [...BLUEPRINTS, ...customBlueprints].filter(bp => {
+  let list = BLUEPRINTS.filter(bp => {
     if(s && !bp.name.toLowerCase().includes(s)) return false;
     if(ordCatFilter && bp.cat !== ordCatFilter) return false;
     if(ordSubFilter && bp.sub !== ordSubFilter) return false;
@@ -4116,19 +4115,6 @@ async function placeOrder() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════
-// BLUEPRINT EDITOR TAB
-// ═══════════════════════════════════════════════════════════════
-
-let customBlueprints = [];  // user-added/edited blueprints (BP Editor removed; kept so
-                             // Orders/Fulfillment/Inventory still show existing custom blueprints)
-
-async function loadCustomBlueprints() {
-  const result = await apiCall({ action: 'getcustombps' });
-  if(result.success) {
-    customBlueprints = result.blueprints||[];
-  }
-}
 
 // ═══════════════════════════════════════════════════════════════
 // ORDER FULFILLMENT TAB
@@ -4370,7 +4356,7 @@ function buildOrderCardBody(order) {
   // Recalculate combined materials from blueprint data
   const combined = {};
   items.forEach(item => {
-    const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === item.name);
+    const bp = BLUEPRINTS.find(b => b.name === item.name);
     if(!bp) return;
     (bp.mats || []).forEach(m => {
       const reqAmt = reqDisplay(m.ore, m.req, m) * item.qty;
@@ -4384,7 +4370,7 @@ function buildOrderCardBody(order) {
 
   // Per-item breakdown rows
   const itemRows = items.map((item, idx) => {
-    const bp = [...BLUEPRINTS, ...customBlueprints].find(b => b.name === item.name);
+    const bp = BLUEPRINTS.find(b => b.name === item.name);
     const matLines = bp ? (bp.mats || []).map(m => {
       const reqAmt = reqDisplay(m.ore, m.req, m) * item.qty;
       const unit   = reqUnit(m.ore, m);
