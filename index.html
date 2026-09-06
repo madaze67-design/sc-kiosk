@@ -1325,6 +1325,103 @@ option:checked, option:hover {
 /* Utility */
 .hidden { display: none !important; }
 .flex { display: flex; }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — the app was a fixed 1360×790px box; this makes it
+   fill whatever window/screen it's opened on, down to phone width.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Fluid frame on any screen: fills the viewport, capped at the
+   original design size on large monitors so it doesn't stretch
+   into an unreadable sprawl. */
+#frame {
+  width: min(1360px, 98vw);
+  height: min(790px, 96vh);
+}
+
+/* Tablet and below: no more little floating window — go edge to
+   edge so there's no wasted chrome around the actual app. */
+@media (max-width: 900px) {
+  body { align-items: stretch; justify-content: stretch; }
+  #frame {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0;
+    border-radius: 0;
+  }
+  #frame::before { display: none; }
+  #window { border: none; }
+
+  /* Orders: blueprint picker stacks above the order builder instead
+     of sitting beside it */
+  #orders-body { flex-direction: column; }
+  #orders-left {
+    width: 100% !important;
+    max-height: 42vh;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+  }
+  /* Order items + total materials stack too */
+  #ord-items-mats-row { flex-direction: column; }
+  #ord-mats-col {
+    width: 100% !important;
+    max-height: 30vh;
+    border-right: none !important;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Inventory: blueprint list stacks above materials */
+  #inv-split-body { flex-direction: column; }
+  #inv-left-panel {
+    width: 100% !important;
+    max-height: 42vh;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+  }
+  #inv-topbar {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 8px 10px;
+    row-gap: 8px;
+  }
+  #inv-chgpw-wrap {
+    position: static;
+    transform: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Modals: every one of them is a full-screen flex overlay whose
+     first child is the actual dialog box at a fixed pixel width —
+     cap that box to the viewport instead of letting it overflow. */
+  [id$="-modal"] > div:first-child {
+    width: 92vw !important;
+    max-width: 92vw !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* Phone width: the title bar's button row needs to actually fit */
+@media (max-width: 640px) {
+  #titlebar {
+    height: auto;
+    min-height: 38px;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding: 6px 10px;
+  }
+  #titlebar .title { font-size: 15px; }
+  #titlebar .center-line { display: none; }
+  #titlebar > div[style*="margin-left:auto"] { flex-wrap: wrap; margin-left: 0 !important; }
+
+  /* Sidebar nav tooltips rely on :hover, which touch devices don't
+     have — shrink the rail slightly and let the icon itself be the
+     only affordance; tapping still switches screens either way. */
+  #sidebar { width: 40px; }
+  .nav-item { width: 32px; }
+}
 </style>
 </head>
 <body>
@@ -1507,7 +1604,7 @@ option:checked, option:hover {
               <option value="">— Select User —</option>
             </select>
           </div>
-          <div style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;">
+          <div id="inv-chgpw-wrap" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;">
             <button id="chg-pw-btn" onclick="openChangePw()" style="display:none;height:26px;padding:0 12px;
               background:var(--bg-main);border:1px solid var(--border);color:var(--white-muted);
               font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1px;
@@ -1521,10 +1618,10 @@ option:checked, option:hover {
         </div>
 
         <!-- Split body -->
-        <div style="display:flex;flex:1;overflow:hidden;">
+        <div id="inv-split-body" style="display:flex;flex:1;overflow:hidden;">
 
           <!-- LEFT: Blueprints -->
-          <div style="width:50%;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
+          <div id="inv-left-panel" style="width:50%;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
             <!-- BP Controls -->
             <div style="padding:8px 10px;border-bottom:1px solid var(--border);background:var(--bg-panel);display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
               <div style="display:flex;align-items:center;gap:6px;">
@@ -1629,7 +1726,7 @@ option:checked, option:hover {
               </button>
             </div>
             <!-- Order items + materials -->
-            <div style="display:flex;flex:1;overflow:hidden;">
+            <div id="ord-items-mats-row" style="display:flex;flex:1;overflow:hidden;">
               <!-- Items list -->
               <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
                 <div style="padding:6px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:15px;letter-spacing:2px;color:var(--teal-dim);background:var(--bg-section);">ORDER ITEMS</div>
@@ -1638,7 +1735,7 @@ option:checked, option:hover {
                 </div>
               </div>
               <!-- Combined materials -->
-              <div style="width:260px;flex-shrink:0;display:flex;flex-direction:column;overflow:hidden;">
+              <div id="ord-mats-col" style="width:260px;flex-shrink:0;display:flex;flex-direction:column;overflow:hidden;">
                 <div style="padding:6px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:15px;letter-spacing:2px;color:var(--teal-dim);background:var(--bg-section);">TOTAL MATERIALS</div>
                 <div id="ord-mats-list" style="flex:1;overflow-y:auto;padding:6px;"></div>
               </div>
