@@ -389,11 +389,10 @@ body {
   height: 6px;
   border-radius: 3px;
   background: linear-gradient(to right,
-    #e04444 0%, #e04444 20%,
-    #c8941a 20%, #c8941a 40%,
-    #85c840 40%, #85c840 60%,
-    #4dc8b0 60%, #4dc8b0 80%,
-    #ffffff 80%
+    #e07040 0%,   #e07040 25%,
+    #c8a030 25%,  #c8a030 50%,
+    #4dc8b0 50%,  #4dc8b0 75%,
+    #4dc870 75%
   );
   margin: 10px 0 6px;
 }
@@ -405,11 +404,10 @@ body {
   color: var(--white-muted);
   margin-bottom: 8px;
 }
-.ql-low  { color: #e04444; }
-.ql-std  { color: #c8941a; }
-.ql-good { color: #85c840; }
-.ql-high { color: #4dc8b0; }
-.ql-perf { color: #ffffff; }
+.ql-low  { color: #e07040; }
+.ql-std  { color: #c8a030; }
+.ql-good { color: #4dc8b0; }
+.ql-high { color: #4dc870; }
 
 .kbd {
   display: inline-block;
@@ -496,7 +494,7 @@ body {
         <div class="hero-eyebrow">USER GUIDE // KOSERA V8</div>
         <div class="hero-title">Craft smarter, <span class="accent">together</span></div>
         <div class="hero-desc">
-          This guide covers everything you need to use the Fabrication Kiosk as an org member — browsing blueprints, checking what your ores can build, placing fabrication orders, and managing your personal inventory.
+          This guide covers everything you need to use the Fabrication Kiosk as an org member — placing fabrication orders, tracking their progress through Fulfillment, and managing your personal ore stock and unlocked blueprints.
         </div>
       </div>
     </div>
@@ -506,14 +504,10 @@ body {
       <div class="toc-grid">
         <button type="button" class="toc-item active" data-target="s1"><span class="toc-num">01</span><span class="toc-label">Getting Started</span></button>
         <button type="button" class="toc-item" data-target="s2"><span class="toc-num">02</span><span class="toc-label">Logging In</span></button>
-        <button type="button" class="toc-item" data-target="s3"><span class="toc-num">03</span><span class="toc-label">Browsing Blueprints</span></button>
-        <button type="button" class="toc-item" data-target="s4"><span class="toc-num">04</span><span class="toc-label">Material Slots &amp; Quality</span></button>
-        <button type="button" class="toc-item" data-target="s5"><span class="toc-num">05</span><span class="toc-label">Reading the Stats Panel</span></button>
-        <button type="button" class="toc-item" data-target="s6"><span class="toc-num">06</span><span class="toc-label">Placing an Order</span></button>
-        <button type="button" class="toc-item" data-target="s7"><span class="toc-num">07</span><span class="toc-label">Tracking Your Orders</span></button>
-        <button type="button" class="toc-item" data-target="s8"><span class="toc-num">08</span><span class="toc-label">Your Inventory</span></button>
-        <button type="button" class="toc-item" data-target="s9"><span class="toc-num">09</span><span class="toc-label">Your Blueprint Collection</span></button>
-        <button type="button" class="toc-item" data-target="s10"><span class="toc-num">10</span><span class="toc-label">Tips &amp; Quick Reference</span></button>
+        <button type="button" class="toc-item" data-target="s3"><span class="toc-num">03</span><span class="toc-label">Placing an Order</span></button>
+        <button type="button" class="toc-item" data-target="s4"><span class="toc-num">04</span><span class="toc-label">Tracking Orders</span></button>
+        <button type="button" class="toc-item" data-target="s5"><span class="toc-num">05</span><span class="toc-label">Your Inventory</span></button>
+        <button type="button" class="toc-item" data-target="s6"><span class="toc-num">06</span><span class="toc-label">Tips &amp; Quick Reference</span></button>
       </div>
     </div>
 
@@ -532,21 +526,21 @@ body {
           <div class="step-num">→</div>
           <div class="step-body">
             <div class="step-label">What you see on load</div>
-            <div class="step-desc">The kiosk opens on the <strong>Fabricate</strong> screen — a blueprint browser on the left and a detail panel on the right. The title bar shows the connection status. A blinking <span class="ui-teal">SYNC</span> indicator means data is loading from the org sheet.</div>
+            <div class="step-desc">The kiosk opens on the <strong>Orders</strong> screen — a blueprint picker on the left and your order builder on the right. The title bar shows the connection status: a green dot and <strong>CONNECTED</strong> means you're synced to the org database.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
             <div class="step-label">Navigation</div>
-            <div class="step-desc">The left sidebar has icons for each main screen: <strong>Fabricate</strong> (the anvil), <strong>Orders</strong> (the clipboard), <strong>Inventory</strong> (the person), and <strong>Ore Manifest</strong> (the table). Click any icon to switch screens.</div>
+            <div class="step-desc">The left sidebar has three icons: <strong>Orders</strong> (clipboard) — place new fabrication requests, <strong>Fulfillment</strong> (checkmark) — track every order's status, and <strong>Inventory</strong> (person) — manage your ore stock and unlocked blueprints. Click any icon to switch screens.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
             <div class="step-label">No account yet?</div>
-            <div class="step-desc">Ask your org admin to add you under the <strong>Inventory</strong> screen. Once added you'll appear in all user dropdowns across the kiosk. You can use most features as a guest without logging in, but placing orders and managing your personal inventory requires selecting your profile.</div>
+            <div class="step-desc">Ask your org admin to add you under the <strong>Inventory</strong> screen. Once added you'll appear in all user dropdowns across the kiosk. You can browse and place orders as a guest without logging in, but tracking your own blueprint unlocks and ore stock requires selecting your profile.</div>
           </div>
         </div>
       </div>
@@ -591,222 +585,95 @@ body {
       </div>
     </div>
 
-    <!-- 03 BROWSING BLUEPRINTS -->
+    <!-- 03 PLACING AN ORDER -->
     <div class="section" id="s3">
       <div class="section-header">
         <div class="section-num">03</div>
-        <div class="section-title">Browsing Blueprints</div>
-        <span class="section-icon">📋</span>
-      </div>
-      <div class="section-intro">
-        The Fabricate screen is your main workspace. The left panel shows all available blueprints as a browsable grid. Click any card to load its full details on the right.
-      </div>
-      <div class="two-col">
-        <div class="feature-card">
-          <div class="feature-card-title">FILTERING BY CATEGORY</div>
-          <div class="feature-card-desc">Click a category icon in the icon row to show only that item type (armor, weapons, ship components, etc.). Hover a category icon to reveal a sub-category dropdown with checkboxes for finer control. Click <span class="ui-nav">CLEAR FILTERS</span> to reset.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-card-title">SMART FILTERS</div>
-          <div class="feature-card-desc">
-            <strong style="color:var(--teal-bright);">Affordable</strong> — shows only blueprints the org currently has enough ore to craft at quantity 1.<br><br>
-            <strong style="color:var(--teal-bright);">Owned</strong> — shows only blueprints in your personal collection (requires your user to be selected).
-          </div>
-        </div>
-      </div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Search</div>
-            <div class="step-desc">Type in the search bar above the blueprint grid to filter by name. The grid updates instantly. Combine with category filters to narrow results further.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Quantity</div>
-            <div class="step-desc">Use the <strong>− / +</strong> buttons next to the quantity field to adjust how many units you want to fabricate. All material requirements and cost displays update to match. Click <strong>Max</strong> to jump to 99.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Autofill materials</div>
-            <div class="step-desc">Click <strong>Best material</strong> to auto-fill all empty slots with the highest-quality ores from the org manifest. Click <strong>Worst material</strong> for the lowest quality. Useful for quickly previewing stat ranges without manually assigning each slot.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 04 MATERIAL SLOTS & QUALITY -->
-    <div class="section" id="s4">
-      <div class="section-header">
-        <div class="section-num">04</div>
-        <div class="section-title">Material Slots &amp; Quality</div>
-        <span class="section-icon">⛏</span>
-      </div>
-      <div class="section-intro">
-        Each blueprint requires one or more ore types. The center panel shows these as slot cards. You assign specific ore entries from the org manifest to each slot — and the quality of those ores directly affects the crafted item's stats.
-      </div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Assigning an ore to a slot</div>
-            <div class="step-desc">Click the ore row inside a slot card. A picker modal opens showing only ores that match that slot's required type. Ores marked <span class="ui-red">LOW STOCK</span> don't have enough quantity for your current order size. Click an ore to assign it; click <strong>Clear slot</strong> at the top of the picker to remove the current assignment.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Quality sliders</div>
-            <div class="step-desc">Each slot has a slider from 0 to 1000 that represents ore quality. Drag it to preview how different quality levels affect the item's stats in real time. The slider does <strong>not</strong> affect the actual ore used in your order — it's a preview tool only. When you assign a real ore from the manifest, the slider snaps to that ore's recorded quality.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Using the Materials tab</div>
-            <div class="step-desc">Switch the left panel to <span class="ui-nav">MATERIALS</span> to browse available ores filtered by type. Click any ore row to assign it to the matching slot. Use the type icon filters and search bar to find specific ores.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div style="margin-bottom:8px;font-family:var(--mono);font-size:17.955px;letter-spacing:2px;color:var(--white-muted);">ORE QUALITY SCALE</div>
-      <div class="quality-bar"></div>
-      <div class="quality-labels">
-        <span class="ql-low">0–199<br>Poor</span>
-        <span class="ql-std">200–399<br>Standard</span>
-        <span class="ql-good">400–599<br>Good</span>
-        <span class="ql-high">600–799<br>High</span>
-        <span class="ql-perf">800–1000<br>Perfect</span>
-      </div>
-      <div class="info-box">
-        <span class="info-label">HANDMINED ORES</span>
-        Some blueprint slots require hand-mined materials (Dolivine, Aphorite, Hadanite, etc.). These are measured in <strong>units / rocks</strong> rather than cSCU. The quantity shown and the LOW STOCK threshold account for this automatically.
-      </div>
-    </div>
-
-    <!-- 05 STATS PANEL -->
-    <div class="section" id="s5">
-      <div class="section-header">
-        <div class="section-num">05</div>
-        <div class="section-title">Reading the Stats Panel</div>
-        <span class="section-icon">📊</span>
-      </div>
-      <div class="section-intro">
-        The right side of the Fabricate screen shows a live stat preview for the selected blueprint. Stats update in real time as you move quality sliders or assign ores.
-      </div>
-      <div class="two-col">
-        <div class="feature-card">
-          <div class="feature-card-title">BASE STATS</div>
-          <div class="feature-card-desc">The values this item has at quality 0 — the minimum. Shown in the left column of the stat table. For many stats this is still a useful baseline: fabrication time, base damage, temperature range, etc.</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-card-title">ENHANCED STATS</div>
-          <div class="feature-card-desc">The values calculated from your current slider positions or assigned ore qualities. Shown in the right column. A <strong style="color:var(--green);">green delta</strong> means improvement over base; a neutral dot means the stat doesn't change with quality.</div>
-        </div>
-      </div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Fabrication time</div>
-            <div class="step-desc">Shown at the top of the stat panel. This is the time to fabricate one unit at the selected tier. Multiply by your quantity for the total session time.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Multi-slot quality</div>
-            <div class="step-desc">When a blueprint has more than one material slot, the final stat enhancement is calculated as a weighted average across all slots. Boosting one high-quality ore while using low-quality ores in other slots gives a partial improvement — not the full maximum.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 06 PLACING AN ORDER -->
-    <div class="section" id="s6">
-      <div class="section-header">
-        <div class="section-num">06</div>
         <div class="section-title">Placing an Order</div>
         <span class="section-icon">📦</span>
       </div>
       <div class="section-intro">
-        Once you've found a blueprint you want and previewed the stats, placing an order sends a fabrication request to your org's artificers. They'll see it in the Fulfillment queue and craft it for you.
-		<p><b>Note</b> that the dropdown at the top of the blueprint list will let you pick from a users blueprints that they have marked as owned. If you choose to pick form any user, then choose the <b>"Gnome Admin Master List."</b> This will have a list of all blueprints from all users.</p>
+        The Orders screen is a blueprint picker on the left and your order builder on the right — everything happens on this one screen now. Once you place an order, your org's artificers see it in the Fulfillment queue and craft it for you.
+      </div>
+      <div class="two-col">
+        <div class="feature-card">
+          <div class="feature-card-title">FILTERING THE BLUEPRINT LIST</div>
+          <div class="feature-card-desc">Click a category icon to show only that item type. Hover a category icon for a sub-category dropdown. Toggle <span class="ui-teal">My BP's</span> to see only blueprints you've unlocked. Use the search bar to find something by name.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-title">WHOSE BLUEPRINTS AM I SEEING?</div>
+          <div class="feature-card-desc">The dropdown above the search bar controls this: <strong style="color:var(--teal-bright);">All Blueprints</strong> shows the entire catalog, picking a specific member shows only what <em>they've</em> unlocked, and the default — <strong style="color:var(--teal-bright);">⚙ Gnome Admin Master List</strong> — shows every blueprint any member of the org has unlocked, combined.</div>
+        </div>
       </div>
       <div class="steps">
         <div class="step amber-step">
           <div class="step-num">01</div>
           <div class="step-body">
-            <div class="step-label">Select a blueprint</div>
-            <div class="step-desc">Click any blueprint card in the grid to open it in the detail view. Make sure it's the item you want — you can confirm the name at the top of the stat panel.</div>
+            <div class="step-label">Select your blueprints</div>
+            <div class="step-desc">Click a blueprint row to check it — click again to uncheck. You can select as many as you want; a counter badge appears on the <span class="ui-teal">+ ADD TO ORDER</span> button showing how many are selected.</div>
           </div>
         </div>
         <div class="step amber-step">
           <div class="step-num">02</div>
           <div class="step-body">
-            <div class="step-label">Set quantity</div>
-            <div class="step-desc">Use <strong>− / +</strong> to adjust how many units you need. The material cost scales with quantity — check that the org has enough stock before placing.</div>
+            <div class="step-label">Set quantities</div>
+            <div class="step-desc">Click <span class="ui-teal">+ ADD TO ORDER</span> to open a quantity panel listing every selected blueprint. Use <strong>− / +</strong> per item to set how many you need, or <strong>✕</strong> to drop one from the selection. Click <span class="ui-teal">ADD ALL TO ORDER</span> when ready.</div>
           </div>
         </div>
         <div class="step amber-step">
           <div class="step-num">03</div>
           <div class="step-body">
-            <div class="step-label">Go to Orders and create a new order</div>
-            <div class="step-desc">Navigate to the <strong>Orders</strong> screen and click <span class="ui-teal">+ NEW ORDER</span>. Alternatively, from the Fabricate screen click <span class="ui-teal">+ ADD TO ORDER</span> to add the current blueprint directly to a new or existing order without leaving the screen.</div>
+            <div class="step-label">Review Order Items &amp; Total Materials</div>
+            <div class="step-desc">Added items appear in the <strong>ORDER ITEMS</strong> list on the right, with running quantities you can still adjust or remove. The <strong>TOTAL MATERIALS</strong> panel beside it shows the combined ore cost across every item in the order.</div>
           </div>
         </div>
         <div class="step amber-step">
           <div class="step-num">04</div>
           <div class="step-body">
-            <div class="step-label">Select yourself as placer</div>
-            <div class="step-desc">Use the <strong>Placer</strong> dropdown to identify who the order is for. Select your name so artificers know who to deliver to. Enter your in-game callsign and RSI handle if prompted.</div>
+            <div class="step-label">Enter Callsign and RSI Handle</div>
+            <div class="step-desc">Both fields are required — they tell your artificer exactly who to deliver the finished items to in-game. If you're logged in, your account name is recorded on the order automatically; if not, it's logged as <strong>Guest</strong>.</div>
           </div>
         </div>
         <div class="step amber-step">
           <div class="step-num">05</div>
           <div class="step-body">
             <div class="step-label">Add a note (optional)</div>
-            <div class="step-desc">Click <strong>ADD NOTE</strong> to add special instructions — preferred quality range, urgency, delivery location, or anything your artificer should know.</div>
+            <div class="step-desc">Click <strong>ADD NOTE</strong> for special instructions — preferred ore quality, urgency, delivery location, or anything your artificer should know before starting.</div>
           </div>
         </div>
         <div class="step amber-step">
           <div class="step-num">06</div>
           <div class="step-body">
             <div class="step-label">Place the order</div>
-            <div class="step-desc">Click <span class="ui-teal">PLACE ORDER</span>. The order is saved instantly to the org sheet and appears in the Fulfillment queue with a <span class="ui-teal" style="padding:1px 5px;">New Order</span> status.</div>
+            <div class="step-desc">Click <span class="ui-teal">PLACE ORDER</span>. It saves instantly to the org sheet and shows up in Fulfillment with a <span class="ui-teal" style="padding:1px 5px;">New Order</span> status.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 07 TRACKING ORDERS -->
-    <div class="section" id="s7">
+    <!-- 04 TRACKING ORDERS -->
+    <div class="section" id="s4">
       <div class="section-header">
-        <div class="section-num">07</div>
-        <div class="section-title">Tracking Your Orders</div>
+        <div class="section-num">04</div>
+        <div class="section-title">Tracking Orders</div>
         <span class="section-icon">🔍</span>
       </div>
       <div class="section-intro">
-        The Orders screen shows all org fabrication requests. You can filter to see only your own orders and check their current status.
+        The Fulfillment screen (checkmark icon) lists every order the org has placed — including yours — so you can watch its progress without asking anyone.
       </div>
       <div class="steps">
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
-            <div class="step-label">Finding your orders</div>
-            <div class="step-desc">Use the <strong>Status</strong> and <strong>Assigned</strong> dropdowns at the top to filter the queue. To see only your orders, select your callsign in the placer filter, or look for your name on the order cards. Each card shows the placer name, date, item count, and current status.</div>
+            <div class="step-label">Finding an order</div>
+            <div class="step-desc">Use the <strong>ORDERS / COMPLETE</strong> toggle to switch between active and finished orders. Use the <strong>Status</strong> and <strong>Assigned</strong> dropdowns to narrow the list — each lets you check/uncheck multiple values at once. Click <strong>▼ ALL</strong> / <strong>▲ ALL</strong> to expand or collapse every card.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
-            <div class="step-label">Order status meanings</div>
-            <div class="step-desc">Click a card to expand it and see the full item list and progress. The status field tells you exactly where your order is in the pipeline.</div>
+            <div class="step-label">Reading an order card</div>
+            <div class="step-desc">Click a card to expand it and see every item in the order, the combined materials needed, and any notes. As your artificer finishes each item they check it off, so an expanded card shows exactly what's done and what's still pending.</div>
           </div>
         </div>
       </div>
@@ -828,84 +695,76 @@ body {
       </div>
     </div>
 
-    <!-- 08 YOUR INVENTORY -->
-    <div class="section" id="s8">
+    <!-- 05 YOUR INVENTORY -->
+    <div class="section" id="s5">
       <div class="section-header">
-        <div class="section-num">08</div>
+        <div class="section-num">05</div>
         <div class="section-title">Your Inventory</div>
         <span class="section-icon">🧰</span>
       </div>
       <div class="section-intro">
-        The Inventory screen (person icon in the sidebar) shows your personal ore stacks and blueprint collection. Select your name in the <strong>USER</strong> dropdown to load your profile.
+        The Inventory screen (person icon) is where you log your personal ore stock and mark which blueprints you've unlocked. Select your name in the <strong>USER</strong> dropdown (password required if your account has one) to load and edit your own profile.
+      </div>
+      <div class="two-col">
+        <div class="feature-card">
+          <div class="feature-card-title">EDITING VS. VIEWING</div>
+          <div class="feature-card-desc">You can only ever add, change, or remove ore entries and blueprint unlocks on <strong>your own</strong> logged-in profile. To look at someone else's stock without touching it, use the separate <strong>VIEW</strong> dropdown — anyone can browse anyone's inventory read-only this way, no password needed.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-title">WHY KEEP IT CURRENT</div>
+          <div class="feature-card-desc">Your ore log and unlocked blueprints are what your officers and artificers see when planning what the org can actually build and who to assign it to. An out-of-date log means someone might get sent to fetch materials you already have.</div>
+        </div>
       </div>
       <div class="steps">
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
-            <div class="step-label">Adding ore entries</div>
-            <div class="step-desc">In the Materials panel on the right, click <span class="ui-teal">+ ADD ORE</span> or click an ore type from the type filter row. A modal opens — enter the quality (0–1000) and quantity (cSCU for ship mineables, units/rocks for hand-mined), then click <strong>COMPLETE</strong>. You can have multiple stacks of the same ore at different quality levels.</div>
+            <div class="step-label">Adding an ore entry</div>
+            <div class="step-desc">In the Materials panel, click an ore from the type filter row. A modal opens — enter the <strong>quality</strong> (0–1000) and <strong>quantity</strong> (SCU for most ores, units/rocks for hand-mined ones like Dolivine or Hadanite), then click <strong>COMPLETE</strong>. You can log multiple stacks of the same ore at different quality levels.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
-            <div class="step-label">Editing or deleting ore entries</div>
-            <div class="step-desc">Hover any material entry in your list to reveal the edit (pencil) and delete (✕) buttons. Edit reopens the quality/quantity modal pre-filled. Delete removes that stack immediately.</div>
+            <div class="step-label">Editing or deleting an entry</div>
+            <div class="step-desc">Hover any material entry in your list to reveal the edit (pencil) and delete (✕) buttons. Edit reopens the same modal pre-filled with that stack's current quality and quantity.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
             <div class="step-label">My Ores filter</div>
-            <div class="step-desc">Toggle <span class="ui-teal">My Ores</span> in the Materials panel header to switch between browsing all ore types (to add new entries) and viewing only the ore types you already have in stock.</div>
+            <div class="step-desc">Toggle <span class="ui-teal">My Ores</span> to switch between browsing every ore type (to add something new) and viewing only what you already have in stock.</div>
           </div>
         </div>
+        <div class="step">
+          <div class="step-num">→</div>
+          <div class="step-body">
+            <div class="step-label">Marking blueprints as owned</div>
+            <div class="step-desc">The left panel lists every blueprint. With your profile loaded, click a row to toggle it between owned (teal highlight + checkmark) and not owned — this saves to your profile automatically. Toggle <span class="ui-teal">My BP's</span> to filter the list down to just what you own.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div style="margin-bottom:8px;font-family:var(--mono);font-size:17.955px;letter-spacing:2px;color:var(--white-muted);">ORE QUALITY SCALE</div>
+      <div class="quality-bar"></div>
+      <div class="quality-labels">
+        <span class="ql-low">0–399<br>Low</span>
+        <span class="ql-std">400–599<br>Standard</span>
+        <span class="ql-good">600–799<br>Good</span>
+        <span class="ql-high">800–1000<br>Excellent</span>
       </div>
       <div class="info-box">
-        <span class="info-label">WHY LOG YOUR ORES?</span>
-        Your personal material entries feed into the <strong>Affordable</strong> filter on the Fabricate screen — it checks your ores alongside the org manifest to show what you can actually build. They also appear in the Materials tab when you're the active user, letting you assign your own stock directly to blueprint slots.
+        <span class="info-label">ORE QUALITY LIVES HERE ONLY</span>
+        Quality is tracked per ore stack in your Inventory — it isn't part of the blueprint/material database itself. Log it accurately when you add an ore so anyone viewing your inventory (or an artificer sourcing materials) knows what grade you actually have.
       </div>
     </div>
 
-    <!-- 09 BLUEPRINT COLLECTION -->
-    <div class="section" id="s9">
+    <!-- 06 TIPS -->
+    <div class="section" id="s6">
       <div class="section-header">
-        <div class="section-num">09</div>
-        <div class="section-title">Your Blueprint Collection</div>
-        <span class="section-icon">📁</span>
-      </div>
-      <div class="section-intro">
-        The left panel of the Inventory screen shows all available blueprints. Blueprints you own are highlighted teal. Toggling ownership helps you and your artificers track what's available when planning fabrication runs.
-      </div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Marking a blueprint as owned</div>
-            <div class="step-desc">With your profile loaded in the Inventory screen, click any blueprint card. It toggles between owned (teal highlight + checkmark) and not owned. The change saves to your profile in the Google Sheet automatically.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Filtering owned blueprints</div>
-            <div class="step-desc">Click <span class="ui-teal">My BP's</span> in the Inventory panel header to show only the blueprints you own. Use the category icons and search bar to browse your collection.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Using owned status in Fabricate</div>
-            <div class="step-desc">On the Fabricate screen, make sure your user is selected in the User dropdown, then enable the <span class="ui-teal">Owned</span> filter. The blueprint grid now shows only blueprints in your collection — useful when you know exactly what you can craft.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 10 TIPS -->
-    <div class="section" id="s10">
-      <div class="section-header">
-        <div class="section-num">10</div>
+        <div class="section-num">06</div>
         <div class="section-title">Tips &amp; Quick Reference</div>
         <span class="section-icon">⚡</span>
       </div>
@@ -916,43 +775,43 @@ body {
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
-            <div class="step-label">Check Affordable before ordering</div>
-            <div class="step-desc">Enable the <span class="ui-teal">Affordable</span> filter before browsing if you want to place an order today — it instantly hides everything the org can't craft right now. If the blueprint you want isn't showing, the org is short on one or more required ores. Let your officer know what's needed.</div>
+            <div class="step-label">Not sure who has a blueprint unlocked?</div>
+            <div class="step-desc">Leave the Orders screen's dropdown on <strong>⚙ Gnome Admin Master List</strong> (the default) — it shows every blueprint unlocked by anyone in the org, so you're never stuck browsing just your own list.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
-            <div class="step-label">Quality matters most for modified stats</div>
-            <div class="step-desc">Not all stats scale with quality — check the delta column in the stats panel. A green delta means higher ore quality gives a real improvement. A dot means the stat is fixed regardless of quality, so there's no benefit to requesting higher-grade ore for those slots.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">→</div>
-          <div class="step-body">
-            <div class="step-label">Add notes to complex orders</div>
-            <div class="step-desc">If you have a preference for ore quality (e.g. "please use 700+ quality ore if available") or a specific delivery window, add it in the order notes field. Artificers see notes inside the expanded order card in the Fulfillment screen.</div>
+            <div class="step-label">Add notes for special requests</div>
+            <div class="step-desc">If you'd like your order crafted from higher-quality ore, or have a delivery preference, say so in the order's <strong>ADD NOTE</strong> field — artificers see it right on the expanded order card in Fulfillment.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
             <div class="step-label">Keep your ore log current</div>
-            <div class="step-desc">The kiosk can only show what you have if you've logged it. After a mining run, update your ore entries in the Inventory screen. Your artificers can then see your stock when planning what to pull for an order.</div>
+            <div class="step-desc">Update your Inventory entries after every mining run. It's the only source the kiosk has for what you actually own — nothing is inferred automatically.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">→</div>
+          <div class="step-body">
+            <div class="step-label">Check on a teammate before asking</div>
+            <div class="step-desc">Use the <strong>VIEW</strong> dropdown on the Inventory screen to see what ore or blueprints a teammate has logged before pinging them directly — it's read-only, so there's no risk of changing their data by mistake.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">→</div>
           <div class="step-body">
             <div class="step-label">The kiosk syncs live</div>
-            <div class="step-desc">All data (orders, ores, blueprint ownership) is stored in the org Google Sheet and syncs every 30 seconds. If another member just added an ore or updated an order, you'll see it within half a minute without refreshing.</div>
+            <div class="step-desc">All data (orders, ores, blueprint unlocks) lives in the org Google Sheet and syncs every 30 seconds. If a teammate just placed an order or updated their ore log, you'll see it within half a minute without refreshing.</div>
           </div>
         </div>
       </div>
 
       <div class="info-box amber">
         <span class="info-label">QUESTIONS?</span>
-        If something looks wrong — a missing ore type, an order stuck in the wrong status, or your account not loading — contact your org admin. They have access to the backend sheet and can fix most issues directly.
+        If something looks wrong — the connection dot shows <strong>NOT CONNECTED</strong>, an order is stuck, or your account won't load — contact your org admin. They have access to the backend sheet and can fix most issues directly.
       </div>
     </div>
 
