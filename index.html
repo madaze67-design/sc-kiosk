@@ -1825,6 +1825,10 @@ option:checked, option:hover {
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
+            <span onclick="openFFMatsModal()" title="List all materials still needed (skips Complete orders and crafted items)"
+              style="font-family:var(--mono);font-size:13px;color:var(--teal-dim);cursor:pointer;padding:3px 8px;border:1px solid var(--border);transition:all 0.15s;"
+              onmouseenter="this.style.color='var(--teal)';this.style.borderColor='var(--teal-dim)'"
+              onmouseleave="this.style.color='var(--teal-dim)';this.style.borderColor='var(--border)'">☰ MATS LIST</span>
             <span onclick="expandAllFFCards()" title="Expand all"
               style="font-family:var(--mono);font-size:13px;color:var(--teal-dim);cursor:pointer;padding:3px 8px;border:1px solid var(--border);transition:all 0.15s;"
               onmouseenter="this.style.color='var(--teal)';this.style.borderColor='var(--teal-dim)'"
@@ -1990,6 +1994,34 @@ option:checked, option:hover {
     </div>
     <div style="padding:8px;">
       <div id="ff-status-items"></div>
+    </div>
+  </div>
+</div>
+
+<!-- OUTSTANDING MATERIALS MODAL -->
+<div id="ff-mats-modal" onclick="if(event.target===this)closeFFMatsModal()" style="display:none;position:fixed;inset:0;background:rgba(2,8,8,0.82);z-index:650;align-items:center;justify-content:center;">
+  <div style="width:460px;background:var(--bg-header);border:1px solid var(--teal-dim);box-shadow:0 0 40px rgba(77,200,176,0.1);">
+    <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--teal);">OUTSTANDING MATERIALS</span>
+      <span onclick="closeFFMatsModal()" style="cursor:pointer;color:var(--white-muted);font-size:14px;">✕</span>
+    </div>
+    <div style="padding:14px;">
+      <div id="ff-mats-summary" style="font-size:13px;font-family:var(--mono);color:var(--white-muted);margin-bottom:8px;"></div>
+      <textarea id="ff-mats-text" rows="16" readonly
+        style="width:100%;background:var(--bg-main);border:1px solid var(--border);color:var(--white);
+               font-family:var(--mono);font-size:14px;padding:8px 10px;resize:vertical;outline:none;"></textarea>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;">
+        <button onclick="closeFFMatsModal()"
+          style="height:30px;padding:0 16px;background:transparent;border:1px solid var(--border);
+                 color:var(--white-muted);font-family:var(--font);font-size:14px;cursor:pointer;transition:all 0.15s;"
+          onmouseenter="this.style.borderColor='var(--teal-dim)';this.style.color='var(--white)'"
+          onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--white-muted)'">CLOSE</button>
+        <button id="ff-mats-copy-btn" onclick="copyFFMats()"
+          style="height:30px;padding:0 16px;background:var(--teal-bg);border:1px solid var(--teal-dim);
+                 color:var(--teal-bright);font-family:var(--font);font-size:14px;cursor:pointer;transition:all 0.15s;"
+          onmouseenter="this.style.borderColor='var(--teal)'"
+          onmouseleave="this.style.borderColor='var(--teal-dim)'">COPY</button>
+      </div>
     </div>
   </div>
 </div>
@@ -4255,19 +4287,18 @@ function setFFTab(tab) {
   renderFulfill();
 }
 
-function renderFulfill() {
-  const container = document.getElementById('ff-orders-list');
-  if(!container) return;
+// Orders shown for a given tab ('orders' or 'complete') under the current status/assignee filters
+function getFFFilteredOrders(tab) {
   const activeStatuses = [...(document.querySelectorAll('#ff-status-dd-panel input[type=checkbox]')||[])].filter(c=>c.checked).map(c=>c.value);
   const activeAssign   = [...(document.querySelectorAll('#ff-assign-dd-items input[type=checkbox]')||[])].filter(c=>c.checked).map(c=>c.value);
 
   // Filter by tab first
-  let list = allOrders.filter(o => {
+  return allOrders.filter(o => {
     const isComplete = o.status === 'Complete';
-    if(ffCurrentTab === 'complete' && !isComplete) return false;
-    if(ffCurrentTab === 'orders'   &&  isComplete) return false;
+    if(tab === 'complete' && !isComplete) return false;
+    if(tab === 'orders'   &&  isComplete) return false;
     // Only apply status filter on Orders tab
-    if(ffCurrentTab === 'orders' && activeStatuses.length && !activeStatuses.includes(o.status)) return false;
+    if(tab === 'orders' && activeStatuses.length && !activeStatuses.includes(o.status)) return false;
     // Assignee filter: empty value = unassigned, match
     if(activeAssign.length) {
       const assigned = o.assignedTo || '';
@@ -4277,6 +4308,12 @@ function renderFulfill() {
     }
     return true;
   }).sort((a,b)=>new Date(b.created)-new Date(a.created));
+}
+
+function renderFulfill() {
+  const container = document.getElementById('ff-orders-list');
+  if(!container) return;
+  const list = getFFFilteredOrders(ffCurrentTab);
 
   document.getElementById('ff-order-count').textContent = list.length+' order'+(list.length!==1?'s':'');
 
@@ -4462,6 +4499,56 @@ function expandAllFFCards() {
 function collapseAllFFCards() {
   document.querySelectorAll('[id^="ff-body-"]').forEach(el => { el.style.display='none'; });
   document.querySelectorAll('[id^="ff-arrow-"]').forEach(el => { el.style.transform='rotate(-90deg)'; });
+}
+
+// ── Outstanding materials list (all active orders, minus crafted items) ──
+function openFFMatsModal() {
+  // Always use the Orders tab filters so Complete orders are never included
+  const orders = getFFFilteredOrders('orders');
+  const combined = {};
+  const missing  = new Set();
+  let itemCount  = 0;
+  orders.forEach(order => {
+    (order.items || []).forEach(item => {
+      if(item.crafted) return;
+      itemCount++;
+      const bp = BLUEPRINTS.find(b => b.name === item.name);
+      if(!bp) { missing.add(item.name); return; }
+      (bp.mats || []).forEach(m => {
+        const unit = reqUnit(m.ore, m);
+        const key  = m.ore + '|' + unit;
+        if(!combined[key]) combined[key] = { ore: m.ore, unit, total: 0 };
+        combined[key].total += reqDisplay(m.ore, m.req, m) * item.qty;
+      });
+    });
+  });
+  const lines = Object.values(combined)
+    .sort((a,b) => a.ore.localeCompare(b.ore))
+    .map(c => c.ore + ': ' + (c.unit==='units' ? Math.ceil(c.total) : fmtCSCU(c.total*100)) + ' ' + c.unit);
+  if(missing.size) {
+    lines.push('', 'No blueprint data for: ' + [...missing].join(', '));
+  }
+
+  document.getElementById('ff-mats-summary').textContent =
+    orders.length + ' order' + (orders.length!==1?'s':'') + ' · ' +
+    itemCount + ' uncrafted item' + (itemCount!==1?'s':'') + ' · current filters applied';
+  document.getElementById('ff-mats-text').value = lines.length ? lines.join('\n') : 'No outstanding materials.';
+  document.getElementById('ff-mats-copy-btn').textContent = 'COPY';
+  document.getElementById('ff-mats-modal').style.display = 'flex';
+}
+function closeFFMatsModal() { document.getElementById('ff-mats-modal').style.display = 'none'; }
+
+async function copyFFMats() {
+  const ta  = document.getElementById('ff-mats-text');
+  const btn = document.getElementById('ff-mats-copy-btn');
+  try {
+    await navigator.clipboard.writeText(ta.value);
+  } catch(e) {
+    // Fallback for file:// or browsers without clipboard API access
+    ta.select();
+    document.execCommand('copy');
+  }
+  btn.textContent = 'COPIED ✓';
 }
 
 function openFFStatusModal(orderId) {
